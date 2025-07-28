@@ -1,3 +1,12 @@
+<?php
+/**
+ * Header Template 
+ *
+ * @package Portfolio 
+ *
+ */
+?>
+
 <header id="header" class="header dark-background d-flex flex-column justify-content-center">
     <i class="header-toggle d-xl-none bi bi-list"></i>
 
