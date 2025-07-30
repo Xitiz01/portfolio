@@ -29,7 +29,7 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: rgba(236, 236, 236, 0.59);  /* The default color of the main navmenu links */
+  --nav-color: #ffffff;  /* The default color of the main navmenu links - now white */
   --nav-hover-color: #ffffff; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #393939; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #393939; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
@@ -161,7 +161,7 @@ h6 {
   border-radius: 20px;
   padding: 15px;
   background-color: var(--background-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  border: 1px solid color-mix(in srgb, #ffffff, transparent 60%);
 }
 
 .header .social-links {
@@ -173,8 +173,8 @@ h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
-  color: var(--default-color);
+  background: rgba(255, 255, 255, 0.1); /* Lighter background for better visibility */
+  color: #ffffff; /* White color for social icons */
   margin: 0 2px;
   border-radius: 50%;
   text-align: center;
@@ -184,8 +184,8 @@ h6 {
 }
 
 .header .social-links a:hover {
-  color: var(--contrast-color);
-  background: var(--accent-color);
+  color: #ffffff; /* Keep white on hover */
+  background: color-mix(in srgb, #ffffff, transparent 60%); /* Use accent color for hover background */
 }
 
 @media (min-width: 1200px) {
@@ -250,7 +250,7 @@ h6 {
 
 .navmenu a,
 .navmenu a:focus {
-  color: var(--nav-color);
+  color: #ffffff !important; /* Force white color for all menu items */
   padding: 15px 10px;
   font-family: var(--nav-font);
   font-size: 16px;
@@ -262,10 +262,19 @@ h6 {
   width: 100%;
 }
 
+/* Ensure all text within menu items is white */
+.navmenu a span,
+.navmenu a:focus span,
+.navmenu a *,
+.navmenu a:focus * {
+ color: #9c9999 !important;     
+}
+
 .navmenu a .navicon,
 .navmenu a:focus .navicon {
   font-size: 20px;
   margin-right: 10px;
+  color: #9c9999 !important; /* Ensure icons are white */
 }
 
 .navmenu a .toggle-dropdown,
@@ -293,13 +302,22 @@ h6 {
 .navmenu a:hover,
 .navmenu .active,
 .navmenu .active:focus {
-  color: var(--nav-hover-color);
+  color: #ffffff !important; /* Keep white on hover and active */
+}
+
+.navmenu a:hover span,
+.navmenu .active span,
+.navmenu .active:focus span,
+.navmenu a:hover *,
+.navmenu .active *,
+.navmenu .active:focus * {
+  color: #ffffff !important;
 }
 
 .navmenu a:hover .navicon,
 .navmenu .active .navicon,
 .navmenu .active:focus .navicon {
-  color: var(--accent-color);
+  color: var(--accent-color) !important; /* Highlight active icons with accent color */
 }
 
 .navmenu .active .toggle-dropdown,
@@ -315,13 +333,29 @@ h6 {
 
 .navmenu .dropdown a,
 .navmenu .dropdown a:focus {
-  color: --nav-dropdown-color;
+  color: #ffffff !important; /* White color for dropdown items */
+}
+
+.navmenu .dropdown a span,
+.navmenu .dropdown a:focus span,
+.navmenu .dropdown a *,
+.navmenu .dropdown a:focus * {
+  color: #ffffff !important;
 }
 
 .navmenu .dropdown a:hover,
 .navmenu .dropdown .active,
 .navmenu .dropdown .active:focus {
-  color: var(--nav-dropdown-hover-color);
+  color: #ffffff !important; /* Keep white on hover for dropdown items */
+}
+
+.navmenu .dropdown a:hover span,
+.navmenu .dropdown .active span,
+.navmenu .dropdown .active:focus span,
+.navmenu .dropdown a:hover *,
+.navmenu .dropdown .active *,
+.navmenu .dropdown .active:focus * {
+  color: #ffffff !important;
 }
 
 .navmenu .dropdown ul {

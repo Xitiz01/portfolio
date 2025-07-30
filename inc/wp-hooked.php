@@ -201,6 +201,107 @@ endif;
 
 
 
+/**
+ * Custom Walker for Portfolio Menu
+ */
+class Portfolio_Walker_Nav_Menu extends Walker_Nav_Menu {
+	
+	/**
+	 * Start the element output.
+	 */
+	function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+		
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
+		
+		// Add dropdown class if has children
+		if ( in_array( 'menu-item-has-children', $classes ) ) {
+			$classes[] = 'dropdown';
+		}
+		
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+		
+		$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
+		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+		
+		$output .= $indent . '<li' . $id . $class_names .'>';
+		
+		$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+		$attributes .= ! empty( $item->target )     ? ' href="'   . esc_attr( $item->target     ) .'"' : '';
+		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+		$attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+		
+		// Get icon from menu item custom field or use default
+		$icon = get_post_meta( $item->ID, '_menu_item_icon', true );
+		if ( ! $icon ) {
+			// Default icons based on menu item title
+			$title_lower = strtolower( $item->title );
+			if ( strpos( $title_lower, 'home' ) !== false ) {
+				$icon = 'bi bi-house';
+			} elseif ( strpos( $title_lower, 'about' ) !== false ) {
+				$icon = 'bi bi-person';
+			} elseif ( strpos( $title_lower, 'resume' ) !== false ) {
+				$icon = 'bi bi-file-earmark-text';
+			} elseif ( strpos( $title_lower, 'portfolio' ) !== false ) {
+				$icon = 'bi bi-images';
+			} elseif ( strpos( $title_lower, 'service' ) !== false ) {
+				$icon = 'bi bi-hdd-stack';
+			} elseif ( strpos( $title_lower, 'contact' ) !== false ) {
+				$icon = 'bi bi-envelope';
+			} else {
+				$icon = 'bi bi-menu-button';
+			}
+		}
+		
+		$item_output = $args->before;
+		$item_output .= '<a'. $attributes .'>';
+		$item_output .= '<i class="' . $icon . ' navicon"></i> ';
+		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+		
+		// Add dropdown toggle if has children
+		if ( in_array( 'menu-item-has-children', $classes ) ) {
+			$item_output .= ' <i class="bi bi-chevron-down toggle-dropdown"></i>';
+		}
+		
+		$item_output .= '</a>';
+		$item_output .= $args->after;
+		
+		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+}
+
+/**
+ * Fallback menu function
+ */
+function portfolio_fallback_menu() {
+    echo '<ul>';
+    echo '<li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>';
+    echo '<li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>';
+    echo '<li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>';
+    echo '<li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>';
+    echo '<li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>';
+    echo '<li class="dropdown"><a href="#"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>';
+    echo '<ul>';
+    echo '<li><a href="#">Dropdown 1</a></li>';
+    echo '<li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>';
+    echo '<ul>';
+    echo '<li><a href="#">Deep Dropdown 1</a></li>';
+    echo '<li><a href="#">Deep Dropdown 2</a></li>';
+    echo '<li><a href="#">Deep Dropdown 3</a></li>';
+    echo '<li><a href="#">Deep Dropdown 4</a></li>';
+    echo '<li><a href="#">Deep Dropdown 5</a></li>';
+    echo '</ul>';
+    echo '</li>';
+    echo '<li><a href="#">Dropdown 2</a></li>';
+    echo '<li><a href="#">Dropdown 3</a></li>';
+    echo '<li><a href="#">Dropdown 4</a></li>';
+    echo '</ul>';
+    echo '</li>';
+    echo '<li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>';
+    echo '</ul>';
+}
 
 
 
