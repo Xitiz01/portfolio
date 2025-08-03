@@ -75,6 +75,10 @@ require get_template_directory() . '/inc/template-functions.php';
  */
 require get_template_directory() . '/inc/wp-hooked.php';
 
+/**
+ * Theme Options
+ */
+require get_template_directory() . '/inc/theme-options.php';
 
 /**
  * Customizer additions.
@@ -87,5 +91,4 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-
 

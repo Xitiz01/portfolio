@@ -31,10 +31,10 @@ get_header();
 
 		<div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
 		  <div class="hero-text">
-			<h1>Kshitiz<span class="accent-text">Khanal</span></h1>
-			<h2>Software Engineer</h2>
+			<h1><?php echo esc_html( get_option( 'hero_first_name', 'Kshitiz' ) ); ?><span class="accent-text"><?php echo esc_html( get_option( 'hero_last_name', 'Khanal' ) ); ?></span></h1>
+			<h2><?php echo esc_html( get_option( 'hero_job_title', 'Software Engineer' ) ); ?></h2>
 			<p class="lead">I'm a <span class="typed" data-typed-items="Software Engineer, Web Developer, Brand Strategist, Creative Director"></span></p>
-			<p class="description">Passionate about creating exceptional digital experiences that blend innovative design with functional development. Let's bring your vision to life.</p>
+			<p class="description"><?php echo esc_html( get_option( 'hero_description', 'Passionate about creating exceptional digital experiences that blend innovative design with functional development. Let\'s bring your vision to life.' ) ); ?></p>
 
 			<div class="hero-actions">
 			  <a href="#portfolio" class="btn btn-primary">View My Work</a>
@@ -54,7 +54,7 @@ get_header();
 		  <div class="hero-visual">
 			<div class="profile-container">
 			  <div class="profile-background"></div>
-			  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/profile/profile-2.webp" alt="Alexander Chen" class="profile-image"> <!-- TODO: Change to my own image -->
+			  <img src="<?php echo esc_url( get_option( 'hero_profile_image', get_template_directory_uri() . '/assets/img/profile/profile-2.webp' ) ); ?>" alt="<?php echo esc_attr( get_option( 'hero_first_name', 'Kshitiz' ) . ' ' . get_option( 'hero_last_name', 'Khanal' ) ); ?>" class="profile-image">
 			</div>
 		  </div>
 		</div>

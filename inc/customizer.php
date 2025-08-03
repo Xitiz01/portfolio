@@ -1,8 +1,8 @@
 <?php
 /**
- * portfolio Theme Customizer
+ * Portfolio Theme Customizer
  *
- * @package portfolio
+ * @package Portfolio
  */
 
 /**
