@@ -17,6 +17,17 @@ require get_template_directory() . '/inc/theme-options/testimonials-section.php'
 require get_template_directory() . '/inc/theme-options/contact-section.php';
 
 /**
+ * Enqueue WordPress media library for theme options
+ */
+function portfolio_enqueue_media_library() {
+	$screen = get_current_screen();
+	if ( $screen && $screen->id === 'toplevel_page_portfolio-theme-options' ) {
+		wp_enqueue_media();
+	}
+}
+add_action( 'admin_enqueue_scripts', 'portfolio_enqueue_media_library' );
+
+/**
  * Add admin menu for theme options
  */
 function portfolio_admin_menu() {

@@ -12,6 +12,13 @@
  * @package portfolio
  */
 
+/**
+ * Helper function to get hero section options with defaults
+ */
+function get_hero_option( $option_name, $default = '' ) {
+	return get_option( 'hero_' . $option_name, $default );
+}
+
 get_header();
 ?>
 <main class="main">
@@ -19,10 +26,12 @@ get_header();
 <!-- Hero Section -->
 <section id="hero" class="hero section">
 
+  <?php if ( get_hero_option( 'show_background_circles', true ) ) : ?>
   <div class="background-elements">
 	<div class="bg-circle circle-1"></div>
 	<div class="bg-circle circle-2"></div>
   </div>
+  <?php endif; ?>
 
   <div class="hero-content">
 
@@ -31,21 +40,90 @@ get_header();
 
 		<div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
 		  <div class="hero-text">
-			<h1>Kshitiz<span class="accent-text">Khanal</span></h1>
-			<h2>Software Engineer</h2>
-			<p class="lead">I'm a <span class="typed" data-typed-items="Software Engineer, Web Developer, Brand Strategist, Creative Director"></span></p>
-			<p class="description">Passionate about creating exceptional digital experiences that blend innovative design with functional development. Let's bring your vision to life.</p>
+			<!-- Debug Info (Remove after testing) -->
+			<?php if ( current_user_can( 'manage_options' ) ) : ?>
+			<div style="background: #f0f0f0; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; font-size: 12px;">
+				<strong>Debug Info (Admin Only):</strong><br>
+				First Name: <?php echo esc_html( get_option( 'hero_first_name', 'NOT SET' ) ); ?><br>
+				Last Name: <?php echo esc_html( get_option( 'hero_last_name', 'NOT SET' ) ); ?><br>
+				Job Title: <?php echo esc_html( get_option( 'hero_job_title', 'NOT SET' ) ); ?><br>
+				Primary Button Link: <?php echo esc_html( get_option( 'hero_primary_button_link', 'NOT SET' ) ); ?><br>
+				Social Link 1: <?php echo esc_html( get_option( 'hero_social_link_1', 'NOT SET' ) ); ?><br>
+				Social Link 1 Icon: <?php echo esc_html( get_option( 'hero_social_link_1_icon', 'NOT SET' ) ); ?>
+			</div>
+			<?php endif; ?>
+			
+			<h1><?php echo esc_html( get_hero_option( 'first_name', 'Kshitiz' ) ); ?><span class="accent-text"><?php echo esc_html( get_hero_option( 'last_name', 'Khanal' ) ); ?></span></h1>
+			<h2><?php echo esc_html( get_hero_option( 'job_title', 'Software Engineer' ) ); ?></h2>
+			<p class="lead">I'm a <span class="typed" data-typed-items="<?php 
+				$typed_skills = get_hero_option( 'typed_skills', array( 'Software Engineer', 'Web Developer', 'Brand Strategist', 'Creative Director' ) );
+				if ( is_array( $typed_skills ) ) {
+					echo esc_attr( implode( ', ', $typed_skills ) );
+				}
+			?>"></span></p>
+			<p class="description"><?php echo esc_html( get_hero_option( 'description', 'Passionate about creating exceptional digital experiences that blend innovative design with functional development. Let\'s bring your vision to life.' ) ); ?></p>
 
 			<div class="hero-actions">
-			  <a href="#portfolio" class="btn btn-primary">View My Work</a>
-			  <a href="#contact" class="btn btn-outline">Get In Touch</a>
+			  <?php 
+			  $primary_link = get_hero_option( 'primary_button_link', '#portfolio' );
+			  $secondary_link = get_hero_option( 'secondary_button_link', '#contact' );
+			  ?>
+			  <a href="<?php echo esc_attr( $primary_link ); ?>" class="btn btn-primary"><?php echo esc_html( get_hero_option( 'primary_button_text', 'View My Work' ) ); ?></a>
+			  <a href="<?php echo esc_attr( $secondary_link ); ?>" class="btn btn-outline"><?php echo esc_html( get_hero_option( 'secondary_button_text', 'Get In Touch' ) ); ?></a>
 			</div>
 
 			<div class="social-links">
-			  <a href="#"><i class="bi bi-dribbble"></i></a>
-			  <a href="#"><i class="bi bi-behance"></i></a>
-			  <a href="#"><i class="bi bi-github"></i></a>
-			  <a href="#"><i class="bi bi-linkedin"></i></a>
+			  <?php 
+			  $social_link_1_url = get_hero_option( 'social_link_1', '' );
+			  $social_link_1_icon = get_hero_option( 'social_link_1_icon', '' );
+			  if ( ! empty( $social_link_1_url ) ) : ?>
+				<a href="<?php echo esc_attr( $social_link_1_url ); ?>">
+					<?php if ( $social_link_1_icon ) : ?>
+						<img src="<?php echo esc_url( $social_link_1_icon ); ?>" alt="Social Link 1" style="width: 24px; height: 24px;">
+					<?php else : ?>
+						<i class="bi bi-link-45deg"></i>
+					<?php endif; ?>
+				</a>
+			  <?php endif; ?>
+
+			  <?php 
+			  $social_link_2_url = get_hero_option( 'social_link_2', '' );
+			  $social_link_2_icon = get_hero_option( 'social_link_2_icon', '' );
+			  if ( ! empty( $social_link_2_url ) ) : ?>
+				<a href="<?php echo esc_attr( $social_link_2_url ); ?>">
+					<?php if ( $social_link_2_icon ) : ?>
+						<img src="<?php echo esc_url( $social_link_2_icon ); ?>" alt="Social Link 2" style="width: 24px; height: 24px;">
+					<?php else : ?>
+						<i class="bi bi-link-45deg"></i>
+					<?php endif; ?>
+				</a>
+			  <?php endif; ?>
+
+			  <?php 
+			  $social_link_3_url = get_hero_option( 'social_link_3', '' );
+			  $social_link_3_icon = get_hero_option( 'social_link_3_icon', '' );
+			  if ( ! empty( $social_link_3_url ) ) : ?>
+				<a href="<?php echo esc_attr( $social_link_3_url ); ?>">
+					<?php if ( $social_link_3_icon ) : ?>
+						<img src="<?php echo esc_url( $social_link_3_icon ); ?>" alt="Social Link 3" style="width: 24px; height: 24px;">
+					<?php else : ?>
+						<i class="bi bi-link-45deg"></i>
+					<?php endif; ?>
+				</a>
+			  <?php endif; ?>
+
+			  <?php 
+			  $social_link_4_url = get_hero_option( 'social_link_4', '' );
+			  $social_link_4_icon = get_hero_option( 'social_link_4_icon', '' );
+			  if ( ! empty( $social_link_4_url ) ) : ?>
+				<a href="<?php echo esc_attr( $social_link_4_url ); ?>">
+					<?php if ( $social_link_4_icon ) : ?>
+						<img src="<?php echo esc_url( $social_link_4_icon ); ?>" alt="Social Link 4" style="width: 24px; height: 24px;">
+					<?php else : ?>
+						<i class="bi bi-link-45deg"></i>
+					<?php endif; ?>
+				</a>
+			  <?php endif; ?>
 			</div>
 		  </div>
 		</div>
@@ -54,7 +132,11 @@ get_header();
 		  <div class="hero-visual">
 			<div class="profile-container">
 			  <div class="profile-background"></div>
-			  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/profile/profile-2.webp" alt="Alexander Chen" class="profile-image"> <!-- TODO: Change to my own image -->
+			  <?php 
+			  $profile_image = get_hero_option( 'profile_image', get_template_directory_uri() . '/assets/img/profile/profile-2.webp' );
+			  $profile_alt = get_hero_option( 'first_name', 'Kshitiz' ) . ' ' . get_hero_option( 'last_name', 'Khanal' );
+			  ?>
+			  <img src="<?php echo esc_url( $profile_image ); ?>" alt="<?php echo esc_attr( $profile_alt ); ?>" class="profile-image">
 			</div>
 		  </div>
 		</div>
