@@ -112,6 +112,10 @@
   if (selectTyped && typeof Typed !== 'undefined') {
     let typed_strings = selectTyped.getAttribute('data-typed-items');
     typed_strings = typed_strings.split(',');
+    
+    // Filter out any empty strings
+    typed_strings = typed_strings.filter(skill => skill.trim() !== '');
+    
     new Typed('.typed', {
       strings: typed_strings,
       loop: true,

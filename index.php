@@ -40,25 +40,26 @@ get_header();
 
 		<div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
 		  <div class="hero-text">
-			<!-- Debug Info (Remove after testing) -->
-			<?php if ( current_user_can( 'manage_options' ) ) : ?>
-			<div style="background: #f0f0f0; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; font-size: 12px;">
-				<strong>Debug Info (Admin Only):</strong><br>
-				First Name: <?php echo esc_html( get_option( 'hero_first_name', 'NOT SET' ) ); ?><br>
-				Last Name: <?php echo esc_html( get_option( 'hero_last_name', 'NOT SET' ) ); ?><br>
-				Job Title: <?php echo esc_html( get_option( 'hero_job_title', 'NOT SET' ) ); ?><br>
-				Primary Button Link: <?php echo esc_html( get_option( 'hero_primary_button_link', 'NOT SET' ) ); ?><br>
-				Social Link 1: <?php echo esc_html( get_option( 'hero_social_link_1', 'NOT SET' ) ); ?><br>
-				Social Link 1 Icon: <?php echo esc_html( get_option( 'hero_social_link_1_icon', 'NOT SET' ) ); ?>
-			</div>
-			<?php endif; ?>
 			
 			<h1><?php echo esc_html( get_hero_option( 'first_name', 'Kshitiz' ) ); ?><span class="accent-text"><?php echo esc_html( get_hero_option( 'last_name', 'Khanal' ) ); ?></span></h1>
 			<h2><?php echo esc_html( get_hero_option( 'job_title', 'Software Engineer' ) ); ?></h2>
+			
 			<p class="lead">I'm a <span class="typed" data-typed-items="<?php 
-				$typed_skills = get_hero_option( 'typed_skills', array( 'Software Engineer', 'Web Developer', 'Brand Strategist', 'Creative Director' ) );
-				if ( is_array( $typed_skills ) ) {
-					echo esc_attr( implode( ', ', $typed_skills ) );
+				// Get skills from database - use the same approach as admin panel
+				$hero_typed_skills = get_option( 'hero_typed_skills', array( 'Software Engineer', 'Web Developer', 'Brand Strategist', 'Creative Director' ) );
+				
+				// Ensure we have an array and filter out empty values
+				if ( is_array( $hero_typed_skills ) ) {
+					$clean_skills = array_filter( $hero_typed_skills );
+					if ( ! empty( $clean_skills ) ) {
+						echo esc_attr( implode( ', ', $clean_skills ) );
+					} else {
+						// If all skills are empty, use defaults
+						echo 'Software Engineer, Web Developer, Brand Strategist, Creative Director';
+					}
+				} else {
+					// Fallback to defaults if not an array
+					echo 'Software Engineer, Web Developer, Brand Strategist, Creative Director';
 				}
 			?>"></span></p>
 			<p class="description"><?php echo esc_html( get_hero_option( 'description', 'Passionate about creating exceptional digital experiences that blend innovative design with functional development. Let\'s bring your vision to life.' ) ); ?></p>
