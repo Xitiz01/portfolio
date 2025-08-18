@@ -92,3 +92,66 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Enable SVG upload support
+ */
+function portfolio_enable_svg_upload( $mimes ) {
+	$mimes['svg'] = 'image/svg+xml';
+	$mimes['svgz'] = 'image/svg+xml';
+	return $mimes;
+}
+add_filter( 'upload_mimes', 'portfolio_enable_svg_upload' );
+
+/**
+ * Sanitize SVG files on upload
+ */
+function portfolio_sanitize_svg( $file ) {
+	if ( $file['type'] === 'image/svg+xml' ) {
+		if ( ! function_exists( 'simplexml_load_file' ) ) {
+			return $file;
+		}
+
+		// Check if file is actually an SVG
+		$file_content = file_get_contents( $file['tmp_name'] );
+		if ( $file_content === false ) {
+			return $file;
+		}
+
+		// Remove any PHP code from SVG
+		$file_content = preg_replace( '/<\?php.*?\?>/s', '', $file_content );
+		$file_content = preg_replace( '/<\?.*?\?>/s', '', $file_content );
+		$file_content = preg_replace( '/<script.*?<\/script>/s', '', $file_content );
+
+		// Validate SVG structure
+		libxml_use_internal_errors( true );
+		$svg = simplexml_load_string( $file_content );
+		libxml_clear_errors();
+
+		if ( $svg === false ) {
+			$file['error'] = __( 'Invalid SVG file format.', 'portfolio' );
+			return $file;
+		}
+
+		// Write sanitized content back to file
+		file_put_contents( $file['tmp_name'], $file_content );
+	}
+
+	return $file;
+}
+add_filter( 'wp_handle_upload_prefilter', 'portfolio_sanitize_svg' );
+
+/**
+ * Add SVG support to media library
+ */
+function portfolio_fix_svg_thumb_display() {
+	echo '
+	<style>
+	td.media-icon img[src$=".svg"], img[src$=".svg"].attachment-post-thumbnail { 
+		width: 100% !important; 
+		height: auto !important; 
+	}
+	</style>
+	';
+}
+add_action( 'admin_head', 'portfolio_fix_svg_thumb_display' );
+

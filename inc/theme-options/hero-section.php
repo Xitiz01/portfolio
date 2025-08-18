@@ -25,16 +25,16 @@ function portfolio_hero_tab_content() {
 	$hero_secondary_button_link = get_option( 'hero_secondary_button_link', '#contact' );
 	
 	// Social media links
-	$hero_social_dribbble = get_option( 'hero_social_dribbble', '' );
-	$hero_social_behance = get_option( 'hero_social_behance', '' );
-	$hero_social_github = get_option( 'hero_social_github', '' );
-	$hero_social_linkedin = get_option( 'hero_social_linkedin', '' );
+	$hero_social_link_1 = get_option( 'hero_social_link_1', '' );
+	$hero_social_link_2 = get_option( 'hero_social_link_2', '' );
+	$hero_social_link_3 = get_option( 'hero_social_link_3', '' );
+	$hero_social_link_4 = get_option( 'hero_social_link_4', '' );
 	
 	// Social media icons
-	$hero_social_dribbble_icon = get_option( 'hero_social_dribbble_icon', '' );
-	$hero_social_behance_icon = get_option( 'hero_social_behance_icon', '' );
-	$hero_social_github_icon = get_option( 'hero_social_github_icon', '' );
-	$hero_social_linkedin_icon = get_option( 'hero_social_linkedin_icon', '' );
+	$hero_social_link_1_icon = get_option( 'hero_social_link_1_icon', '' );
+	$hero_social_link_2_icon = get_option( 'hero_social_link_2_icon', '' );
+	$hero_social_link_3_icon = get_option( 'hero_social_link_3_icon', '' );
+	$hero_social_link_4_icon = get_option( 'hero_social_link_4_icon', '' );
 	
 	// Background elements
 	$hero_show_background_circles = get_option( 'hero_show_background_circles', true );
@@ -158,18 +158,18 @@ function portfolio_hero_tab_content() {
 			<td>
 				<div class="social-media-row">
 					<div class="social-url-field">
-						<input type="text" id="hero_social_link_1" name="hero_social_link_1" value="<?php echo esc_attr( $hero_social_dribbble ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
+						<input type="text" id="hero_social_link_1" name="hero_social_link_1" value="<?php echo esc_attr( $hero_social_link_1 ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
 						<p class="description">Your first social media profile URL (leave empty to hide this social link)</p>
 					</div>
 					<div class="social-icon-field">
-						<input type="hidden" id="hero_social_link_1_icon" name="hero_social_link_1_icon" value="<?php echo esc_url( $hero_social_dribbble_icon ); ?>">
+						<input type="hidden" id="hero_social_link_1_icon" name="hero_social_link_1_icon" value="<?php echo esc_url( $hero_social_link_1_icon ); ?>">
 						<div class="icon-preview">
-							<?php if ( $hero_social_dribbble_icon ) : ?>
-								<img src="<?php echo esc_url( $hero_social_dribbble_icon ); ?>" alt="Social Icon 1" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
+							<?php if ( $hero_social_link_1_icon ) : ?>
+								<img src="<?php echo esc_url( $hero_social_link_1_icon ); ?>" alt="Social Icon 1" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
 							<?php endif; ?>
 						</div>
 						<button type="button" class="button upload-social-icon" data-target="hero_social_link_1_icon">Upload Icon</button>
-						<button type="button" class="button remove-social-icon" data-target="hero_social_link_1_icon" <?php echo empty( $hero_social_dribbble_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
+						<button type="button" class="button remove-social-icon" data-target="hero_social_link_1_icon" <?php echo empty( $hero_social_link_1_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
 						<p class="description">Upload custom icon for social link 1 (32x32px recommended)</p>
 					</div>
 				</div>
@@ -182,18 +182,18 @@ function portfolio_hero_tab_content() {
 			<td>
 				<div class="social-media-row">
 					<div class="social-url-field">
-						<input type="text" id="hero_social_link_2" name="hero_social_link_2" value="<?php echo esc_attr( $hero_social_behance ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
+						<input type="text" id="hero_social_link_2" name="hero_social_link_2" value="<?php echo esc_attr( $hero_social_link_2 ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
 						<p class="description">Your second social media profile URL (leave empty to hide this social link)</p>
 					</div>
 					<div class="social-icon-field">
-						<input type="hidden" id="hero_social_link_2_icon" name="hero_social_link_2_icon" value="<?php echo esc_url( $hero_social_behance_icon ); ?>">
+						<input type="hidden" id="hero_social_link_2_icon" name="hero_social_link_2_icon" value="<?php echo esc_url( $hero_social_link_2_icon ); ?>">
 						<div class="icon-preview">
-							<?php if ( $hero_social_behance_icon ) : ?>
-								<img src="<?php echo esc_url( $hero_social_behance_icon ); ?>" alt="Social Icon 2" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
+							<?php if ( $hero_social_link_2_icon ) : ?>
+								<img src="<?php echo esc_url( $hero_social_link_2_icon ); ?>" alt="Social Icon 2" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
 							<?php endif; ?>
 						</div>
 						<button type="button" class="button upload-social-icon" data-target="hero_social_link_2_icon">Upload Icon</button>
-						<button type="button" class="button remove-social-icon" data-target="hero_social_link_2_icon" <?php echo empty( $hero_social_behance_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
+						<button type="button" class="button remove-social-icon" data-target="hero_social_link_2_icon" <?php echo empty( $hero_social_link_2_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
 						<p class="description">Upload custom icon for social link 2 (32x32px recommended)</p>
 					</div>
 				</div>
@@ -206,18 +206,18 @@ function portfolio_hero_tab_content() {
 			<td>
 				<div class="social-media-row">
 					<div class="social-url-field">
-						<input type="text" id="hero_social_link_3" name="hero_social_link_3" value="<?php echo esc_attr( $hero_social_github ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
+						<input type="text" id="hero_social_link_3" name="hero_social_link_3" value="<?php echo esc_attr( $hero_social_link_3 ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
 						<p class="description">Your third social media profile URL (leave empty to hide this social link)</p>
 					</div>
 					<div class="social-icon-field">
-						<input type="hidden" id="hero_social_link_3_icon" name="hero_social_link_3_icon" value="<?php echo esc_url( $hero_social_github_icon ); ?>">
+						<input type="hidden" id="hero_social_link_3_icon" name="hero_social_link_3_icon" value="<?php echo esc_url( $hero_social_link_3_icon ); ?>">
 						<div class="icon-preview">
-							<?php if ( $hero_social_github_icon ) : ?>
-								<img src="<?php echo esc_url( $hero_social_github_icon ); ?>" alt="Social Icon 3" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
+							<?php if ( $hero_social_link_3_icon ) : ?>
+								<img src="<?php echo esc_url( $hero_social_link_3_icon ); ?>" alt="Social Icon 3" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
 							<?php endif; ?>
 						</div>
 						<button type="button" class="button upload-social-icon" data-target="hero_social_link_3_icon">Upload Icon</button>
-						<button type="button" class="button remove-social-icon" data-target="hero_social_link_3_icon" <?php echo empty( $hero_social_github_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
+						<button type="button" class="button remove-social-icon" data-target="hero_social_link_3_icon" <?php echo empty( $hero_social_link_3_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
 						<p class="description">Upload custom icon for social link 3 (32x32px recommended)</p>
 					</div>
 				</div>
@@ -230,18 +230,18 @@ function portfolio_hero_tab_content() {
 			<td>
 				<div class="social-media-row">
 					<div class="social-url-field">
-						<input type="text" id="hero_social_link_4" name="hero_social_link_4" value="<?php echo esc_attr( $hero_social_linkedin ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
+						<input type="text" id="hero_social_link_4" name="hero_social_link_4" value="<?php echo esc_attr( $hero_social_link_4 ); ?>" class="regular-text" placeholder="https://example.com/yourusername or leave empty">
 						<p class="description">Your fourth social media profile URL (leave empty to hide this social link)</p>
 					</div>
 					<div class="social-icon-field">
-						<input type="hidden" id="hero_social_link_4_icon" name="hero_social_link_4_icon" value="<?php echo esc_url( $hero_social_linkedin_icon ); ?>">
+						<input type="hidden" id="hero_social_link_4_icon" name="hero_social_link_4_icon" value="<?php echo esc_url( $hero_social_link_4_icon ); ?>">
 						<div class="icon-preview">
-							<?php if ( $hero_social_linkedin_icon ) : ?>
-								<img src="<?php echo esc_url( $hero_social_linkedin_icon ); ?>" alt="Social Icon 4" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
+							<?php if ( $hero_social_link_4_icon ) : ?>
+								<img src="<?php echo esc_url( $hero_social_link_4_icon ); ?>" alt="Social Icon 4" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">
 							<?php endif; ?>
 						</div>
 						<button type="button" class="button upload-social-icon" data-target="hero_social_link_4_icon">Upload Icon</button>
-						<button type="button" class="button remove-social-icon" data-target="hero_social_link_4_icon" <?php echo empty( $hero_social_linkedin_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
+						<button type="button" class="button remove-social-icon" data-target="hero_social_link_4_icon" <?php echo empty( $hero_social_link_4_icon ) ? 'style="display:none;"' : ''; ?>>Remove</button>
 						<p class="description">Upload custom icon for social link 4 (32x32px recommended)</p>
 					</div>
 				</div>
@@ -320,13 +320,21 @@ function portfolio_hero_tab_content() {
 				title: 'Upload Profile Image',
 				multiple: false,
 				library: {
-					type: 'image'
+					type: ['image', 'application/octet-stream']
 				}
 			}).open().on('select', function() {
 				var uploaded_image = image.state().get('selection').first();
 				var image_url = uploaded_image.toJSON().url;
+				var file_type = uploaded_image.toJSON().subtype;
+				
 				$('#hero_profile_image').val(image_url);
-				$('.image-preview').html('<img src="' + image_url + '" alt="Profile Preview" style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px; margin-bottom: 10px;">');
+				
+				// Handle SVG files differently
+				if (file_type === 'svg+xml' || image_url.toLowerCase().endsWith('.svg')) {
+					$('.image-preview').html('<img src="' + image_url + '" alt="Profile Preview" style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px; margin-bottom: 10px; background: #f9f9f9;">');
+				} else {
+					$('.image-preview').html('<img src="' + image_url + '" alt="Profile Preview" style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px; margin-bottom: 10px;">');
+				}
 				$('#remove_profile_image').show();
 			});
 		});
@@ -356,13 +364,21 @@ function portfolio_hero_tab_content() {
 				title: 'Upload Social Media Icon',
 				multiple: false,
 				library: {
-					type: 'image'
+					type: ['image', 'application/octet-stream']
 				}
 			}).open().on('select', function() {
 				var uploaded_image = image.state().get('selection').first();
 				var image_url = uploaded_image.toJSON().url;
+				var file_type = uploaded_image.toJSON().subtype;
+				
 				targetInput.val(image_url);
-				targetPreview.html('<img src="' + image_url + '" alt="Social Icon" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">');
+				
+				// Handle SVG files differently
+				if (file_type === 'svg+xml' || image_url.toLowerCase().endsWith('.svg')) {
+					targetPreview.html('<img src="' + image_url + '" alt="Social Icon" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px; background: #f9f9f9;">');
+				} else {
+					targetPreview.html('<img src="' + image_url + '" alt="Social Icon" style="max-width: 32px; height: auto; border: 1px solid #ddd; padding: 2px;">');
+				}
 				targetRemoveBtn.show();
 			});
 		});

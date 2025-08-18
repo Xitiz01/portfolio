@@ -176,3 +176,14 @@ if(! function_exists('portfolio_page_end')) {
   }
 }
 add_action('portfolio_after_footer', 'portfolio_page_end', 10);
+
+
+// This function allows admins to upload lottie files
+function allow_lottie_for_admins($mimes) {
+  // Check if user is admin
+  if (current_user_can('manage_options')) {
+      $mimes['json'] = 'application/json';
+  }
+  return $mimes;
+}
+add_filter('upload_mimes', 'allow_lottie_for_admins');
