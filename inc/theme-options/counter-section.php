@@ -10,7 +10,9 @@
  */
 function portfolio_counter_tab_content() {
 	?>
-	<table class="form-table">
+	<div class="counter-section-options">
+		<h3>Section Header</h3>
+		<table class="form-table">
 		<tr>
 			<th scope="row">
 				<label for="counter_section_title">Section Title</label>
@@ -30,12 +32,15 @@ function portfolio_counter_tab_content() {
 			</td>
 		</tr>
 		
+		</table>
+
+		<h3>Counter Items</h3>
+		
 		<!-- Counter Item 1 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Counter Item 1</h3>
-			</th>
-		</tr>
+		<div class="counter-item-header">
+			<h4>Counter Item 1</h4>
+		</div>
+		<table class="form-table">
 		<tr>
 			<th scope="row">
 				<label for="counter_1_icon">Icon Class</label>
@@ -64,12 +69,13 @@ function portfolio_counter_tab_content() {
 			</td>
 		</tr>
 		
+		</table>
+
 		<!-- Counter Item 2 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Counter Item 2</h3>
-			</th>
-		</tr>
+		<div class="counter-item-header">
+			<h4>Counter Item 2</h4>
+		</div>
+		<table class="form-table">
 		<tr>
 			<th scope="row">
 				<label for="counter_2_icon">Icon Class</label>
@@ -98,12 +104,13 @@ function portfolio_counter_tab_content() {
 			</td>
 		</tr>
 		
+		</table>
+
 		<!-- Counter Item 3 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Counter Item 3</h3>
-			</th>
-		</tr>
+		<div class="counter-item-header">
+			<h4>Counter Item 3</h4>
+		</div>
+		<table class="form-table">
 		<tr>
 			<th scope="row">
 				<label for="counter_3_icon">Icon Class</label>
@@ -132,12 +139,13 @@ function portfolio_counter_tab_content() {
 			</td>
 		</tr>
 		
+		</table>
+
 		<!-- Counter Item 4 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Counter Item 4</h3>
-			</th>
-		</tr>
+		<div class="counter-item-header">
+			<h4>Counter Item 4</h4>
+		</div>
+		<table class="form-table">
 		<tr>
 			<th scope="row">
 				<label for="counter_4_icon">Icon Class</label>
@@ -165,7 +173,33 @@ function portfolio_counter_tab_content() {
 				<p class="description">Enter the counter label</p>
 			</td>
 		</tr>
-	</table>
+		</table>
+	</div>
+
+	<style>
+	.counter-section-options h3 {
+		margin-top: 30px;
+		margin-bottom: 15px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #ccc;
+		color: #23282d;
+	}
+	.counter-section-options h3:first-child {
+		margin-top: 0;
+	}
+	.counter-section-options .counter-item-header {
+		background: #f9f9f9;
+		padding: 15px;
+		margin: 20px 0 15px 0;
+		border-left: 4px solid #0073aa;
+		border-radius: 3px;
+	}
+	.counter-section-options .counter-item-header h4 {
+		margin: 0;
+		color: #0073aa;
+		font-size: 16px;
+	}
+	</style>
 	<?php
 }
 

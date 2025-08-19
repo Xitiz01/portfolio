@@ -182,7 +182,7 @@ get_header();
 		<div class="profile-card">
 		  <div class="profile-header">
 			<div class="profile-image">
-			  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/profile/profile-square-3.webp" alt="Profile Image" class="img-fluid">
+			  <img src="<?php echo esc_url( get_option( 'profile_image', get_template_directory_uri() . '/assets/img/profile/profile-square-3.webp' ) ); ?>" alt="Profile Image" class="img-fluid">
 			</div>
 			<div class="profile-badge">
 			  <i class="bi bi-check-circle-fill"></i>
@@ -190,21 +190,31 @@ get_header();
 		  </div>
 
 		  <div class="profile-content">
-			<h3>Marcus Thompson</h3>
-			<p class="profession">Creative Director &amp; Developer</p>
+			<h3><?php echo esc_html( get_option( 'profile_name', 'Marcus Thompson' ) ); ?></h3>
+			<p class="profession"><?php echo esc_html( get_option( 'profile_profession', 'Creative Director & Developer' ) ); ?></p>
 
 			<div class="contact-links">
-			  <a href="mailto:marcus@example.com" class="contact-item">
+			  <a href="mailto:<?php echo esc_attr( get_option( 'profile_email', 'marcus@example.com' ) ); ?>" class="contact-item">
 				<i class="bi bi-envelope"></i>
-				marcus@example.com
+				<?php echo esc_html( get_option( 'profile_email', 'marcus@example.com' ) ); ?>
 			  </a>
-			  <a href="tel:+15551234567" class="contact-item">
+			  <a href="tel:<?php echo esc_attr( get_option( 'profile_phone', '+1 (555) 123-4567' ) ); ?>" class="contact-item">
 				<i class="bi bi-telephone"></i>
-				+1 (555) 123-4567
+				<?php echo esc_html( get_option( 'profile_phone', '+1 (555) 123-4567' ) ); ?>
 			  </a>
-			  <a href="#" class="contact-item">
+			  <?php 
+			  $location_url = get_option( 'profile_location_url', '' );
+			  if ( ! empty( $location_url ) ) {
+				  $href = esc_url( $location_url );
+				  $target = '_blank';
+			  } else {
+				  $href = 'https://maps.google.com/?q=' . urlencode( get_option( 'profile_location', 'San Francisco, CA' ) );
+				  $target = '_blank';
+			  }
+			  ?>
+			  <a href="<?php echo $href; ?>" target="<?php echo $target; ?>" class="contact-item">
 				<i class="bi bi-geo-alt"></i>
-				San Francisco, CA
+				<?php echo esc_html( get_option( 'profile_location', 'San Francisco, CA' ) ); ?>
 			  </a>
 			</div>
 		  </div>
@@ -214,27 +224,27 @@ get_header();
 	  <div class="col-lg-7" data-aos="fade-left" data-aos-delay="300">
 		<div class="about-content">
 		  <div class="section-header">
-			<span class="badge-text">Get to Know Me</span>
-			<h2>Passionate About Creating Digital Experiences</h2>
+			<span class="badge-text"><?php echo esc_html( get_option( 'about_badge_text', 'Get to Know Me' ) ); ?></span>
+			<h2><?php echo esc_html( get_option( 'about_title', 'Passionate About Creating Digital Experiences' ) ); ?></h2>
 		  </div>
 
 		  <div class="description">
-			<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+			<?php echo wp_kses_post( wpautop( get_option( 'about_content', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
 
-			<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.</p>
+Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.' ) ) ); ?>
 		  </div>
 
 		  <div class="stats-grid">
 			<div class="stat-item">
-			  <div class="stat-number">150+</div>
+			  <div class="stat-number"><?php echo esc_html( get_option( 'stats_projects', '150+' ) ); ?></div>
 			  <div class="stat-label">Projects Completed</div>
 			</div>
 			<div class="stat-item">
-			  <div class="stat-number">5+</div>
+			  <div class="stat-number"><?php echo esc_html( get_option( 'stats_experience', '5+' ) ); ?></div>
 			  <div class="stat-label">Years Experience</div>
 			</div>
 			<div class="stat-item">
-			  <div class="stat-number">98%</div>
+			  <div class="stat-number"><?php echo esc_html( get_option( 'stats_satisfaction', '98%' ) ); ?></div>
 			  <div class="stat-label">Client Satisfaction</div>
 			</div>
 		  </div>
@@ -243,33 +253,33 @@ get_header();
 			<div class="detail-row">
 			  <div class="detail-item">
 				<span class="detail-label">Specialization</span>
-				<span class="detail-value">UI/UX Design &amp; Development</span>
+				<span class="detail-value"><?php echo esc_html( get_option( 'detail_specialization', 'UI/UX Design & Development' ) ); ?></span>
 			  </div>
 			  <div class="detail-item">
 				<span class="detail-label">Experience Level</span>
-				<span class="detail-value">Senior Professional</span>
+				<span class="detail-value"><?php echo esc_html( get_option( 'detail_experience_level', 'Senior Professional' ) ); ?></span>
 			  </div>
 			</div>
 			<div class="detail-row">
 			  <div class="detail-item">
 				<span class="detail-label">Education</span>
-				<span class="detail-value">Computer Science, MIT</span>
+				<span class="detail-value"><?php echo esc_html( get_option( 'detail_education', 'Computer Science, MIT' ) ); ?></span>
 			  </div>
 			  <div class="detail-item">
 				<span class="detail-label">Languages</span>
-				<span class="detail-value">English, Spanish, French</span>
+				<span class="detail-value"><?php echo esc_html( get_option( 'detail_languages', 'English, Spanish, French' ) ); ?></span>
 			  </div>
 			</div>
 		  </div>
 
 		  <div class="cta-section">
-			<a href="#" class="btn btn-primary">
+			<a href="<?php echo esc_url( get_option( 'cta_resume_url', '#' ) ); ?>" class="btn btn-primary">
 			  <i class="bi bi-download"></i>
-			  Download Resume
+			  <?php echo esc_html( get_option( 'cta_resume_text', 'Download Resume' ) ); ?>
 			</a>
-			<a href="#" class="btn btn-outline">
+			<a href="<?php echo esc_url( get_option( 'cta_talk_url', '#contact' ) ); ?>" class="btn btn-outline">
 			  <i class="bi bi-chat-dots"></i>
-			  Let's Talk
+			  <?php echo esc_html( get_option( 'cta_talk_text', 'Let\'s Talk' ) ); ?>
 			</a>
 		  </div>
 		</div>
@@ -287,37 +297,48 @@ get_header();
 
 	<div class="row justify-content-center">
 	  <div class="col-lg-10">
+		<?php if ( get_option( 'counter_section_title' ) || get_option( 'counter_section_description' ) ) : ?>
+		<div class="section-title text-center mb-5" data-aos="fade-up">
+		  <?php if ( get_option( 'counter_section_title' ) ) : ?>
+		  <h2><?php echo esc_html( get_option( 'counter_section_title', 'Statistics' ) ); ?></h2>
+		  <?php endif; ?>
+		  <?php if ( get_option( 'counter_section_description' ) ) : ?>
+		  <p><?php echo esc_html( get_option( 'counter_section_description', 'Our achievements and milestones' ) ); ?></p>
+		  <?php endif; ?>
+		</div>
+		<?php endif; ?>
+
 		<div class="stats-wrapper">
 		  <div class="stats-item" data-aos="zoom-in" data-aos-delay="150">
 			<div class="icon-wrapper">
-			  <i class="bi bi-emoji-smile"></i>
+			  <i class="<?php echo esc_attr( get_option( 'counter_1_icon', 'bi bi-emoji-smile' ) ); ?>"></i>
 			</div>
-			<span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-			<p>Happy Clients</p>
+			<span data-purecounter-start="0" data-purecounter-end="<?php echo esc_attr( get_option( 'counter_1_number', '232' ) ); ?>" data-purecounter-duration="1" class="purecounter"></span>
+			<p><?php echo esc_html( get_option( 'counter_1_label', 'Happy Clients' ) ); ?></p>
 		  </div><!-- End Stats Item -->
 
 		  <div class="stats-item" data-aos="zoom-in" data-aos-delay="200">
 			<div class="icon-wrapper">
-			  <i class="bi bi-journal-richtext"></i>
+			  <i class="<?php echo esc_attr( get_option( 'counter_2_icon', 'bi bi-journal-richtext' ) ); ?>"></i>
 			</div>
-			<span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-			<p>Projects</p>
+			<span data-purecounter-start="0" data-purecounter-end="<?php echo esc_attr( get_option( 'counter_2_number', '521' ) ); ?>" data-purecounter-duration="1" class="purecounter"></span>
+			<p><?php echo esc_html( get_option( 'counter_2_label', 'Projects' ) ); ?></p>
 		  </div><!-- End Stats Item -->
 
 		  <div class="stats-item" data-aos="zoom-in" data-aos-delay="250">
 			<div class="icon-wrapper">
-			  <i class="bi bi-headset"></i>
+			  <i class="<?php echo esc_attr( get_option( 'counter_3_icon', 'bi bi-headset' ) ); ?>"></i>
 			</div>
-			<span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-			<p>Hours Of Support</p>
+			<span data-purecounter-start="0" data-purecounter-end="<?php echo esc_attr( get_option( 'counter_3_number', '1463' ) ); ?>" data-purecounter-duration="1" class="purecounter"></span>
+			<p><?php echo esc_html( get_option( 'counter_3_label', 'Hours Of Support' ) ); ?></p>
 		  </div><!-- End Stats Item -->
 
 		  <div class="stats-item" data-aos="zoom-in" data-aos-delay="300">
 			<div class="icon-wrapper">
-			  <i class="bi bi-people"></i>
+			  <i class="<?php echo esc_attr( get_option( 'counter_4_icon', 'bi bi-people' ) ); ?>"></i>
 			</div>
-			<span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-			<p>Hard Workers</p>
+			<span data-purecounter-start="0" data-purecounter-end="<?php echo esc_attr( get_option( 'counter_4_number', '15' ) ); ?>" data-purecounter-duration="1" class="purecounter"></span>
+			<p><?php echo esc_html( get_option( 'counter_4_label', 'Hard Workers' ) ); ?></p>
 		  </div><!-- End Stats Item -->
 		</div>
 	  </div>
