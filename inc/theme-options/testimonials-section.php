@@ -33,7 +33,7 @@ function portfolio_testimonials_tab_content() {
 		<!-- Testimonial 1 -->
 		<tr>
 			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Testimonial 1</h3>
+				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd; color: #0073aa;">Testimonial 1</h3>
 			</th>
 		</tr>
 		<tr>
@@ -65,11 +65,22 @@ function portfolio_testimonials_tab_content() {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="testimonial_1_image">Client Image URL</label>
+				<label for="testimonial_1_image">Client Image</label>
 			</th>
 			<td>
-				<input type="url" id="testimonial_1_image" name="testimonial_1_image" value="<?php echo esc_url( get_option( 'testimonial_1_image', get_template_directory_uri() . '/assets/img/person/person-f-7.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the client image</p>
+				<div class="image-upload-field">
+					<input type="hidden" id="testimonial_1_image" name="testimonial_1_image" value="<?php echo esc_url( get_option( 'testimonial_1_image', get_template_directory_uri() . '/assets/img/person/person-f-7.webp' ) ); ?>">
+					<div class="image-preview">
+						<?php 
+						$image_url = get_option( 'testimonial_1_image', get_template_directory_uri() . '/assets/img/person/person-f-7.webp' );
+						if ( $image_url ) : ?>
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="Client Image 1" style="max-width: 100px; height: auto; border: 2px solid #ddd; border-radius: 5px; padding: 5px;">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button upload-image" data-target="testimonial_1_image">Upload Image</button>
+					<button type="button" class="button remove-image" data-target="testimonial_1_image" <?php echo empty( $image_url ) ? 'style="display:none;"' : ''; ?>>Remove Image</button>
+					<p class="description">Upload client image (recommended: 150x150px, square format)</p>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -86,7 +97,7 @@ function portfolio_testimonials_tab_content() {
 		<!-- Testimonial 2 -->
 		<tr>
 			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Testimonial 2</h3>
+				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd; color: #0073aa;">Testimonial 2</h3>
 			</th>
 		</tr>
 		<tr>
@@ -118,11 +129,22 @@ function portfolio_testimonials_tab_content() {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="testimonial_2_image">Client Image URL</label>
+				<label for="testimonial_2_image">Client Image</label>
 			</th>
 			<td>
-				<input type="url" id="testimonial_2_image" name="testimonial_2_image" value="<?php echo esc_url( get_option( 'testimonial_2_image', get_template_directory_uri() . '/assets/img/person/person-m-7.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the client image</p>
+				<div class="image-upload-field">
+					<input type="hidden" id="testimonial_2_image" name="testimonial_2_image" value="<?php echo esc_url( get_option( 'testimonial_2_image', get_template_directory_uri() . '/assets/img/person/person-m-7.webp' ) ); ?>">
+					<div class="image-preview">
+						<?php 
+						$image_url = get_option( 'testimonial_2_image', get_template_directory_uri() . '/assets/img/person/person-m-7.webp' );
+						if ( $image_url ) : ?>
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="Client Image 2" style="max-width: 100px; height: auto; border: 2px solid #ddd; border-radius: 5px; padding: 5px;">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button upload-image" data-target="testimonial_2_image">Upload Image</button>
+					<button type="button" class="button remove-image" data-target="testimonial_2_image" <?php echo empty( $image_url ) ? 'style="display:none;"' : ''; ?>>Remove Image</button>
+					<p class="description">Upload client image (recommended: 150x150px, square format)</p>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -139,7 +161,7 @@ function portfolio_testimonials_tab_content() {
 		<!-- Testimonial 3 -->
 		<tr>
 			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Testimonial 3</h3>
+				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd; color: #0073aa;">Testimonial 3</h3>
 			</th>
 		</tr>
 		<tr>
@@ -171,11 +193,22 @@ function portfolio_testimonials_tab_content() {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="testimonial_3_image">Client Image URL</label>
+				<label for="testimonial_3_image">Client Image</label>
 			</th>
 			<td>
-				<input type="url" id="testimonial_3_image" name="testimonial_3_image" value="<?php echo esc_url( get_option( 'testimonial_3_image', get_template_directory_uri() . '/assets/img/person/person-f-8.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the client image</p>
+				<div class="image-upload-field">
+					<input type="hidden" id="testimonial_3_image" name="testimonial_3_image" value="<?php echo esc_url( get_option( 'testimonial_3_image', get_template_directory_uri() . '/assets/img/person/person-f-8.webp' ) ); ?>">
+					<div class="image-preview">
+						<?php 
+						$image_url = get_option( 'testimonial_3_image', get_template_directory_uri() . '/assets/img/person/person-f-8.webp' );
+						if ( $image_url ) : ?>
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="Client Image 3" style="max-width: 100px; height: auto; border: 2px solid #ddd; border-radius: 5px; padding: 5px;">
+						</div>
+						<?php endif; ?>
+					<button type="button" class="button upload-image" data-target="testimonial_3_image">Upload Image</button>
+					<button type="button" class="button remove-image" data-target="testimonial_3_image" <?php echo empty( $image_url ) ? 'style="display:none;"' : ''; ?>>Remove Image</button>
+					<p class="description">Upload client image (recommended: 150x150px, square format)</p>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -192,7 +225,7 @@ function portfolio_testimonials_tab_content() {
 		<!-- Testimonial 4 -->
 		<tr>
 			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Testimonial 4</h3>
+				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd; color: #0073aa;">Testimonial 4</h3>
 			</th>
 		</tr>
 		<tr>
@@ -224,11 +257,22 @@ function portfolio_testimonials_tab_content() {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="testimonial_4_image">Client Image URL</label>
+				<label for="testimonial_4_image">Client Image</label>
 			</th>
 			<td>
-				<input type="url" id="testimonial_4_image" name="testimonial_4_image" value="<?php echo esc_url( get_option( 'testimonial_4_image', get_template_directory_uri() . '/assets/img/person/person-m-8.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the client image</p>
+				<div class="image-upload-field">
+					<input type="hidden" id="testimonial_4_image" name="testimonial_4_image" value="<?php echo esc_url( get_option( 'testimonial_4_image', get_template_directory_uri() . '/assets/img/person/person-m-8.webp' ) ); ?>">
+					<div class="image-preview">
+						<?php 
+						$image_url = get_option( 'testimonial_4_image', get_template_directory_uri() . '/assets/img/person/person-m-8.webp' );
+						if ( $image_url ) : ?>
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="Client Image 4" style="max-width: 100px; height: auto; border: 2px solid #ddd; border-radius: 5px; padding: 5px;">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button upload-image" data-target="testimonial_4_image">Upload Image</button>
+					<button type="button" class="button remove-image" data-target="testimonial_4_image" <?php echo empty( $image_url ) ? 'style="display:none;"' : ''; ?>>Remove Image</button>
+					<p class="description">Upload client image (recommended: 150x150px, square format)</p>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -245,7 +289,7 @@ function portfolio_testimonials_tab_content() {
 		<!-- Testimonial 5 -->
 		<tr>
 			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Testimonial 5</h3>
+				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd; color: #0073aa;">Testimonial 5</h3>
 			</th>
 		</tr>
 		<tr>
@@ -277,11 +321,22 @@ function portfolio_testimonials_tab_content() {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="testimonial_5_image">Client Image URL</label>
+				<label for="testimonial_5_image">Client Image</label>
 			</th>
 			<td>
-				<input type="url" id="testimonial_5_image" name="testimonial_5_image" value="<?php echo esc_url( get_option( 'testimonial_5_image', get_template_directory_uri() . '/assets/img/person/person-f-9.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the client image</p>
+				<div class="image-upload-field">
+					<input type="hidden" id="testimonial_5_image" name="testimonial_5_image" value="<?php echo esc_url( get_option( 'testimonial_5_image', get_template_directory_uri() . '/assets/img/person/person-f-9.webp' ) ); ?>">
+					<div class="image-preview">
+						<?php 
+						$image_url = get_option( 'testimonial_5_image', get_template_directory_uri() . '/assets/img/person/person-f-9.webp' );
+						if ( $image_url ) : ?>
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="Client Image 5" style="max-width: 100px; height: auto; border: 2px solid #ddd; border-radius: 5px; padding: 5px;">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button upload-image" data-target="testimonial_5_image">Upload Image</button>
+					<button type="button" class="button remove-image" data-target="testimonial_5_image" <?php echo empty( $image_url ) ? 'style="display:none;"' : ''; ?>>Remove Image</button>
+					<p class="description">Upload client image (recommended: 150x150px, square format)</p>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -298,7 +353,7 @@ function portfolio_testimonials_tab_content() {
 		<!-- Testimonial 6 -->
 		<tr>
 			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Testimonial 6</h3>
+				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd; color: #0073aa;">Testimonial 6</h3>
 			</th>
 		</tr>
 		<tr>
@@ -330,11 +385,22 @@ function portfolio_testimonials_tab_content() {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="testimonial_6_image">Client Image URL</label>
+				<label for="testimonial_6_image">Client Image</label>
 			</th>
 			<td>
-				<input type="url" id="testimonial_6_image" name="testimonial_6_image" value="<?php echo esc_url( get_option( 'testimonial_6_image', get_template_directory_uri() . '/assets/img/person/person-m-13.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the client image</p>
+				<div class="image-upload-field">
+					<input type="hidden" id="testimonial_6_image" name="testimonial_6_image" value="<?php echo esc_url( get_option( 'testimonial_6_image', get_template_directory_uri() . '/assets/img/person/person-m-13.webp' ) ); ?>">
+					<div class="image-preview">
+						<?php 
+						$image_url = get_option( 'testimonial_6_image', get_template_directory_uri() . '/assets/img/person/person-m-13.webp' );
+						if ( $image_url ) : ?>
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="Client Image 6" style="max-width: 100px; height: auto; border: 2px solid #ddd; border-radius: 5px; padding: 5px;">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button upload-image" data-target="testimonial_6_image">Upload Image</button>
+					<button type="button" class="button remove-image" data-target="testimonial_6_image" <?php echo empty( $image_url ) ? 'style="display:none;"' : ''; ?>>Remove Image</button>
+					<p class="description">Upload client image (recommended: 150x150px, square format)</p>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -348,6 +414,66 @@ function portfolio_testimonials_tab_content() {
 			</td>
 		</tr>
 	</table>
+
+	<style>
+	.image-upload-field {
+		margin: 10px 0;
+	}
+	.image-preview {
+		margin: 10px 0;
+		padding: 10px;
+		background: #f9f9f9;
+		border-radius: 5px;
+		display: inline-block;
+	}
+	.upload-image, .remove-image {
+		margin-right: 10px;
+	}
+	</style>
+
+	<script>
+	jQuery(document).ready(function($) {
+		// Image upload functionality
+		$('.upload-image').on('click', function(e) {
+			e.preventDefault();
+			var target = $(this).data('target');
+			var button = $(this);
+			var removeButton = $('.remove-image[data-target="' + target + '"]');
+			var preview = button.siblings('.image-preview');
+			var input = $('#' + target);
+			
+			var frame = wp.media({
+				title: 'Select or Upload Image',
+				button: {
+					text: 'Use this image'
+				},
+				multiple: false
+			});
+			
+			frame.on('select', function() {
+				var attachment = frame.state().get('selection').first().toJSON();
+				input.val(attachment.url);
+				preview.html('<img src="' + attachment.url + '" alt="Preview" style="max-width: 100px; height: auto; border: 2px solid #ddd; border-radius: 5px; padding: 5px;">');
+				removeButton.show();
+			});
+			
+			frame.open();
+		});
+		
+		// Remove image functionality
+		$('.remove-image').on('click', function(e) {
+			e.preventDefault();
+			var target = $(this).data('target');
+			var button = $(this);
+			var preview = button.siblings('.image-preview');
+			var input = $('#' + target);
+			
+			input.val('');
+			preview.empty();
+			button.hide();
+		});
+	});
+	</script>
 	<?php
 }
 
