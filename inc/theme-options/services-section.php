@@ -78,8 +78,8 @@ function portfolio_services_tab_content() {
 				<label for="services_header_button_url">Header Button URL</label>
 			</th>
 			<td>
-				<input type="url" id="services_header_button_url" name="services_header_button_url" value="<?php echo esc_url( get_option( 'services_header_button_url', 'services.html' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL for the header button</p>
+				<input type="text" id="services_header_button_url" name="services_header_button_url" value="<?php echo esc_url( get_option( 'services_header_button_url', 'services.html' ) ); ?>" class="regular-text">
+				<p class="description">Enter the URL for the header button (can be relative URL, anchor link like #contact, or full URL)</p>
 			</td>
 		</tr>
 
@@ -141,8 +141,8 @@ function portfolio_services_tab_content() {
 				<label for="service_1_url">Service URL</label>
 			</th>
 			<td>
-				<input type="url" id="service_1_url" name="service_1_url" value="<?php echo esc_url( get_option( 'service_1_url', 'service-details.html' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL for the service details page</p>
+				<input type="text" id="service_1_url" name="service_1_url" value="<?php echo esc_url( get_option( 'service_1_url', 'service-details.html' ) ); ?>" class="regular-text">
+				<p class="description">Enter the URL for the service details page (can be relative URL, anchor link, or full URL)</p>
 			</td>
 		</tr>
 
@@ -204,8 +204,8 @@ function portfolio_services_tab_content() {
 				<label for="service_2_url">Service URL</label>
 			</th>
 			<td>
-				<input type="url" id="service_2_url" name="service_2_url" value="<?php echo esc_url( get_option( 'service_2_url', 'service-details.html' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL for the service details page</p>
+				<input type="text" id="service_2_url" name="service_2_url" value="<?php echo esc_url( get_option( 'service_2_url', 'service-details.html' ) ); ?>" class="regular-text">
+				<p class="description">Enter the URL for the service details page (can be relative URL, anchor link, or full URL)</p>
 			</td>
 		</tr>
 
@@ -267,8 +267,8 @@ function portfolio_services_tab_content() {
 				<label for="service_3_url">Service URL</label>
 			</th>
 			<td>
-				<input type="url" id="service_3_url" name="service_3_url" value="<?php echo esc_url( get_option( 'service_3_url', 'service-details.html' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL for the service details page</p>
+				<input type="text" id="service_3_url" name="service_3_url" value="<?php echo esc_url( get_option( 'service_3_url', 'service-details.html' ) ); ?>" class="regular-text">
+				<p class="description">Enter the URL for the service details page (can be relative URL, anchor link, or full URL)</p>
 			</td>
 		</tr>
 
@@ -330,8 +330,8 @@ function portfolio_services_tab_content() {
 				<label for="service_4_url">Service URL</label>
 			</th>
 			<td>
-				<input type="url" id="service_4_url" name="service_4_url" value="<?php echo esc_url( get_option( 'service_4_url', 'service-details.html' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL for the service details page</p>
+				<input type="text" id="service_4_url" name="service_4_url" value="<?php echo esc_url( get_option( 'service_4_url', 'service-details.html' ) ); ?>" class="regular-text">
+				<p class="description">Enter the URL for the service details page (can be relative URL, anchor link, or full URL)</p>
 			</td>
 		</tr>
 
@@ -393,8 +393,8 @@ function portfolio_services_tab_content() {
 				<label for="service_5_url">Service URL</label>
 			</th>
 			<td>
-				<input type="url" id="service_5_url" name="service_5_url" value="<?php echo esc_url( get_option( 'service_5_url', 'service-details.html' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL for the service details page</p>
+				<input type="text" id="service_5_url" name="service_5_url" value="<?php echo esc_url( get_option( 'service_5_url', 'service-details.html' ) ); ?>" class="regular-text">
+				<p class="description">Enter the URL for the service details page (can be relative URL, anchor link, or full URL)</p>
 			</td>
 		</tr>
 
@@ -456,8 +456,8 @@ function portfolio_services_tab_content() {
 				<label for="service_6_url">Service URL</label>
 			</th>
 			<td>
-				<input type="url" id="service_6_url" name="service_6_url" value="<?php echo esc_url( get_option( 'service_6_url', 'service-details.html' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL for the service details page</p>
+				<input type="text" id="service_6_url" name="service_6_url" value="<?php echo esc_url( get_option( 'service_6_url', 'service-details.html' ) ); ?>" class="regular-text">
+				<p class="description">Enter the URL for the service details page (can be relative URL, anchor link, or full URL)</p>
 			</td>
 		</tr>
 	</table>
@@ -519,6 +519,89 @@ function portfolio_services_tab_content() {
 			preview.empty();
 			button.hide();
 		});
+
+		// URL validation for service URLs
+		$('input[name*="_url"]').on('blur', function() {
+			var url = $(this).val().trim();
+			var field = $(this);
+			
+			// Remove any existing validation messages
+			field.siblings('.url-validation-message').remove();
+			
+			if (url !== '') {
+				// Allow various URL formats
+				var isValid = false;
+				
+				// Check if it's an anchor link
+				if (url.startsWith('#')) {
+					isValid = true;
+				}
+				// Check if it's a relative URL
+				else if (url.startsWith('/') || url.startsWith('./') || url.startsWith('../')) {
+					isValid = true;
+				}
+				// Check if it's a valid full URL
+				else if (url.match(/^https?:\/\/.+/)) {
+					isValid = true;
+				}
+				// Check if it's a relative file path (like .html files)
+				else if (url.match(/^[a-zA-Z0-9\-_\/\.]+$/)) {
+					isValid = true;
+				}
+				
+				if (isValid) {
+					field.css('border-color', '#46b450');
+					field.after('<span class="url-validation-message" style="color: #46b450; font-size: 12px; margin-left: 10px;">✓ Valid URL format</span>');
+				} else {
+					field.css('border-color', '#dc3232');
+					field.after('<span class="url-validation-message" style="color: #dc3232; font-size: 12px; margin-left: 10px;">⚠ Please enter a valid URL, relative path, or anchor link</span>');
+				}
+			} else {
+				field.css('border-color', '');
+			}
+		});
+
+		// Form submission validation
+		$('form').on('submit', function(e) {
+			var hasErrors = false;
+			var urlFields = $('input[name*="_url"]');
+			
+			urlFields.each(function() {
+				var url = $(this).val().trim();
+				if (url !== '') {
+					var isValid = false;
+					
+					// Check if it's an anchor link
+					if (url.startsWith('#')) {
+						isValid = true;
+					}
+					// Check if it's a relative URL
+					else if (url.startsWith('/') || url.startsWith('./') || url.startsWith('../')) {
+						isValid = true;
+					}
+					// Check if it's a valid full URL
+					else if (url.match(/^https?:\/\/.+/)) {
+						isValid = true;
+					}
+					// Check if it's a relative file path (like .html files)
+					else if (url.match(/^[a-zA-Z0-9\-_\/\.]+$/)) {
+						isValid = true;
+					}
+					
+					if (!isValid) {
+						hasErrors = true;
+						$(this).css('border-color', '#dc3232');
+						$(this).focus();
+					}
+				}
+			});
+			
+			if (hasErrors) {
+				e.preventDefault();
+				alert('Please fix the URL validation errors before submitting the form.');
+				return false;
+			}
+		});
 	});
 	</script>
 	<?php
@@ -550,7 +633,13 @@ function portfolio_save_services_options() {
 		update_option( 'services_header_button_text', sanitize_text_field( $_POST['services_header_button_text'] ) );
 	}
 	if ( isset( $_POST['services_header_button_url'] ) ) {
-		update_option( 'services_header_button_url', esc_url_raw( $_POST['services_header_button_url'] ) );
+		$url = sanitize_text_field( $_POST['services_header_button_url'] );
+		// Allow relative URLs, anchor links, and full URLs
+		if ( !empty($url) && (strpos($url, '#') === 0 || strpos($url, '/') === 0 || filter_var($url, FILTER_VALIDATE_URL) || strpos($url, '.html') !== false) ) {
+			update_option( 'services_header_button_url', $url );
+		} else {
+			update_option( 'services_header_button_url', esc_url_raw( $url ) );
+		}
 	}
 
 	// Service 1
@@ -567,7 +656,13 @@ function portfolio_save_services_options() {
 		update_option( 'service_1_icon', esc_url_raw( $_POST['service_1_icon'] ) );
 	}
 	if ( isset( $_POST['service_1_url'] ) ) {
-		update_option( 'service_1_url', esc_url_raw( $_POST['service_1_url'] ) );
+		$url = sanitize_text_field( $_POST['service_1_url'] );
+		// Allow relative URLs, anchor links, and full URLs
+		if ( !empty($url) && (strpos($url, '#') === 0 || strpos($url, '/') === 0 || filter_var($url, FILTER_VALIDATE_URL) || strpos($url, '.html') !== false) ) {
+			update_option( 'service_1_url', $url );
+		} else {
+			update_option( 'service_1_url', esc_url_raw( $url ) );
+		}
 	}
 
 	// Service 2
@@ -584,7 +679,13 @@ function portfolio_save_services_options() {
 		update_option( 'service_2_icon', esc_url_raw( $_POST['service_2_icon'] ) );
 	}
 	if ( isset( $_POST['service_2_url'] ) ) {
-		update_option( 'service_2_url', esc_url_raw( $_POST['service_2_url'] ) );
+		$url = sanitize_text_field( $_POST['service_2_url'] );
+		// Allow relative URLs, anchor links, and full URLs
+		if ( !empty($url) && (strpos($url, '#') === 0 || strpos($url, '/') === 0 || filter_var($url, FILTER_VALIDATE_URL) || strpos($url, '.html') !== false) ) {
+			update_option( 'service_2_url', $url );
+		} else {
+			update_option( 'service_2_url', esc_url_raw( $url ) );
+		}
 	}
 
 	// Service 3
@@ -601,7 +702,13 @@ function portfolio_save_services_options() {
 		update_option( 'service_3_icon', esc_url_raw( $_POST['service_3_icon'] ) );
 	}
 	if ( isset( $_POST['service_3_url'] ) ) {
-		update_option( 'service_3_url', esc_url_raw( $_POST['service_3_url'] ) );
+		$url = sanitize_text_field( $_POST['service_3_url'] );
+		// Allow relative URLs, anchor links, and full URLs
+		if ( !empty($url) && (strpos($url, '#') === 0 || strpos($url, '/') === 0 || filter_var($url, FILTER_VALIDATE_URL) || strpos($url, '.html') !== false) ) {
+			update_option( 'service_3_url', $url );
+		} else {
+			update_option( 'service_3_url', esc_url_raw( $url ) );
+		}
 	}
 
 	// Service 4
@@ -618,7 +725,13 @@ function portfolio_save_services_options() {
 		update_option( 'service_4_icon', esc_url_raw( $_POST['service_4_icon'] ) );
 	}
 	if ( isset( $_POST['service_4_url'] ) ) {
-		update_option( 'service_4_url', esc_url_raw( $_POST['service_4_url'] ) );
+		$url = sanitize_text_field( $_POST['service_4_url'] );
+		// Allow relative URLs, anchor links, and full URLs
+		if ( !empty($url) && (strpos($url, '#') === 0 || strpos($url, '/') === 0 || filter_var($url, FILTER_VALIDATE_URL) || strpos($url, '.html') !== false) ) {
+			update_option( 'service_4_url', $url );
+		} else {
+			update_option( 'service_4_url', esc_url_raw( $url ) );
+		}
 	}
 
 	// Service 5
@@ -635,7 +748,13 @@ function portfolio_save_services_options() {
 		update_option( 'service_5_icon', esc_url_raw( $_POST['service_5_icon'] ) );
 	}
 	if ( isset( $_POST['service_5_url'] ) ) {
-		update_option( 'service_5_url', esc_url_raw( $_POST['service_5_url'] ) );
+		$url = sanitize_text_field( $_POST['service_5_url'] );
+		// Allow relative URLs, anchor links, and full URLs
+		if ( !empty($url) && (strpos($url, '#') === 0 || strpos($url, '/') === 0 || filter_var($url, FILTER_VALIDATE_URL) || strpos($url, '.html') !== false) ) {
+			update_option( 'service_5_url', $url );
+		} else {
+			update_option( 'service_5_url', esc_url_raw( $url ) );
+		}
 	}
 
 	// Service 6
@@ -652,6 +771,12 @@ function portfolio_save_services_options() {
 		update_option( 'service_6_icon', esc_url_raw( $_POST['service_6_icon'] ) );
 	}
 	if ( isset( $_POST['service_6_url'] ) ) {
-		update_option( 'service_6_url', esc_url_raw( $_POST['service_6_url'] ) );
+		$url = sanitize_text_field( $_POST['service_6_url'] );
+		// Allow relative URLs, anchor links, and full URLs
+		if ( !empty($url) && (strpos($url, '#') === 0 || strpos($url, '/') === 0 || filter_var($url, FILTER_VALIDATE_URL) || strpos($url, '.html') !== false) ) {
+			update_option( 'service_6_url', $url );
+		} else {
+			update_option( 'service_6_url', esc_url_raw( $url ) );
+		}
 	}
 } 
