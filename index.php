@@ -459,8 +459,8 @@ get_header();
 
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-	<h2>Resume</h2>
-	<p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+	<h2><?php echo esc_html( get_option( 'resume_section_title', 'Resume' ) ); ?></h2>
+	<p><?php echo esc_html( get_option( 'resume_section_description', 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.' ) ); ?></p>
   </div><!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -470,61 +470,97 @@ get_header();
 	  <div class="col-lg-4">
 		<div class="resume-side" data-aos="fade-right" data-aos-delay="100">
 		  <div class="profile-img mb-4">
-			<img src="<?php echo get_template_directory_uri(); ?>/assets/img/profile/profile-square-2.webp" alt="Profile" class="img-fluid rounded">
+			<?php 
+			$profile_image = get_option( 'resume_profile_image', get_template_directory_uri() . '/assets/img/profile/profile-square-2.webp' );
+			if ( ! empty( $profile_image ) ) : ?>
+				<img src="<?php echo esc_url( $profile_image ); ?>" alt="Profile" class="img-fluid rounded">
+			<?php endif; ?>
 		  </div>
 
 		  <h3>Professional Summary</h3>
-		  <p>Driven software architect with expertise in developing scalable, high-performance enterprise solutions. Passionate about leveraging cutting-edge technologies to solve complex business challenges.</p>
+		  <p><?php echo esc_html( get_option( 'resume_professional_summary', 'Driven software architect with expertise in developing scalable, high-performance enterprise solutions. Passionate about leveraging cutting-edge technologies to solve complex business challenges.' ) ); ?></p>
 
 		  <h3 class="mt-4">Contact Information</h3>
 		  <ul class="contact-info list-unstyled">
-			<li><i class="bi bi-geo-alt"></i> 742 Evergreen Terrace, Springfield, MA 02101</li>
-			<li><i class="bi bi-envelope"></i> contact@example.com</li>
-			<li><i class="bi bi-phone"></i> +1 (555) 123-4567</li>
-			<li><i class="bi bi-linkedin"></i> linkedin.com/in/example</li>
+			<?php if ( get_option( 'resume_address' ) ) : ?>
+				<li><i class="bi bi-geo-alt"></i> <?php echo esc_html( get_option( 'resume_address' ) ); ?></li>
+			<?php endif; ?>
+			<?php if ( get_option( 'resume_email' ) ) : ?>
+				<li><i class="bi bi-envelope"></i> <?php echo esc_html( get_option( 'resume_email' ) ); ?></li>
+			<?php endif; ?>
+			<?php if ( get_option( 'resume_phone' ) ) : ?>
+				<li><i class="bi bi-phone"></i> <?php echo esc_html( get_option( 'resume_phone' ) ); ?></li>
+			<?php endif; ?>
+			<?php if ( get_option( 'resume_linkedin' ) ) : ?>
+				<li><i class="bi bi-linkedin"></i> <?php echo esc_html( get_option( 'resume_linkedin' ) ); ?></li>
+			<?php endif; ?>
 		  </ul>
 
 		  <div class="skills-animation mt-4">
 			<h3>Technical Skills</h3>
+			<?php
+			// Technical Skill 1
+			$skill_1_name = get_option( 'resume_skill_1_name', 'Web Development' );
+			$skill_1_percentage = get_option( 'resume_skill_1_percentage', '95' );
+			if ( ! empty( $skill_1_name ) && ! empty( $skill_1_percentage ) ) : ?>
 			<div class="skill-item">
 			  <div class="d-flex justify-content-between">
-				<span>Web Development</span>
-				<span>95%</span>
+				<span><?php echo esc_html( $skill_1_name ); ?></span>
+				<span><?php echo esc_html( $skill_1_percentage ); ?>%</span>
 			  </div>
 			  <div class="progress">
-				<div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo esc_attr( $skill_1_percentage ); ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			  </div>
 			</div>
+			<?php endif; ?>
 
+			<?php
+			// Technical Skill 2
+			$skill_2_name = get_option( 'resume_skill_2_name', 'UI/UX Design' );
+			$skill_2_percentage = get_option( 'resume_skill_2_percentage', '85' );
+			if ( ! empty( $skill_2_name ) && ! empty( $skill_2_percentage ) ) : ?>
 			<div class="skill-item">
 			  <div class="d-flex justify-content-between">
-				<span>UI/UX Design</span>
-				<span>85%</span>
+				<span><?php echo esc_html( $skill_2_name ); ?></span>
+				<span><?php echo esc_html( $skill_2_percentage ); ?>%</span>
 			  </div>
 			  <div class="progress">
-				<div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo esc_attr( $skill_2_percentage ); ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			  </div>
 			</div>
+			<?php endif; ?>
 
+			<?php
+			// Technical Skill 3
+			$skill_3_name = get_option( 'resume_skill_3_name', 'Cloud Architecture' );
+			$skill_3_percentage = get_option( 'resume_skill_3_percentage', '90' );
+			if ( ! empty( $skill_3_name ) && ! empty( $skill_3_percentage ) ) : ?>
 			<div class="skill-item">
 			  <div class="d-flex justify-content-between">
-				<span>Cloud Architecture</span>
-				<span>90%</span>
+				<span><?php echo esc_html( $skill_3_name ); ?></span>
+				<span><?php echo esc_html( $skill_3_percentage ); ?>%</span>
 			  </div>
 			  <div class="progress">
-				<div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo esc_attr( $skill_3_percentage ); ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			  </div>
 			</div>
+			<?php endif; ?>
 
+			<?php
+			// Technical Skill 4
+			$skill_4_name = get_option( 'resume_skill_4_name', 'Project Management' );
+			$skill_4_percentage = get_option( 'resume_skill_4_percentage', '80' );
+			if ( ! empty( $skill_4_name ) && ! empty( $skill_4_percentage ) ) : ?>
 			<div class="skill-item">
 			  <div class="d-flex justify-content-between">
-				<span>Project Management</span>
-				<span>80%</span>
+				<span><?php echo esc_html( $skill_4_name ); ?></span>
+				<span><?php echo esc_html( $skill_4_percentage ); ?>%</span>
 			  </div>
 			  <div class="progress">
-				<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+				<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo esc_attr( $skill_4_percentage ); ?>" aria-valuemin="0" aria-valuemax="100"></div>
 			  </div>
 			</div>
+			<?php endif; ?>
 		  </div>
 		</div>
 	  </div>
@@ -535,63 +571,123 @@ get_header();
 		<div class="resume-section" data-aos="fade-up">
 		  <h3><i class="bi bi-briefcase me-2"></i>Professional Experience</h3>
 
+		  <?php
+		  // Experience 1
+		  $exp_1_title = get_option( 'resume_experience_1_title', 'Senior Software Architect' );
+		  $exp_1_period = get_option( 'resume_experience_1_period', '2022 - Present' );
+		  $exp_1_company = get_option( 'resume_experience_1_company', 'Tech Innovations Inc.' );
+		  $exp_1_description = get_option( 'resume_experience_1_description', 'Lead the architectural design and implementation of enterprise-scale applications. Mentor team of 12 developers and establish technical best practices. Drive adoption of microservices architecture and cloud-native solutions. Reduce system downtime by 75% through improved architecture and monitoring.' );
+		  
+		  if ( ! empty( $exp_1_title ) && ! empty( $exp_1_company ) ) : ?>
 		  <div class="resume-item">
-			<h4>Senior Software Architect</h4>
-			<h5>2022 - Present</h5>
-			<p class="company"><i class="bi bi-building"></i> Tech Innovations Inc.</p>
-			<ul>
-			  <li>Lead the architectural design and implementation of enterprise-scale applications</li>
-			  <li>Mentor team of 12 developers and establish technical best practices</li>
-			  <li>Drive adoption of microservices architecture and cloud-native solutions</li>
-			  <li>Reduce system downtime by 75% through improved architecture and monitoring</li>
-			</ul>
+			<h4><?php echo esc_html( $exp_1_title ); ?></h4>
+			<?php if ( ! empty( $exp_1_period ) ) : ?>
+				<h5><?php echo esc_html( $exp_1_period ); ?></h5>
+			<?php endif; ?>
+			<p class="company"><i class="bi bi-building"></i> <?php echo esc_html( $exp_1_company ); ?></p>
+			<?php if ( ! empty( $exp_1_description ) ) : ?>
+				<p><?php echo esc_html( $exp_1_description ); ?></p>
+			<?php endif; ?>
 		  </div>
+		  <?php endif; ?>
 
+		  <?php
+		  // Experience 2
+		  $exp_2_title = get_option( 'resume_experience_2_title', 'Lead Developer' );
+		  $exp_2_period = get_option( 'resume_experience_2_period', '2019 - 2022' );
+		  $exp_2_company = get_option( 'resume_experience_2_company', 'Digital Solutions Corp.' );
+		  $exp_2_description = get_option( 'resume_experience_2_description', 'Spearheaded development of company\'s flagship product reaching 1M+ users. Implemented CI/CD pipeline reducing deployment time by 60%. Managed team of 8 developers across multiple projects. Increased code test coverage from 45% to 90%.' );
+		  
+		  if ( ! empty( $exp_2_title ) && ! empty( $exp_2_company ) ) : ?>
 		  <div class="resume-item">
-			<h4>Lead Developer</h4>
-			<h5>2019 - 2022</h5>
-			<p class="company"><i class="bi bi-building"></i> Digital Solutions Corp.</p>
-			<ul>
-			  <li>Spearheaded development of company's flagship product reaching 1M+ users</li>
-			  <li>Implemented CI/CD pipeline reducing deployment time by 60%</li>
-			  <li>Managed team of 8 developers across multiple projects</li>
-			  <li>Increased code test coverage from 45% to 90%</li>
-			</ul>
+			<h4><?php echo esc_html( $exp_2_title ); ?></h4>
+			<?php if ( ! empty( $exp_2_period ) ) : ?>
+				<h5><?php echo esc_html( $exp_2_period ); ?></h5>
+			<?php endif; ?>
+			<p class="company"><i class="bi bi-building"></i> <?php echo esc_html( $exp_2_company ); ?></p>
+			<?php if ( ! empty( $exp_2_description ) ) : ?>
+				<p><?php echo esc_html( $exp_2_description ); ?></p>
+			<?php endif; ?>
 		  </div>
+		  <?php endif; ?>
 		</div>
 
 		<!-- Education Section -->
 		<div class="resume-section" data-aos="fade-up" data-aos-delay="100">
 		  <h3><i class="bi bi-mortarboard me-2"></i>Education</h3>
 
+		  <?php
+		  // Education 1
+		  $edu_1_degree = get_option( 'resume_education_1_degree', 'Master of Science in Computer Science' );
+		  $edu_1_period = get_option( 'resume_education_1_period', '2017 - 2019' );
+		  $edu_1_school = get_option( 'resume_education_1_school', 'Stanford University' );
+		  $edu_1_description = get_option( 'resume_education_1_description', 'Specialized in Artificial Intelligence and Machine Learning. Graduated with honors.' );
+		  
+		  if ( ! empty( $edu_1_degree ) && ! empty( $edu_1_school ) ) : ?>
 		  <div class="resume-item">
-			<h4>Master of Science in Computer Science</h4>
-			<h5>2017 - 2019</h5>
-			<p class="company"><i class="bi bi-building"></i> Stanford University</p>
-			<p>Specialized in Artificial Intelligence and Machine Learning. Graduated with honors.</p>
+			<h4><?php echo esc_html( $edu_1_degree ); ?></h4>
+			<?php if ( ! empty( $edu_1_period ) ) : ?>
+				<h5><?php echo esc_html( $edu_1_period ); ?></h5>
+			<?php endif; ?>
+			<p class="company"><i class="bi bi-building"></i> <?php echo esc_html( $edu_1_school ); ?></p>
+			<?php if ( ! empty( $edu_1_description ) ) : ?>
+				<p><?php echo esc_html( $edu_1_description ); ?></p>
+			<?php endif; ?>
 		  </div>
+		  <?php endif; ?>
 
+		  <?php
+		  // Education 2
+		  $edu_2_degree = get_option( 'resume_education_2_degree', 'Bachelor of Science in Software Engineering' );
+		  $edu_2_period = get_option( 'resume_education_2_period', '2013 - 2017' );
+		  $edu_2_school = get_option( 'resume_education_2_school', 'MIT' );
+		  $edu_2_description = get_option( 'resume_education_2_description', 'Dean\'s List all semesters. Led university\'s coding club.' );
+		  
+		  if ( ! empty( $edu_2_degree ) && ! empty( $edu_2_school ) ) : ?>
 		  <div class="resume-item">
-			<h4>Bachelor of Science in Software Engineering</h4>
-			<h5>2013 - 2017</h5>
-			<p class="company"><i class="bi bi-building"></i> MIT</p>
-			<p>Dean's List all semesters. Led university's coding club.</p>
+			<h4><?php echo esc_html( $edu_2_degree ); ?></h4>
+			<?php if ( ! empty( $edu_2_period ) ) : ?>
+				<h5><?php echo esc_html( $edu_2_period ); ?></h5>
+			<?php endif; ?>
+			<p class="company"><i class="bi bi-building"></i> <?php echo esc_html( $edu_2_school ); ?></p>
+			<?php if ( ! empty( $edu_2_description ) ) : ?>
+				<p><?php echo esc_html( $edu_2_description ); ?></p>
+			<?php endif; ?>
 		  </div>
+		  <?php endif; ?>
 		</div>
 
 		<!-- Certifications Section -->
 		<div class="resume-section" data-aos="fade-up" data-aos-delay="200">
 		  <h3><i class="bi bi-award me-2"></i>Certifications</h3>
 
+		  <?php
+		  // Certification 1
+		  $cert_1_name = get_option( 'resume_certification_1_name', 'AWS Certified Solutions Architect - Professional' );
+		  $cert_1_year = get_option( 'resume_certification_1_year', '2023' );
+		  
+		  if ( ! empty( $cert_1_name ) ) : ?>
 		  <div class="resume-item">
-			<h4>AWS Certified Solutions Architect - Professional</h4>
-			<h5>2023</h5>
+			<h4><?php echo esc_html( $cert_1_name ); ?></h4>
+			<?php if ( ! empty( $cert_1_year ) ) : ?>
+				<h5><?php echo esc_html( $cert_1_year ); ?></h5>
+			<?php endif; ?>
 		  </div>
+		  <?php endif; ?>
 
+		  <?php
+		  // Certification 2
+		  $cert_2_name = get_option( 'resume_certification_2_name', 'Google Cloud Professional Architect' );
+		  $cert_2_year = get_option( 'resume_certification_2_year', '2022' );
+		  
+		  if ( ! empty( $cert_2_name ) ) : ?>
 		  <div class="resume-item">
-			<h4>Google Cloud Professional Architect</h4>
-			<h5>2022</h5>
+			<h4><?php echo esc_html( $cert_2_name ); ?></h4>
+			<?php if ( ! empty( $cert_2_year ) ) : ?>
+				<h5><?php echo esc_html( $cert_2_year ); ?></h5>
+			<?php endif; ?>
 		  </div>
+		  <?php endif; ?>
 		</div>
 	  </div>
 	</div>
@@ -605,8 +701,8 @@ get_header();
 
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-	<h2>Portfolio</h2>
-	<p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+	<h2><?php echo esc_html( get_option( 'portfolio_section_title', 'Portfolio' ) ); ?></h2>
+	<p><?php echo esc_html( get_option( 'portfolio_section_description', 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.' ) ); ?></p>
   </div><!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -617,11 +713,21 @@ get_header();
 		<div class="col-lg-3 filter-sidebar">
 		  <div class="filters-wrapper" data-aos="fade-right" data-aos-delay="150">
 			<ul class="portfolio-filters isotope-filters">
-			  <li data-filter="*" class="filter-active">All Projects</li>
-			  <li data-filter=".filter-photography">Photography</li>
-			  <li data-filter=".filter-design">Design</li>
-			  <li data-filter=".filter-automotive">Automotive</li>
-			  <li data-filter=".filter-nature">Nature</li>
+			  <?php
+			  $portfolio_categories = get_option( 'portfolio_categories', array(
+				  array( 'name' => 'Photography', 'slug' => 'photography' ),
+				  array( 'name' => 'Design', 'slug' => 'design' ),
+				  array( 'name' => 'Automotive', 'slug' => 'automotive' ),
+				  array( 'name' => 'Nature', 'slug' => 'nature' )
+			  ) );
+			  
+			  // First category is always "All Projects"
+			  if ( ! empty( $portfolio_categories ) ) : ?>
+				  <li data-filter="*" class="filter-active">All Projects</li>
+				  <?php foreach ( $portfolio_categories as $category ) : ?>
+					  <li data-filter=".filter-<?php echo esc_attr( $category['slug'] ); ?>"><?php echo esc_html( $category['name'] ); ?></li>
+				  <?php endforeach; ?>
+			  <?php endif; ?>
 			</ul>
 		  </div>
 		</div>
@@ -629,103 +735,123 @@ get_header();
 		<div class="col-lg-9">
 		  <div class="row gy-4 portfolio-container isotope-container" data-aos="fade-up" data-aos-delay="200">
 
-			<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-photography">
-			  <div class="portfolio-wrap">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-portrait-1.webp" class="img-fluid" alt="Portfolio Image" loading="lazy">
-				<div class="portfolio-info">
-				  <div class="content">
-					<span class="category">Photography</span>
-					<h4>Capturing Moments</h4>
-					<div class="portfolio-links">
-					  <a href="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-portrait-1.webp" class="glightbox" title="Capturing Moments"><i class="bi bi-plus-lg"></i></a>
-					  <a href="portfolio-details.html" title="More Details"><i class="bi bi-arrow-right"></i></a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div><!-- End Portfolio Item -->
-
-			<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-design">
-			  <div class="portfolio-wrap">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-2.webp" class="img-fluid" alt="Portfolio Image" loading="lazy">
-				<div class="portfolio-info">
-				  <div class="content">
-					<span class="category">Web Design</span>
-					<h4>Woodcraft Design</h4>
-					<div class="portfolio-links">
-					  <a href="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-2.webp" class="glightbox" title="Woodcraft Design"><i class="bi bi-plus-lg"></i></a>
-					  <a href="portfolio-details.html" title="More Details"><i class="bi bi-arrow-right"></i></a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div><!-- End Portfolio Item -->
-
-			<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-automotive">
-			  <div class="portfolio-wrap">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-portrait-2.webp" class="img-fluid" alt="Portfolio Image" loading="lazy">
-				<div class="portfolio-info">
-				  <div class="content">
-					<span class="category">Automotive</span>
-					<h4>Classic Beauty</h4>
-					<div class="portfolio-links">
-					  <a href="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-portrait-2.webp" class="glightbox" title="Classic Beauty"><i class="bi bi-plus-lg"></i></a>
-					  <a href="portfolio-details.html" title="More Details"><i class="bi bi-arrow-right"></i></a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div><!-- End Portfolio Item -->
-
-			<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-nature">
-			  <div class="portfolio-wrap">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-portrait-4.webp" class="img-fluid" alt="Portfolio Image" loading="lazy">
-				<div class="portfolio-info">
-				  <div class="content">
-					<span class="category">Nature</span>
-					<h4>Natural Growth</h4>
-					<div class="portfolio-links">
-					  <a href="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-portrait-4.webp" class="glightbox" title="Natural Growth"><i class="bi bi-plus-lg"></i></a>
-					  <a href="portfolio-details.html" title="More Details"><i class="bi bi-arrow-right"></i></a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div><!-- End Portfolio Item -->
-
-			<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-photography">
-			  <div class="portfolio-wrap">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-5.webp" class="img-fluid" alt="Portfolio Image" loading="lazy">
-				<div class="portfolio-info">
-				  <div class="content">
-					<span class="category">Photography</span>
-					<h4>Urban Stories</h4>
-					<div class="portfolio-links">
-					  <a href="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-5.webp" class="glightbox" title="Urban Stories"><i class="bi bi-plus-lg"></i></a>
-					  <a href="portfolio-details.html" title="More Details"><i class="bi bi-arrow-right"></i></a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div><!-- End Portfolio Item -->
-
-			<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-design">
-			  <div class="portfolio-wrap">
-				<img src="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-6.webp" class="img-fluid" alt="Portfolio Image" loading="lazy">
-				<div class="portfolio-info">
-				  <div class="content">
-					<span class="category">Web Design</span>
-					<h4>Digital Experience</h4>
-					<div class="portfolio-links">
-					  <a href="<?php echo get_template_directory_uri(); ?>/assets/img/portfolio/portfolio-6.webp" class="glightbox" title="Digital Experience"><i class="bi bi-plus-lg"></i></a>
-					  <a href="portfolio-details.html" title="More Details"><i class="bi bi-arrow-right"></i></a>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div><!-- End Portfolio Item -->
+			<?php
+			$portfolio_projects = get_option( 'portfolio_projects', array(
+				array(
+					'title' => 'Capturing Moments',
+					'category' => 'photography',
+					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+					'description' => 'Photography project showcasing beautiful moments',
+					'link' => 'portfolio-details.html'
+				),
+				array(
+					'title' => 'Woodcraft Design',
+					'category' => 'design',
+					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
+					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
+					'description' => 'Web design project for woodcraft business',
+					'link' => 'portfolio-details.html'
+				),
+				array(
+					'title' => 'Classic Beauty',
+					'category' => 'automotive',
+					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
+					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
+					'description' => 'Automotive photography project',
+					'link' => 'portfolio-details.html'
+				),
+				array(
+					'title' => 'Natural Growth',
+					'category' => 'nature',
+					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
+					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
+					'description' => 'Nature photography project',
+					'link' => 'portfolio-details.html'
+				),
+				array(
+					'title' => 'Urban Stories',
+					'category' => 'photography',
+					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+					'description' => 'Urban photography storytelling',
+					'link' => 'portfolio-details.html'
+				),
+				array(
+					'title' => 'Digital Experience',
+					'category' => 'design',
+					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+					'description' => 'Digital design experience project',
+					'link' => 'portfolio-details.html'
+				)
+			) );
+			
+			$initial_projects = get_option( 'portfolio_initial_projects', 6 );
+			$total_projects = count( $portfolio_projects );
+			
+			// Randomize the projects for the initial display
+			$shuffled_projects = $portfolio_projects;
+			shuffle( $shuffled_projects );
+			
+			if ( ! empty( $shuffled_projects ) ) :
+				// Show all projects initially (they will be filtered by JavaScript)
+				foreach ( $shuffled_projects as $index => $project ) :
+					// Get category name for display
+					$category_name = '';
+					foreach ( $portfolio_categories as $cat ) {
+						if ( $cat['slug'] === $project['category'] ) {
+							$category_name = $cat['name'];
+							break;
+						}
+					}
+					
+					// Add data attributes for filtering and view more functionality
+					$is_initial = $index < $initial_projects ? 'true' : 'false';
+					?>
+					<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-<?php echo esc_attr( $project['category'] ); ?>" 
+						 data-initial="<?php echo $is_initial; ?>" 
+						 data-index="<?php echo $index; ?>"
+						 style="<?php echo $index >= $initial_projects ? 'display: none;' : ''; ?>">
+					  <div class="portfolio-wrap">
+						<?php if ( ! empty( $project['image'] ) ) : ?>
+							<img src="<?php echo esc_url( $project['image'] ); ?>" class="img-fluid" alt="<?php echo esc_attr( $project['title'] ); ?>" loading="lazy">
+						<?php endif; ?>
+						<div class="portfolio-info">
+						  <div class="content">
+							<?php if ( ! empty( $category_name ) ) : ?>
+								<span class="category"><?php echo esc_html( $category_name ); ?></span>
+							<?php endif; ?>
+							<?php if ( ! empty( $project['title'] ) ) : ?>
+								<h4><?php echo esc_html( $project['title'] ); ?></h4>
+							<?php endif; ?>
+							<div class="portfolio-links">
+							  <?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
+								  <a href="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="glightbox" title="<?php echo esc_attr( $project['title'] ); ?>"><i class="bi bi-plus-lg"></i></a>
+							  <?php endif; ?>
+							  <?php if ( ! empty( $project['link'] ) ) : ?>
+								  <a href="<?php echo esc_url( $project['link'] ); ?>" title="More Details"><i class="bi bi-arrow-right"></i></a>
+							  <?php endif; ?>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div><!-- End Portfolio Item -->
+					<?php
+				endforeach;
+			endif;
+			?>
 
 		  </div><!-- End Portfolio Container -->
+		  
+		  <!-- View More Button (only visible on All Projects tab) -->
+		  <?php if ( $total_projects > $initial_projects ) : ?>
+		  <div class="text-center mt-4" id="portfolio-view-more-container" style="display: none;">
+			<button type="button" class="btn btn-primary" id="portfolio-view-more-btn">
+				View More Projects
+			</button>
+		  </div>
+		  <?php endif; ?>
 		</div>
 	  </div>
 

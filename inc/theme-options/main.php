@@ -152,13 +152,17 @@ function portfolio_theme_options_page() {
  * Save theme options - calls individual section save functions
  */
 function portfolio_save_theme_options() {
+		// Get the form data
+	$input = $_POST;
+	
 	// Call individual section save functions
+	// Most sections don't expect parameters, only portfolio does
 	portfolio_save_hero_options();
 	portfolio_save_about_options();
 	portfolio_save_counter_options();
 	portfolio_save_skills_options();
 	portfolio_save_resume_options();
-	portfolio_save_portfolio_options();
+	portfolio_save_portfolio_options( $input ); // Portfolio section expects $input parameter
 	portfolio_save_services_options();
 	portfolio_save_testimonials_options();
 	portfolio_save_contact_options();

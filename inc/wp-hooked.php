@@ -176,6 +176,9 @@ function portfolio_scripts() {
     wp_enqueue_style('portfolio-style', get_stylesheet_uri(), array(), PORTFOLIO_VERSION);
     wp_style_add_data('portfolio-style', 'rtl', 'replace');
 
+    // Portfolio Frontend CSS
+    wp_enqueue_style('portfolio-frontend', get_template_directory_uri() . '/css/portfolio-frontend.css', array(), PORTFOLIO_VERSION, 'all');
+
     // Vendor JavaScript Files
     wp_enqueue_script('bootstrap', get_template_directory_uri() . '/assets/vendor/bootstrap/js/bootstrap.bundle.min.js', array('jquery'), PORTFOLIO_VERSION, true);
     wp_enqueue_script('aos', get_template_directory_uri() . '/assets/vendor/aos/aos.js', array('jquery'), PORTFOLIO_VERSION, true);
@@ -190,6 +193,9 @@ function portfolio_scripts() {
 
     // Main JavaScript File
     wp_enqueue_script('portfolio-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery', 'bootstrap', 'aos', 'typed', 'purecounter', 'waypoints', 'imagesloaded', 'isotope', 'glightbox', 'swiper'), PORTFOLIO_VERSION, true);
+
+    // Portfolio Frontend JavaScript
+    wp_enqueue_script('portfolio-frontend', get_template_directory_uri() . '/js/portfolio-frontend.js', array('jquery', 'isotope', 'imagesloaded'), PORTFOLIO_VERSION, true);
 
     // Comment reply script
     if (is_singular() && comments_open() && get_option('thread_comments')) {

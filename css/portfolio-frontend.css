@@ -1,0 +1,70 @@
+/* Portfolio Frontend Styles */
+
+/* View More Button Container */
+#portfolio-view-more-container {
+	margin-top: 30px;
+	text-align: center;
+}
+
+/* View More Button - Updated to match site design */
+#portfolio-view-more-btn {
+	background: white;
+	border: 2px solid grey;
+	color: black;
+	padding: 12px 30px;
+	border-radius: 5px;
+	font-weight: 500;
+	font-size: 16px;
+	text-transform: none;
+	letter-spacing: 0.5px;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+}
+
+#portfolio-view-more-btn:hover {
+	background: white;
+	border-color: grey;
+	color: black;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#portfolio-view-more-btn:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+#portfolio-view-more-btn:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Portfolio Item Transitions */
+.portfolio-item {
+	transition: all 0.3s ease;
+}
+
+.portfolio-item.hidden {
+	opacity: 0;
+	transform: scale(0.8);
+}
+
+.portfolio-item.visible {
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	#portfolio-view-more-btn {
+		padding: 10px 25px;
+		font-size: 14px;
+	}
+	
+	#portfolio-view-more-container {
+		margin-top: 25px;
+	}
+}

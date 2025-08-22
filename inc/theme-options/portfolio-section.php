@@ -1,389 +1,485 @@
 <?php
 /**
  * Portfolio Section Theme Options
- *
+ * 
  * @package Portfolio
  */
+
+// Prevent direct access
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Portfolio section tab content
  */
 function portfolio_portfolio_tab_content() {
+	// Get existing options
+	$portfolio_section_title = get_option( 'portfolio_section_title', 'Portfolio' );
+	$portfolio_section_description = get_option( 'portfolio_section_description', 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.' );
+	
+	// Get portfolio categories
+	$portfolio_categories = get_option( 'portfolio_categories', array(
+		array( 'name' => 'Photography', 'slug' => 'photography' ),
+		array( 'name' => 'Design', 'slug' => 'design' ),
+		array( 'name' => 'Automotive', 'slug' => 'automotive' ),
+		array( 'name' => 'Nature', 'slug' => 'nature' )
+	) );
+	
+	// Get portfolio projects
+	$portfolio_projects = get_option( 'portfolio_projects', array(
+		array(
+			'title' => 'Capturing Moments',
+			'category' => 'photography',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+			'description' => 'Photography project showcasing beautiful moments',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Woodcraft Design',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
+			'description' => 'Web design project for woodcraft business',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Classic Beauty',
+			'category' => 'automotive',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
+			'description' => 'Automotive photography project',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Natural Growth',
+			'category' => 'nature',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
+			'description' => 'Nature photography project',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Urban Stories',
+			'category' => 'photography',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+			'description' => 'Urban photography storytelling',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Digital Experience',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+			'description' => 'Digital design experience project',
+			'link' => 'portfolio-details.html'
+		)
+	) );
 	?>
-	<table class="form-table">
-		<tr>
-			<th scope="row">
-				<label for="portfolio_section_title">Section Title</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_section_title" name="portfolio_section_title" value="<?php echo esc_attr( get_option( 'portfolio_section_title', 'Portfolio' ) ); ?>" class="regular-text">
-				<p class="description">Enter the title for the portfolio section</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_section_description">Section Description</label>
-			</th>
-			<td>
-				<textarea id="portfolio_section_description" name="portfolio_section_description" rows="3" class="large-text"><?php echo esc_textarea( get_option( 'portfolio_section_description', 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.' ) ); ?></textarea>
-				<p class="description">Enter the description for the portfolio section</p>
-			</td>
-		</tr>
+	
+	<div class="portfolio-section-options">
+		<h3>Portfolio Section Settings</h3>
 		
-		<!-- Portfolio Item 1 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Portfolio Item 1</h3>
-			</th>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_1_image">Image URL</label>
-			</th>
-			<td>
-				<input type="url" id="portfolio_1_image" name="portfolio_1_image" value="<?php echo esc_url( get_option( 'portfolio_1_image', get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the portfolio image</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_1_category">Category</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_1_category" name="portfolio_1_category" value="<?php echo esc_attr( get_option( 'portfolio_1_category', 'Photography' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio category</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_1_title">Title</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_1_title" name="portfolio_1_title" value="<?php echo esc_attr( get_option( 'portfolio_1_title', 'Capturing Moments' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio title</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_1_filter">Filter Class</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_1_filter" name="portfolio_1_filter" value="<?php echo esc_attr( get_option( 'portfolio_1_filter', 'filter-photography' ) ); ?>" class="regular-text">
-				<p class="description">Enter the filter class (e.g., filter-photography, filter-design)</p>
-			</td>
-		</tr>
+		<table class="form-table">
+			<tr>
+				<th scope="row">
+					<label for="portfolio_section_title">Section Title</label>
+				</th>
+				<td>
+					<input type="text" id="portfolio_section_title" name="portfolio_section_title" value="<?php echo esc_attr( $portfolio_section_title ); ?>" class="regular-text">
+					<p class="description">The main title for the portfolio section.</p>
+				</td>
+			</tr>
+			
+			<tr>
+				<th scope="row">
+					<label for="portfolio_section_description">Section Description</label>
+				</th>
+				<td>
+					<textarea id="portfolio_section_description" name="portfolio_section_description" rows="3" class="large-text"><?php echo esc_textarea( $portfolio_section_description ); ?></textarea>
+					<p class="description">Description text displayed below the section title.</p>
+				</td>
+			</tr>
+			
+			<tr>
+				<th scope="row">
+					<label for="portfolio_initial_projects">Initial Projects to Show</label>
+				</th>
+				<td>
+					<input type="number" id="portfolio_initial_projects" name="portfolio_initial_projects" value="<?php echo esc_attr( get_option( 'portfolio_initial_projects', '6' ) ); ?>" min="1" max="50" class="small-text">
+					<p class="description">Number of projects to show initially on "All Projects" tab before "View More" button.</p>
+				</td>
+			</tr>
+		</table>
 		
-		<!-- Portfolio Item 2 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Portfolio Item 2</h3>
-			</th>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_2_image">Image URL</label>
-			</th>
-			<td>
-				<input type="url" id="portfolio_2_image" name="portfolio_2_image" value="<?php echo esc_url( get_option( 'portfolio_2_image', get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the portfolio image</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_2_category">Category</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_2_category" name="portfolio_2_category" value="<?php echo esc_attr( get_option( 'portfolio_2_category', 'Web Design' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio category</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_2_title">Title</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_2_title" name="portfolio_2_title" value="<?php echo esc_attr( get_option( 'portfolio_2_title', 'Woodcraft Design' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio title</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_2_filter">Filter Class</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_2_filter" name="portfolio_2_filter" value="<?php echo esc_attr( get_option( 'portfolio_2_filter', 'filter-design' ) ); ?>" class="regular-text">
-				<p class="description">Enter the filter class</p>
-			</td>
-		</tr>
+		<h3>Portfolio Categories</h3>
+		<p class="description">Manage the category tabs for filtering portfolio projects. The first category will be used as "All Projects".</p>
 		
-		<!-- Portfolio Item 3 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Portfolio Item 3</h3>
-			</th>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_3_image">Image URL</label>
-			</th>
-			<td>
-				<input type="url" id="portfolio_3_image" name="portfolio_3_image" value="<?php echo esc_url( get_option( 'portfolio_3_image', get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the portfolio image</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_3_category">Category</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_3_category" name="portfolio_3_category" value="<?php echo esc_attr( get_option( 'portfolio_3_category', 'Automotive' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio category</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_3_title">Title</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_3_title" name="portfolio_3_title" value="<?php echo esc_attr( get_option( 'portfolio_3_title', 'Classic Beauty' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio title</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_3_filter">Filter Class</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_3_filter" name="portfolio_3_filter" value="<?php echo esc_attr( get_option( 'portfolio_3_filter', 'filter-automotive' ) ); ?>" class="regular-text">
-				<p class="description">Enter the filter class</p>
-			</td>
-		</tr>
+		<div id="portfolio-categories-container">
+			<?php foreach ( $portfolio_categories as $index => $category ) : ?>
+			<div class="category-item" data-index="<?php echo $index; ?>">
+				<h4>Category <?php echo $index + 1; ?></h4>
+				<table class="form-table">
+					<tr>
+						<th scope="row">
+							<label>Category Name</label>
+						</th>
+						<td>
+							<input type="text" name="portfolio_categories[<?php echo $index; ?>][name]" value="<?php echo esc_attr( $category['name'] ); ?>" class="regular-text" required>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">
+							<label>Category Slug</label>
+						</th>
+						<td>
+							<input type="text" name="portfolio_categories[<?php echo $index; ?>][slug]" value="<?php echo esc_attr( $category['slug'] ); ?>" class="regular-text" required>
+							<p class="description">Used for CSS classes and filtering. Use lowercase, no spaces.</p>
+						</td>
+					</tr>
+				</table>
+				<button type="button" class="button button-link-delete remove-category" data-index="<?php echo $index; ?>">Remove Category</button>
+			</div>
+			<?php endforeach; ?>
+		</div>
 		
-		<!-- Portfolio Item 4 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Portfolio Item 4</h3>
-			</th>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_4_image">Image URL</label>
-			</th>
-			<td>
-				<input type="url" id="portfolio_4_image" name="portfolio_4_image" value="<?php echo esc_url( get_option( 'portfolio_4_image', get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the portfolio image</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_4_category">Category</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_4_category" name="portfolio_4_category" value="<?php echo esc_attr( get_option( 'portfolio_4_category', 'Nature' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio category</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_4_title">Title</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_4_title" name="portfolio_4_title" value="<?php echo esc_attr( get_option( 'portfolio_4_title', 'Natural Growth' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio title</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_4_filter">Filter Class</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_4_filter" name="portfolio_4_filter" value="<?php echo esc_attr( get_option( 'portfolio_4_filter', 'filter-nature' ) ); ?>" class="regular-text">
-				<p class="description">Enter the filter class</p>
-			</td>
-		</tr>
+		<button type="button" class="button button-secondary" id="add-category">Add New Category</button>
 		
-		<!-- Portfolio Item 5 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Portfolio Item 5</h3>
-			</th>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_5_image">Image URL</label>
-			</th>
-			<td>
-				<input type="url" id="portfolio_5_image" name="portfolio_5_image" value="<?php echo esc_url( get_option( 'portfolio_5_image', get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the portfolio image</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_5_category">Category</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_5_category" name="portfolio_5_category" value="<?php echo esc_attr( get_option( 'portfolio_5_category', 'Photography' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio category</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_5_title">Title</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_5_title" name="portfolio_5_title" value="<?php echo esc_attr( get_option( 'portfolio_5_title', 'Urban Stories' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio title</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_5_filter">Filter Class</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_5_filter" name="portfolio_5_filter" value="<?php echo esc_attr( get_option( 'portfolio_5_filter', 'filter-photography' ) ); ?>" class="regular-text">
-				<p class="description">Enter the filter class</p>
-			</td>
-		</tr>
+		<h3>Portfolio Projects</h3>
+		<p class="description">Manage portfolio projects. Each project can be assigned to a category for filtering.</p>
 		
-		<!-- Portfolio Item 6 -->
-		<tr>
-			<th scope="row" colspan="2">
-				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd;">Portfolio Item 6</h3>
-			</th>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_6_image">Image URL</label>
-			</th>
-			<td>
-				<input type="url" id="portfolio_6_image" name="portfolio_6_image" value="<?php echo esc_url( get_option( 'portfolio_6_image', get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of the portfolio image</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_6_category">Category</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_6_category" name="portfolio_6_category" value="<?php echo esc_attr( get_option( 'portfolio_6_category', 'Web Design' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio category</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_6_title">Title</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_6_title" name="portfolio_6_title" value="<?php echo esc_attr( get_option( 'portfolio_6_title', 'Digital Experience' ) ); ?>" class="regular-text">
-				<p class="description">Enter the portfolio title</p>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">
-				<label for="portfolio_6_filter">Filter Class</label>
-			</th>
-			<td>
-				<input type="text" id="portfolio_6_filter" name="portfolio_6_filter" value="<?php echo esc_attr( get_option( 'portfolio_6_filter', 'filter-design' ) ); ?>" class="regular-text">
-				<p class="description">Enter the filter class</p>
-			</td>
-		</tr>
-	</table>
+		<div id="portfolio-projects-container">
+			<?php foreach ( $portfolio_projects as $index => $project ) : ?>
+			<div class="project-item" data-index="<?php echo $index; ?>">
+				<h4>Project <?php echo $index + 1; ?></h4>
+				<table class="form-table">
+					<tr>
+						<th scope="row">
+							<label>Project Title</label>
+						</th>
+						<td>
+							<input type="text" name="portfolio_projects[<?php echo $index; ?>][title]" value="<?php echo esc_attr( $project['title'] ); ?>" class="regular-text" required>
+						</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">
+							<label>Category</label>
+						</th>
+						<td>
+							<select name="portfolio_projects[<?php echo $index; ?>][category]" required>
+								<option value="">Select Category</option>
+								<?php foreach ( $portfolio_categories as $cat ) : ?>
+									<option value="<?php echo esc_attr( $cat['slug'] ); ?>" <?php selected( $project['category'], $cat['slug'] ); ?>>
+										<?php echo esc_html( $cat['name'] ); ?>
+									</option>
+								<?php endforeach; ?>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">
+							<label>Project Image</label>
+						</th>
+						<td>
+							<div class="image-upload-wrapper">
+								<input type="hidden" name="portfolio_projects[<?php echo $index; ?>][image]" value="<?php echo esc_url( $project['image'] ); ?>" class="project-image-input">
+								<div class="image-preview" id="project_image_preview_<?php echo $index; ?>">
+									<?php if ( ! empty( $project['image'] ) ) : ?>
+										<img src="<?php echo esc_url( $project['image'] ); ?>" alt="Project Preview" style="max-width: 150px; height: auto; border-radius: 5px;">
+									<?php endif; ?>
+								</div>
+								<button type="button" class="button button-secondary project-image-upload-btn" data-index="<?php echo $index; ?>">Choose Image</button>
+								<button type="button" class="button button-link-delete project-image-remove-btn" data-index="<?php echo $index; ?>" style="display: <?php echo ! empty( $project['image'] ) ? 'inline-block' : 'none'; ?>;">Remove Image</button>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">
+							<label>Lightbox Image</label>
+						</th>
+						<td>
+							<div class="image-upload-wrapper">
+								<input type="hidden" name="portfolio_projects[<?php echo $index; ?>][lightbox_image]" value="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="project-lightbox-image-input">
+								<div class="image-preview" id="project_lightbox_image_preview_<?php echo $index; ?>">
+									<?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
+										<img src="<?php echo esc_url( $project['lightbox_image'] ); ?>" alt="Lightbox Preview" style="max-width: 150px; height: auto; border-radius: 5px;">
+									<?php endif; ?>
+								</div>
+								<button type="button" class="button button-secondary project-lightbox-image-upload-btn" data-index="<?php echo $index; ?>">Choose Image</button>
+								<button type="button" class="button button-link-delete project-lightbox-image-remove-btn" data-index="<?php echo $index; ?>" style="display: <?php echo ! empty( $project['lightbox_image'] ) ? 'inline-block' : 'none'; ?>;">Remove Image</button>
+								<p class="description">Image displayed in lightbox when clicking the plus icon.</p>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">
+							<label>Description</label>
+						</th>
+						<td>
+							<textarea name="portfolio_projects[<?php echo $index; ?>][description]" rows="2" class="large-text"><?php echo esc_textarea( $project['description'] ); ?></textarea>
+							<p class="description">Brief description of the project.</p>
+						</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">
+							<label>Project Link</label>
+						</th>
+						<td>
+							<input type="url" name="portfolio_projects[<?php echo $index; ?>][link]" value="<?php echo esc_url( $project['link'] ); ?>" class="regular-text">
+							<p class="description">Link to project details page (optional).</p>
+						</td>
+					</tr>
+				</table>
+				<button type="button" class="button button-link-delete remove-project" data-index="<?php echo $index; ?>">Remove Project</button>
+			</div>
+			<?php endforeach; ?>
+		</div>
+		
+		<button type="button" class="button button-secondary" id="add-project">Add New Project</button>
+	</div>
+	
+	<script type="text/template" id="category-template">
+		<div class="category-item" data-index="{{index}}">
+			<h4>Category {{number}}</h4>
+			<table class="form-table">
+				<tr>
+					<th scope="row">
+						<label>Category Name</label>
+					</th>
+					<td>
+						<input type="text" name="portfolio_categories[{{index}}][name]" class="regular-text" required>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label>Category Slug</label>
+					</th>
+					<td>
+						<input type="text" name="portfolio_categories[{{index}}][slug]" class="regular-text" required>
+						<p class="description">Used for CSS classes and filtering. Use lowercase, no spaces.</p>
+					</td>
+				</tr>
+			</table>
+			<button type="button" class="button button-link-delete remove-category" data-index="{{index}}">Remove Category</button>
+		</div>
+	</script>
+	
+	<script type="text/template" id="project-template">
+		<div class="project-item" data-index="{{index}}">
+			<h4>Project {{number}}</h4>
+			<table class="form-table">
+				<tr>
+					<th scope="row">
+						<label>Project Title</label>
+					</th>
+					<td>
+						<input type="text" name="portfolio_projects[{{index}}][title]" class="regular-text" required>
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label>Category</label>
+					</th>
+					<td>
+						<select name="portfolio_projects[{{index}}][category]" required>
+							<option value="">Select Category</option>
+							<?php foreach ( $portfolio_categories as $cat ) : ?>
+								<option value="<?php echo esc_attr( $cat['slug'] ); ?>"><?php echo esc_html( $cat['name'] ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label>Project Image</label>
+					</th>
+					<td>
+						<div class="image-upload-wrapper">
+							<input type="hidden" name="portfolio_projects[{{index}}][image]" class="project-image-input">
+							<div class="image-preview" id="project_image_preview_{{index}}"></div>
+							<button type="button" class="button button-secondary project-image-upload-btn" data-index="{{index}}">Choose Image</button>
+							<button type="button" class="button button-link-delete project-image-remove-btn" data-index="{{index}}" style="display: none;">Remove Image</button>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label>Lightbox Image</label>
+					</th>
+					<td>
+						<div class="image-upload-wrapper">
+							<input type="hidden" name="portfolio_projects[{{index}}][lightbox_image]" class="project-lightbox-image-input">
+							<div class="image-preview" id="project_lightbox_image_preview_{{index}}"></div>
+							<button type="button" class="button button-secondary project-lightbox-image-upload-btn" data-index="{{index}}">Choose Image</button>
+							<button type="button" class="button button-link-delete project-lightbox-image-remove-btn" data-index="{{index}}" style="display: none;">Remove Image</button>
+							<p class="description">Image displayed in lightbox when clicking the plus icon.</p>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label>Description</label>
+					</th>
+					<td>
+						<textarea name="portfolio_projects[{{index}}][description]" rows="2" class="large-text"></textarea>
+						<p class="description">Brief description of the project.</p>
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<label>Project Link</label>
+					</th>
+					<td>
+						<input type="url" name="portfolio_projects[{{index}}][link]" class="regular-text">
+						<p class="description">Link to project details page (optional).</p>
+					</td>
+				</tr>
+			</table>
+			<button type="button" class="button button-link-delete remove-project" data-index="{{index}}">Remove Project</button>
+		</div>
+	</script>
+	
 	<?php
 }
 
 /**
  * Save portfolio section options
  */
-function portfolio_save_portfolio_options() {
-	// Portfolio Section
-	if ( isset( $_POST['portfolio_section_title'] ) ) {
-		update_option( 'portfolio_section_title', sanitize_text_field( $_POST['portfolio_section_title'] ) );
-	}
-	if ( isset( $_POST['portfolio_section_description'] ) ) {
-		update_option( 'portfolio_section_description', sanitize_textarea_field( $_POST['portfolio_section_description'] ) );
+function portfolio_save_portfolio_options( $input ) {
+	$updated_options = array();
+	
+	// Save section title and description
+	if ( isset( $input['portfolio_section_title'] ) ) {
+		$updated_options['portfolio_section_title'] = sanitize_text_field( $input['portfolio_section_title'] );
 	}
 	
-	// Portfolio Item 1
-	if ( isset( $_POST['portfolio_1_image'] ) ) {
-		update_option( 'portfolio_1_image', esc_url_raw( $_POST['portfolio_1_image'] ) );
-	}
-	if ( isset( $_POST['portfolio_1_category'] ) ) {
-		update_option( 'portfolio_1_category', sanitize_text_field( $_POST['portfolio_1_category'] ) );
-	}
-	if ( isset( $_POST['portfolio_1_title'] ) ) {
-		update_option( 'portfolio_1_title', sanitize_text_field( $_POST['portfolio_1_title'] ) );
-	}
-	if ( isset( $_POST['portfolio_1_filter'] ) ) {
-		update_option( 'portfolio_1_filter', sanitize_text_field( $_POST['portfolio_1_filter'] ) );
+	if ( isset( $input['portfolio_section_description'] ) ) {
+		$updated_options['portfolio_section_description'] = sanitize_textarea_field( $input['portfolio_section_description'] );
 	}
 	
-	// Portfolio Item 2
-	if ( isset( $_POST['portfolio_2_image'] ) ) {
-		update_option( 'portfolio_2_image', esc_url_raw( $_POST['portfolio_2_image'] ) );
-	}
-	if ( isset( $_POST['portfolio_2_category'] ) ) {
-		update_option( 'portfolio_2_category', sanitize_text_field( $_POST['portfolio_2_category'] ) );
-	}
-	if ( isset( $_POST['portfolio_2_title'] ) ) {
-		update_option( 'portfolio_2_title', sanitize_text_field( $_POST['portfolio_2_title'] ) );
-	}
-	if ( isset( $_POST['portfolio_2_filter'] ) ) {
-		update_option( 'portfolio_2_filter', sanitize_text_field( $_POST['portfolio_2_filter'] ) );
+	// Save initial projects to show
+	if ( isset( $input['portfolio_initial_projects'] ) ) {
+		$updated_options['portfolio_initial_projects'] = intval( $input['portfolio_initial_projects'] );
 	}
 	
-	// Portfolio Item 3
-	if ( isset( $_POST['portfolio_3_image'] ) ) {
-		update_option( 'portfolio_3_image', esc_url_raw( $_POST['portfolio_3_image'] ) );
-	}
-	if ( isset( $_POST['portfolio_3_category'] ) ) {
-		update_option( 'portfolio_3_category', sanitize_text_field( $_POST['portfolio_3_category'] ) );
-	}
-	if ( isset( $_POST['portfolio_3_title'] ) ) {
-		update_option( 'portfolio_3_title', sanitize_text_field( $_POST['portfolio_3_title'] ) );
-	}
-	if ( isset( $_POST['portfolio_3_filter'] ) ) {
-		update_option( 'portfolio_3_filter', sanitize_text_field( $_POST['portfolio_3_filter'] ) );
-	}
-	
-	// Portfolio Item 4
-	if ( isset( $_POST['portfolio_4_image'] ) ) {
-		update_option( 'portfolio_4_image', esc_url_raw( $_POST['portfolio_4_image'] ) );
-	}
-	if ( isset( $_POST['portfolio_4_category'] ) ) {
-		update_option( 'portfolio_4_category', sanitize_text_field( $_POST['portfolio_4_category'] ) );
-	}
-	if ( isset( $_POST['portfolio_4_title'] ) ) {
-		update_option( 'portfolio_4_title', sanitize_text_field( $_POST['portfolio_4_title'] ) );
-	}
-	if ( isset( $_POST['portfolio_4_filter'] ) ) {
-		update_option( 'portfolio_4_filter', sanitize_text_field( $_POST['portfolio_4_filter'] ) );
+	// Save portfolio categories
+	if ( isset( $input['portfolio_categories'] ) && is_array( $input['portfolio_categories'] ) ) {
+		$categories = array();
+		foreach ( $input['portfolio_categories'] as $category ) {
+			if ( ! empty( $category['name'] ) && ! empty( $category['slug'] ) ) {
+				$categories[] = array(
+					'name' => sanitize_text_field( $category['name'] ),
+					'slug' => sanitize_title( $category['slug'] )
+				);
+			}
+		}
+		$updated_options['portfolio_categories'] = $categories;
 	}
 	
-	// Portfolio Item 5
-	if ( isset( $_POST['portfolio_5_image'] ) ) {
-		update_option( 'portfolio_5_image', esc_url_raw( $_POST['portfolio_5_image'] ) );
-	}
-	if ( isset( $_POST['portfolio_5_category'] ) ) {
-		update_option( 'portfolio_5_category', sanitize_text_field( $_POST['portfolio_5_category'] ) );
-	}
-	if ( isset( $_POST['portfolio_5_title'] ) ) {
-		update_option( 'portfolio_5_title', sanitize_text_field( $_POST['portfolio_5_title'] ) );
-	}
-	if ( isset( $_POST['portfolio_5_filter'] ) ) {
-		update_option( 'portfolio_5_filter', sanitize_text_field( $_POST['portfolio_5_filter'] ) );
+	// Save portfolio projects
+	if ( isset( $input['portfolio_projects'] ) && is_array( $input['portfolio_projects'] ) ) {
+		$projects = array();
+		foreach ( $input['portfolio_projects'] as $project ) {
+			if ( ! empty( $project['title'] ) && ! empty( $project['category'] ) ) {
+				$projects[] = array(
+					'title' => sanitize_text_field( $project['title'] ),
+					'category' => sanitize_title( $project['category'] ),
+					'image' => esc_url_raw( $project['image'] ),
+					'lightbox_image' => esc_url_raw( $project['lightbox_image'] ),
+					'description' => sanitize_textarea_field( $project['description'] ),
+					'link' => esc_url_raw( $project['link'] )
+				);
+			}
+		}
+		$updated_options['portfolio_projects'] = $projects;
 	}
 	
-	// Portfolio Item 6
-	if ( isset( $_POST['portfolio_6_image'] ) ) {
-		update_option( 'portfolio_6_image', esc_url_raw( $_POST['portfolio_6_image'] ) );
+	// Update options
+	foreach ( $updated_options as $option_name => $option_value ) {
+		update_option( $option_name, $option_value );
 	}
-	if ( isset( $_POST['portfolio_6_category'] ) ) {
-		update_option( 'portfolio_6_category', sanitize_text_field( $_POST['portfolio_6_category'] ) );
-	}
-	if ( isset( $_POST['portfolio_6_title'] ) ) {
-		update_option( 'portfolio_6_title', sanitize_text_field( $_POST['portfolio_6_title'] ) );
-	}
-	if ( isset( $_POST['portfolio_6_filter'] ) ) {
-		update_option( 'portfolio_6_filter', sanitize_text_field( $_POST['portfolio_6_filter'] ) );
-	}
-} 
+	
+	return $input;
+}
+
+/**
+ * Enqueue media scripts for portfolio section
+ */
+function portfolio_portfolio_enqueue_media_scripts() {
+	wp_enqueue_media();
+	wp_enqueue_script( 'portfolio-portfolio-media', get_template_directory_uri() . '/js/portfolio-media.js', array( 'jquery' ), '1.0.0', true );
+}
+add_action( 'admin_enqueue_scripts', 'portfolio_portfolio_enqueue_media_scripts' );
+
+/**
+ * Add admin styles for portfolio section
+ */
+function portfolio_portfolio_admin_styles() {
+	?>
+	<style>
+		.portfolio-section-options h3 {
+			margin-top: 30px;
+			margin-bottom: 20px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		.category-item, .project-item {
+			background: #f9f9f9;
+			padding: 20px;
+			margin: 20px 0;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+		}
+		
+		.category-item h4, .project-item h4 {
+			margin-top: 0;
+			color: #23282d;
+		}
+		
+		.image-upload-wrapper {
+			max-width: 400px;
+		}
+		
+		.image-preview {
+			margin-bottom: 10px;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			background: #fff;
+			text-align: center;
+			min-height: 50px;
+		}
+		
+		.image-preview img {
+			max-width: 100%;
+			height: auto;
+		}
+		
+		.project-image-upload-btn, .project-lightbox-image-upload-btn {
+			margin-right: 10px;
+		}
+		
+		.remove-category, .remove-project {
+			margin-top: 15px;
+		}
+		
+		#add-category, #add-project {
+			margin: 20px 0;
+		}
+	</style>
+	<?php
+}
+add_action( 'admin_head', 'portfolio_portfolio_admin_styles' ); 

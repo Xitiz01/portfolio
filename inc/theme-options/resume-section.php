@@ -38,11 +38,22 @@ function portfolio_resume_tab_content() {
 		</tr>
 		<tr>
 			<th scope="row">
-				<label for="resume_profile_image">Profile Image URL</label>
+				<label for="resume_profile_image">Profile Image</label>
 			</th>
 			<td>
-				<input type="url" id="resume_profile_image" name="resume_profile_image" value="<?php echo esc_url( get_option( 'resume_profile_image', get_template_directory_uri() . '/assets/img/profile/profile-square-2.webp' ) ); ?>" class="regular-text">
-				<p class="description">Enter the URL of your profile image</p>
+				<div class="image-upload-wrapper">
+					<input type="hidden" id="resume_profile_image" name="resume_profile_image" value="<?php echo esc_url( get_option( 'resume_profile_image', get_template_directory_uri() . '/assets/img/profile/profile-square-2.webp' ) ); ?>">
+					<div class="image-preview" id="resume_profile_image_preview">
+						<?php 
+						$profile_image = get_option( 'resume_profile_image', get_template_directory_uri() . '/assets/img/profile/profile-square-2.webp' );
+						if ( ! empty( $profile_image ) ) : ?>
+							<img src="<?php echo esc_url( $profile_image ); ?>" alt="Profile Preview" style="max-width: 150px; height: auto; border-radius: 5px;">
+						<?php endif; ?>
+					</div>
+					<button type="button" class="button button-secondary" id="resume_profile_image_upload_btn">Choose Image</button>
+					<button type="button" class="button button-link-delete" id="resume_profile_image_remove_btn" style="display: <?php echo ! empty( $profile_image ) ? 'inline-block' : 'none'; ?>;">Remove Image</button>
+					<p class="description">Upload or choose an image from the media library. Recommended size: 400x400 pixels.</p>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -529,3 +540,41 @@ function portfolio_save_resume_options() {
 		update_option( 'resume_certification_2_year', sanitize_text_field( $_POST['resume_certification_2_year'] ) );
 	}
 } 
+
+/**
+ * Enqueue media uploader scripts for resume section
+ */
+function portfolio_resume_enqueue_media_scripts() {
+	wp_enqueue_media();
+	wp_enqueue_script( 'portfolio-resume-media', get_template_directory_uri() . '/js/resume-media.js', array( 'jquery' ), '1.0.0', true );
+}
+add_action( 'admin_enqueue_scripts', 'portfolio_resume_enqueue_media_scripts' );
+
+/**
+ * Add inline styles for resume section admin
+ */
+function portfolio_resume_admin_styles() {
+	?>
+	<style>
+		.image-upload-wrapper {
+			max-width: 400px;
+		}
+		.image-preview {
+			margin-bottom: 10px;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			background: #f9f9f9;
+			text-align: center;
+		}
+		.image-preview img {
+			max-width: 100%;
+			height: auto;
+		}
+		#resume_profile_image_upload_btn {
+			margin-right: 10px;
+		}
+	</style>
+	<?php
+}
+add_action( 'admin_head', 'portfolio_resume_admin_styles' ); 
