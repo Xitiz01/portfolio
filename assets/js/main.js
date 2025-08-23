@@ -91,6 +91,181 @@
   }
 
   /**
+   * Portfolio Mobile Slider
+   */
+  function initPortfolioSlider() {
+    const portfolioSlider = document.querySelector('.portfolio-swiper');
+    if (portfolioSlider && typeof Swiper !== 'undefined') {
+      new Swiper('.portfolio-swiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 20,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.portfolio-swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.portfolio-swiper-button-next',
+          prevEl: '.portfolio-swiper-button-prev',
+        },
+        breakpoints: {
+          320: {
+            slidesPerView: 1.2,
+            spaceBetween: 15,
+          },
+          480: {
+            slidesPerView: 1.3,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 1.5,
+            spaceBetween: 25,
+          },
+        },
+        on: {
+          init: function() {
+            // Add custom classes for sneak peek effect
+            this.slides.forEach((slide, index) => {
+              if (index === this.activeIndex) {
+                slide.classList.add('swiper-slide-active');
+              } else if (index === this.activeIndex + 1 || (this.activeIndex === this.slides.length - 1 && index === 0)) {
+                slide.classList.add('swiper-slide-next');
+              } else if (index === this.activeIndex - 1 || (this.activeIndex === 0 && index === this.slides.length - 1)) {
+                slide.classList.add('swiper-slide-prev');
+              }
+            });
+          },
+          slideChange: function() {
+            // Update classes on slide change
+            this.slides.forEach(slide => {
+              slide.classList.remove('swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
+            });
+            
+            this.slides.forEach((slide, index) => {
+              if (index === this.activeIndex) {
+                slide.classList.add('swiper-slide-active');
+              } else if (index === this.activeIndex + 1 || (this.activeIndex === this.slides.length - 1 && index === 0)) {
+                slide.classList.add('swiper-slide-next');
+              } else if (index === this.activeIndex - 1 || (this.activeIndex === 0 && index === this.slides.length - 1)) {
+                slide.classList.add('swiper-slide-prev');
+              }
+            });
+          }
+        }
+      });
+    }
+  }
+
+  /**
+   * Testimonial Mobile Vertical Slider
+   */
+  function initTestimonialSlider() {
+    console.log('Attempting to initialize testimonial slider...');
+    console.log('Window width:', window.innerWidth);
+    console.log('Is mobile/tablet view:', window.innerWidth <= 1199);
+    
+    const testimonialSlider = document.querySelector('.testimonial-mobile-slider');
+    const swiperElement = document.querySelector('.testimonial-swiper');
+    
+    console.log('Testimonial slider container:', testimonialSlider);
+    console.log('Swiper element:', swiperElement);
+    
+    if (!testimonialSlider) {
+      console.log('Testimonial slider container not found');
+      return;
+    }
+    
+    if (!swiperElement) {
+      console.log('Swiper element not found');
+      return;
+    }
+    
+    // Check if Swiper is available
+    if (typeof Swiper === 'undefined') {
+      console.log('Swiper not loaded, waiting...');
+      // Wait for Swiper to load
+      setTimeout(initTestimonialSlider, 500);
+      return;
+    }
+    
+    console.log('Swiper is available, initializing...');
+    
+    try {
+      const testimonialSwiper = new Swiper('.testimonial-swiper', {
+        direction: 'vertical',
+        slidesPerView: 1,
+        spaceBetween: 80,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false,
+        },
+        effect: 'slide',
+        speed: 800,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          type: 'bullets',
+        },
+        breakpoints: {
+          480: {
+            spaceBetween: 70,
+          },
+          768: {
+            spaceBetween: 80,
+          }
+        },
+        on: {
+          init: function() {
+            console.log('Testimonial slider initialized successfully!');
+            // Add custom classes for enhanced sneak peek effect
+            this.slides.forEach((slide, index) => {
+              if (index === this.activeIndex) {
+                slide.classList.add('swiper-slide-active');
+              } else if (index === this.activeIndex + 1 || (this.activeIndex === this.slides.length - 1 && index === 0)) {
+                slide.classList.add('swiper-slide-next');
+              } else if (index === this.activeIndex - 1 || (this.activeIndex === 0 && index === this.slides.length - 1)) {
+                slide.classList.add('swiper-slide-prev');
+              } else if (index === this.activeIndex + 2 || (this.activeIndex >= this.slides.length - 2 && index === 0)) {
+                slide.classList.add('swiper-slide-next-next');
+              } else if (index === this.activeIndex - 2 || (this.activeIndex <= 1 && index === this.slides.length - 1)) {
+                slide.classList.add('swiper-slide-prev-prev');
+              }
+            });
+          },
+          slideChange: function() {
+            // Update classes on slide change
+            this.slides.forEach(slide => {
+              slide.classList.remove('swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
+            });
+            
+            this.slides.forEach((slide, index) => {
+              if (index === this.activeIndex) {
+                slide.classList.add('swiper-slide-active');
+              } else if (index === this.activeIndex + 1 || (this.activeIndex === this.slides.length - 1 && index === 0)) {
+                slide.classList.add('swiper-slide-next');
+              } else if (index === this.activeIndex - 1 || (this.activeIndex === 0 && index === this.slides.length - 1)) {
+                slide.classList.add('swiper-slide-prev');
+              }
+            });
+          }
+        }
+      });
+      
+      console.log('Testimonial slider created:', testimonialSwiper);
+      
+    } catch (error) {
+      console.error('Error initializing testimonial slider:', error);
+    }
+  }
+
+  /**
    * Animation on scroll function and init
    */
   function aosInit() {
@@ -215,6 +390,23 @@
   }
 
   window.addEventListener("load", initSwiper);
+
+  /**
+   * Init portfolio mobile slider
+   */
+  window.addEventListener("load", initPortfolioSlider);
+
+  /**
+   * Init testimonial mobile slider
+   */
+  window.addEventListener("load", initTestimonialSlider);
+  
+  // Also try to initialize after a delay in case Swiper loads later
+  setTimeout(initTestimonialSlider, 1000);
+  setTimeout(initTestimonialSlider, 2000);
+  
+  // Debug: Test if function is being called
+  console.log('Testimonial slider initialization scheduled');
 
   /**
    * Correct scrolling position upon page load for URLs containing hash links.

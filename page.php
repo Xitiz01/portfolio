@@ -537,7 +537,11 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 				<li><i class="bi bi-phone"></i> <?php echo esc_html( get_option( 'resume_phone' ) ); ?></li>
 			<?php endif; ?>
 			<?php if ( get_option( 'resume_linkedin' ) ) : ?>
-				<li><i class="bi bi-linkedin"></i> <?php echo esc_html( get_option( 'resume_linkedin' ) ); ?></li>
+				<li><i class="bi bi-linkedin"></i> 
+					<a href="<?php echo esc_url( get_option( 'resume_linkedin' ) ); ?>" target="_blank" rel="noopener noreferrer">
+						<?php echo esc_html( get_option( 'resume_linkedin_display', 'Kshitiz Khanal' ) ); ?>
+					</a>
+				</li>
 			<?php endif; ?>
 		  </ul>
 
@@ -752,6 +756,66 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
 
+	<?php
+	$portfolio_projects = get_option( 'portfolio_projects', array(
+		array(
+			'title' => 'Capturing Moments',
+			'category' => 'photography',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+			'description' => 'Photography project showcasing beautiful moments',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Woodcraft Design',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
+			'description' => 'Web design project for woodcraft business',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Classic Beauty',
+			'category' => 'automotive',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
+			'description' => 'Automotive photography project',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Natural Growth',
+			'category' => 'nature',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
+			'description' => 'Nature photography project',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Urban Stories',
+			'category' => 'photography',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+			'description' => 'Urban photography storytelling',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Digital Experience',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+			'description' => 'Digital design experience project',
+			'link' => 'portfolio-details.html'
+		)
+	) );
+	
+	$initial_projects = get_option( 'portfolio_initial_projects', 6 );
+	$total_projects = count( $portfolio_projects );
+	
+	// Randomize the projects for the initial display
+	$shuffled_projects = $portfolio_projects;
+	shuffle( $shuffled_projects );
+	?>
+
 	<div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
 	  <div class="row">
@@ -778,67 +842,59 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 		</div>
 
 		<div class="col-lg-9">
-		  <div class="row gy-4 portfolio-container isotope-container" data-aos="fade-up" data-aos-delay="200">
+		  <!-- Mobile Portfolio Slider (visible only on mobile) -->
+		  <div class="portfolio-mobile-slider d-lg-none" data-aos="fade-up" data-aos-delay="200">
+			<div class="swiper portfolio-swiper">
+			  <div class="swiper-wrapper">
+				<?php
+				if ( ! empty( $shuffled_projects ) ) :
+					foreach ( $shuffled_projects as $index => $project ) :
+						// Get category name for display
+						$category_name = '';
+						foreach ( $portfolio_categories as $cat ) {
+							if ( $cat['slug'] === $project['category'] ) {
+								$category_name = $cat['name'];
+								break;
+							}
+						}
+						?>
+						<div class="swiper-slide">
+						  <div class="portfolio-wrap">
+							<?php if ( ! empty( $project['image'] ) ) : ?>
+								<img src="<?php echo esc_url( $project['image'] ); ?>" class="img-fluid" alt="<?php echo esc_attr( $project['title'] ); ?>" loading="lazy">
+							<?php endif; ?>
+							<div class="portfolio-info">
+							  <div class="content">
+								<?php if ( ! empty( $category_name ) ) : ?>
+									<span class="category"><?php echo esc_html( $category_name ); ?></span>
+								<?php endif; ?>
+								<?php if ( ! empty( $project['title'] ) ) : ?>
+									<h4><?php echo esc_html( $project['title'] ); ?></h4>
+								<?php endif; ?>
+								<div class="portfolio-links">
+								  <?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
+									  <a href="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="glightbox" title="<?php echo esc_attr( $project['title'] ); ?>"><i class="bi bi-plus-lg"></i></a>
+								  <?php endif; ?>
+								  <?php if ( ! empty( $project['link'] ) ) : ?>
+									  <a href="<?php echo esc_url( $project['link'] ); ?>" title="More Details"><i class="bi bi-arrow-right"></i></a>
+								  <?php endif; ?>
+								</div>
+							  </div>
+							</div>
+						  </div>
+						</div>
+						<?php
+					endforeach;
+				endif;
+				?>
+			  </div>
+			</div>
+		  </div>
+
+		  <!-- Desktop Portfolio Grid (visible only on desktop) -->
+		  <div class="row gy-4 portfolio-container isotope-container d-none d-lg-block" data-aos="fade-up" data-aos-delay="200">
 
 			<?php
-			$portfolio_projects = get_option( 'portfolio_projects', array(
-				array(
-					'title' => 'Capturing Moments',
-					'category' => 'photography',
-					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
-					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
-					'description' => 'Photography project showcasing beautiful moments',
-					'link' => 'portfolio-details.html'
-				),
-				array(
-					'title' => 'Woodcraft Design',
-					'category' => 'design',
-					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
-					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-2.webp',
-					'description' => 'Web design project for woodcraft business',
-					'link' => 'portfolio-details.html'
-				),
-				array(
-					'title' => 'Classic Beauty',
-					'category' => 'automotive',
-					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
-					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-2.webp',
-					'description' => 'Automotive photography project',
-					'link' => 'portfolio-details.html'
-				),
-				array(
-					'title' => 'Natural Growth',
-					'category' => 'nature',
-					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
-					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-4.webp',
-					'description' => 'Nature photography project',
-					'link' => 'portfolio-details.html'
-				),
-				array(
-					'title' => 'Urban Stories',
-					'category' => 'photography',
-					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
-					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
-					'description' => 'Urban photography storytelling',
-					'link' => 'portfolio-details.html'
-				),
-				array(
-					'title' => 'Digital Experience',
-					'category' => 'design',
-					'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
-					'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
-					'description' => 'Digital design experience project',
-					'link' => 'portfolio-details.html'
-				)
-			) );
-			
-			$initial_projects = get_option( 'portfolio_initial_projects', 6 );
-			$total_projects = count( $portfolio_projects );
-			
-			// Randomize the projects for the initial display
-			$shuffled_projects = $portfolio_projects;
-			shuffle( $shuffled_projects );
-			
 			if ( ! empty( $shuffled_projects ) ) :
 				// Show all projects initially (they will be filtered by JavaScript)
 				foreach ( $shuffled_projects as $index => $project ) :
@@ -889,14 +945,7 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 
 		  </div><!-- End Portfolio Container -->
 		  
-		  <!-- View More Button (only visible on All Projects tab) -->
-		  <?php if ( $total_projects > $initial_projects ) : ?>
-		  <div class="text-center mt-4" id="portfolio-view-more-container" style="display: none;">
-			<button type="button" class="btn btn-primary" id="portfolio-view-more-btn">
-				View More Projects
-			</button>
-		  </div>
-		  <?php endif; ?>
+
 		</div>
 	  </div>
 
@@ -1215,7 +1264,8 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 
   <div class="container">
 
-	<div class="testimonial-masonry">
+	<!-- Desktop Testimonials Grid (visible only on desktop) -->
+	<div class="testimonial-masonry d-none d-xl-block">
 
 	  <?php
 	  // Testimonial 1
@@ -1397,6 +1447,96 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 	  </div>
 	  <?php endif; ?>
 
+	</div>
+
+	<!-- Mobile & Tablet Testimonials Vertical Slider (visible on mobile and tablet) -->
+	<div class="testimonial-mobile-slider d-xl-none" data-aos="fade-up" data-aos-delay="200">
+	  <div class="swiper testimonial-swiper">
+		<!-- Pagination Dots -->
+		<div class="swiper-pagination"></div>
+		
+		<div class="swiper-wrapper">
+		  <?php
+		  // Create array of testimonials for mobile slider
+		  $testimonials = array(
+			array(
+				'content' => $testimonial_1_content,
+				'name' => $testimonial_1_name,
+				'position' => $testimonial_1_position,
+				'image' => $testimonial_1_image,
+				'highlight' => $testimonial_1_highlight
+			),
+			array(
+				'content' => $testimonial_2_content,
+				'name' => $testimonial_2_name,
+				'position' => $testimonial_2_position,
+				'image' => $testimonial_2_image,
+				'highlight' => $testimonial_2_highlight
+			),
+			array(
+				'content' => $testimonial_3_content,
+				'name' => $testimonial_3_name,
+				'position' => $testimonial_3_position,
+				'image' => $testimonial_3_image,
+				'highlight' => $testimonial_3_highlight
+			),
+			array(
+				'content' => $testimonial_4_content,
+				'name' => $testimonial_4_name,
+				'position' => $testimonial_4_position,
+				'image' => $testimonial_4_image,
+				'highlight' => $testimonial_4_highlight
+			),
+			array(
+				'content' => $testimonial_5_content,
+				'name' => $testimonial_5_name,
+				'position' => $testimonial_5_position,
+				'image' => $testimonial_5_image,
+				'highlight' => $testimonial_5_highlight
+			),
+			array(
+				'content' => $testimonial_6_content,
+				'name' => $testimonial_6_name,
+				'position' => $testimonial_6_position,
+				'image' => $testimonial_6_image,
+				'highlight' => $testimonial_6_highlight
+			)
+		  );
+		  
+		  // Filter out empty testimonials
+		  $testimonials = array_filter($testimonials, function($testimonial) {
+			return !empty($testimonial['content']) && !empty($testimonial['name']);
+		  });
+		  
+		  if ( ! empty( $testimonials ) ) :
+			foreach ( $testimonials as $testimonial ) :
+				$highlight_class = $testimonial['highlight'] ? ' highlight' : '';
+				?>
+				<div class="swiper-slide">
+				  <div class="testimonial-wrap">
+					<div class="testimonial-content">
+					  <div class="quote-pattern">
+						<i class="bi bi-quote"></i>
+					  </div>
+					  <p><?php echo esc_html( $testimonial['content'] ); ?></p>
+					  <div class="client-info">
+						<div class="client-image">
+						  <img src="<?php echo esc_url( $testimonial['image'] ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>">
+						</div>
+						<div class="client-details">
+						  <h3><?php echo esc_html( $testimonial['name'] ); ?></h3>
+						  <span class="position"><?php echo esc_html( $testimonial['position'] ); ?></span>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<?php
+			endforeach;
+		  endif;
+		  ?>
+		</div>
+	  </div>
 	</div>
 
   </div>

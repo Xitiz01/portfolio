@@ -187,8 +187,42 @@ function portfolio_contact_tab_content() {
 				<label for="contact_form_action">Form Action URL</label>
 			</th>
 			<td>
-				<input type="url" id="contact_form_action" name="contact_form_action" value="<?php echo esc_url( get_option( 'contact_form_action', 'forms/contact.php' ) ); ?>" class="regular-text">
-				<p class="description">Enter the form action URL for the default contact form (only used if no shortcode is provided)</p>
+				<input type="text" id="contact_form_action" name="contact_form_action" value="<?php echo esc_attr( get_option( 'contact_form_action', 'forms/contact.php' ) ); ?>" class="regular-text" placeholder="forms/contact.php or #contact">
+				<p class="description">Enter the form action URL for the default contact form (only used if no shortcode is provided). You can use a file path, full URL, or anchor like #contact.</p>
+			</td>
+		</tr>
+
+		<!-- Footer Options -->
+		<tr>
+			<th scope="row" colspan="2">
+				<h3 style="margin: 0; padding: 10px 0; border-bottom: 1px solid #ddd; color: #0073aa;">Footer Settings</h3>
+			</th>
+		</tr>
+		<tr>
+			<th scope="row">
+				<label for="footer_copyright_text">Copyright Text</label>
+			</th>
+			<td>
+				<input type="text" id="footer_copyright_text" name="footer_copyright_text" value="<?php echo esc_attr( get_option( 'footer_copyright_text', '© Copyright iPortfolio All Rights Reserved' ) ); ?>" class="regular-text">
+				<p class="description">Enter the copyright text for the footer</p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">
+				<label for="footer_designed_by">Designed By Text</label>
+			</th>
+			<td>
+				<input type="text" id="footer_designed_by" name="footer_designed_by" value="<?php echo esc_attr( get_option( 'footer_designed_by', 'Designed by Kshitiz Khanal' ) ); ?>" class="regular-text">
+				<p class="description">Enter the "Designed by" text (e.g., "Designed by Your Name")</p>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">
+				<label for="footer_designed_by_url">Designed By URL</label>
+			</th>
+			<td>
+				<input type="text" id="footer_designed_by_url" name="footer_designed_by_url" value="<?php echo esc_attr( get_option( 'footer_designed_by_url', '#' ) ); ?>" class="regular-text" placeholder="https://yourwebsite.com or #">
+				<p class="description">Enter the URL for the "Designed by" link (use # for no link)</p>
 			</td>
 		</tr>
 	</table>
@@ -256,6 +290,37 @@ function portfolio_save_contact_options() {
 		update_option( 'contact_form_shortcode', sanitize_text_field( $_POST['contact_form_shortcode'] ) );
 	}
 	if ( isset( $_POST['contact_form_action'] ) ) {
-		update_option( 'contact_form_action', esc_url_raw( $_POST['contact_form_action'] ) );
+		$form_action = trim( $_POST['contact_form_action'] );
+		
+		// Allow empty values, anchors (#), and valid URLs
+		if ( empty( $form_action ) || $form_action === '#' || strpos( $form_action, '#' ) === 0 ) {
+			// Allow empty, #, or anchor values
+			update_option( 'contact_form_action', $form_action );
+		} else {
+			// Validate and sanitize URLs
+			$sanitized_url = esc_url_raw( $form_action );
+			if ( ! empty( $sanitized_url ) ) {
+				update_option( 'contact_form_action', $sanitized_url );
+			} else {
+				// If esc_url_raw fails, store as plain text (for file paths)
+				update_option( 'contact_form_action', sanitize_text_field( $form_action ) );
+			}
+		}
+	}
+
+	// Footer Options
+	if ( isset( $_POST['footer_copyright_text'] ) ) {
+		update_option( 'footer_copyright_text', sanitize_text_field( $_POST['footer_copyright_text'] ) );
+	}
+	if ( isset( $_POST['footer_designed_by'] ) ) {
+		update_option( 'footer_designed_by', sanitize_text_field( $_POST['footer_designed_by'] ) );
+	}
+	if ( isset( $_POST['footer_designed_by_url'] ) ) {
+		$designed_by_url = trim( $_POST['footer_designed_by_url'] );
+		if ( empty( $designed_by_url ) || $designed_by_url === '#' ) {
+			update_option( 'footer_designed_by_url', '#' );
+		} else {
+			update_option( 'footer_designed_by_url', esc_url_raw( $designed_by_url ) );
+		}
 	}
 } 

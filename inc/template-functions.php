@@ -130,17 +130,24 @@ if (! function_exists('portfolio_footer_bottom')) {
    */
   function portfolio_footer_bottom()
   {
+    // Get footer options
+    $copyright_text = get_option( 'footer_copyright_text', '© Copyright iPortfolio All Rights Reserved' );
+    $designed_by_text = get_option( 'footer_designed_by', 'Designed by Kshitiz Khanal' );
+    $designed_by_url = get_option( 'footer_designed_by_url', '#' );
+    
     ?>
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
+        <p><?php echo wp_kses_post( $copyright_text ); ?></p>
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        <?php if ( ! empty( $designed_by_text ) ) : ?>
+          <?php if ( $designed_by_url && $designed_by_url !== '#' ) : ?>
+            <?php echo esc_html( str_replace( 'Designed by ', '', $designed_by_text ) ); ?> <a href="<?php echo esc_url( $designed_by_url ); ?>"><?php echo esc_html( str_replace( 'Designed by ', '', $designed_by_text ) ); ?></a>
+          <?php else : ?>
+            <?php echo esc_html( $designed_by_text ); ?>
+          <?php endif; ?>
+        <?php endif; ?>
       </div>
     </div>
     <?php

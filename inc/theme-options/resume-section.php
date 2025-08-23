@@ -108,6 +108,15 @@ function portfolio_resume_tab_content() {
 				<p class="description">Enter your LinkedIn profile URL</p>
 			</td>
 		</tr>
+		<tr>
+			<th scope="row">
+				<label for="resume_linkedin_display">LinkedIn Display Text</label>
+			</th>
+			<td>
+				<input type="text" id="resume_linkedin_display" name="resume_linkedin_display" value="<?php echo esc_attr( get_option( 'resume_linkedin_display', 'Kshitiz Khanal' ) ); ?>" class="regular-text">
+				<p class="description">Enter the text to display instead of the full URL (e.g., "Kshitiz Khanal" or "LinkedIn Profile")</p>
+			</td>
+		</tr>
 		
 		<!-- Technical Skills -->
 		<tr>
@@ -444,6 +453,9 @@ function portfolio_save_resume_options() {
 	}
 	if ( isset( $_POST['resume_linkedin'] ) ) {
 		update_option( 'resume_linkedin', esc_url_raw( $_POST['resume_linkedin'] ) );
+	}
+	if ( isset( $_POST['resume_linkedin_display'] ) ) {
+		update_option( 'resume_linkedin_display', sanitize_text_field( $_POST['resume_linkedin_display'] ) );
 	}
 	
 	// Technical Skills

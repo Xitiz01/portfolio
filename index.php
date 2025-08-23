@@ -492,7 +492,11 @@ get_header();
 				<li><i class="bi bi-phone"></i> <?php echo esc_html( get_option( 'resume_phone' ) ); ?></li>
 			<?php endif; ?>
 			<?php if ( get_option( 'resume_linkedin' ) ) : ?>
-				<li><i class="bi bi-linkedin"></i> <?php echo esc_html( get_option( 'resume_linkedin' ) ); ?></li>
+				<li><i class="bi bi-linkedin"></i> 
+					<a href="<?php echo esc_url( get_option( 'resume_linkedin' ) ); ?>" target="_blank" rel="noopener noreferrer">
+						<?php echo esc_html( get_option( 'resume_linkedin_display', 'Kshitiz Khanal' ) ); ?>
+					</a>
+				</li>
 			<?php endif; ?>
 		  </ul>
 

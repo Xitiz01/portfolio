@@ -73,7 +73,6 @@ jQuery(document).ready(function($) {
 	// Function to force isotope reload for better grid handling - optimized
 	function forceIsotopeReload() {
 		if (isAnimating) return; // Prevent multiple simultaneous calls
-		
 		isAnimating = true;
 		setTimeout(function() {
 			if ($portfolioContainer.hasClass('isotope-container')) {

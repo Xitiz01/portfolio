@@ -870,6 +870,105 @@ section,
   }
 }
 
+/* 14-inch laptop and smaller screens */
+@media (max-width: 1366px) {
+  .hero .hero-text h1 {
+    font-size: 48px;
+    line-height: 1.1;
+  }
+
+  .hero .hero-text h2 {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+
+  .hero .hero-text .lead {
+    font-size: 19px;
+    line-height: 1.3;
+  }
+
+  .hero .hero-text .description {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .hero .hero-actions .btn {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+
+  .hero .hero-visual .profile-container {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .hero .hero-text h1 {
+    font-size: 52px;
+    line-height: 1.1;
+  }
+
+  .hero .hero-text h2 {
+    font-size: 27px;
+    line-height: 1.2;
+  }
+
+  .hero .hero-text .lead {
+    font-size: 19.5px;
+    line-height: 1.3;
+  }
+
+  .hero .hero-text .description {
+    font-size: 17.5px;
+    line-height: 1.5;
+  }
+
+  .hero .hero-actions .btn {
+    padding: 15px 30px;
+    font-size: 15.5px;
+  }
+
+  .hero .hero-visual .profile-container {
+    width: 340px;
+    height: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero .hero-text h1 {
+    font-size: 36px;
+    line-height: 1.1;
+  }
+
+  .hero .hero-text h2 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .hero .hero-text .lead {
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
+  .hero .hero-text .description {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .hero .hero-actions .btn {
+    padding: 10px 20px;
+    font-size: 13px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .hero .hero-visual .profile-container {
+    width: 250px;
+    height: 250px;
+  }
+}
+
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
@@ -1440,12 +1539,196 @@ section,
 .resume .resume-side .contact-info li {
   margin-bottom: 1rem;
   color: var(--default-color);
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  margin-left: 0;
 }
 
 .resume .resume-side .contact-info li i {
   width: 25px;
   color: var(--accent-color);
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  text-align: center;
+  margin-left: 0;
+}
+
+.resume .resume-side .contact-info li span,
+.resume .resume-side .contact-info li a {
+  margin-left: 0;
+  padding-left: 0;
+  text-indent: 0;
+}
+
+/* Force remove all left spacing from contact info text */
+.resume .resume-side .contact-info li * {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  text-indent: 0 !important;
+}
+
+/* Ensure the text content starts immediately after icon */
+.resume .resume-side .contact-info li {
+  text-indent: 0;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Remove any inherited left spacing */
+.resume .resume-side .contact-info {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Style LinkedIn link */
+.resume .resume-side .contact-info li a {
+  color: var(--default-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.resume .resume-side .contact-info li a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+
+
+/* Override Bootstrap list-unstyled and any other list styling */
+.resume .resume-side .contact-info.list-unstyled,
+.resume .resume-side ul.contact-info {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  list-style: none !important;
+}
+
+/* Target the specific list items more aggressively */
+.resume .resume-side .contact-info.list-unstyled li,
+.resume .resume-side ul.contact-info li {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  text-indent: 0 !important;
+  list-style: none !important;
+}
+
+/* Responsive fixes for smaller screens */
+@media (max-width: 1366px) {
+  .resume .resume-side .contact-info li {
+    font-size: 0.9rem;
+  }
+  
+  .resume .resume-side .contact-info li i {
+    width: 20px;
+    margin-right: 0.5rem;
+  }
+}
+
+/* Mobile Portfolio Slider Styles */
+.portfolio-mobile-slider {
+  margin-bottom: 2rem;
+}
+
+.portfolio-mobile-slider .swiper {
+  padding: 0 20px;
+  overflow: visible;
+}
+
+.portfolio-mobile-slider .swiper-slide {
+  width: 85%;
+  margin-right: 20px;
+  transition: all 0.3s ease;
+}
+
+.portfolio-mobile-slider .swiper-slide-active {
+  transform: scale(1);
+  z-index: 2;
+}
+
+.portfolio-mobile-slider .swiper-slide-next {
+  transform: scale(0.9);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.portfolio-mobile-slider .swiper-slide-prev {
+  transform: scale(0.9);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.portfolio-mobile-slider .portfolio-wrap {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.portfolio-mobile-slider .swiper-slide-active .portfolio-wrap {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* Responsive adjustments for mobile slider */
+@media (max-width: 768px) {
+  .portfolio-mobile-slider .swiper {
+    padding: 0 15px;
+  }
+  
+  .portfolio-mobile-slider .swiper-slide {
+    width: 80%;
+    margin-right: 15px;
+  }
+  
+  .portfolio-swiper-button-next,
+  .portfolio-swiper-button-prev {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .portfolio-swiper-button-next::after,
+  .portfolio-swiper-button-prev::after {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-mobile-slider .swiper {
+    padding: 0 10px;
+  }
+  
+  .portfolio-mobile-slider .swiper-slide {
+    width: 75%;
+    margin-right: 10px;
+  }
+  
+  .portfolio-swiper-button-next,
+  .portfolio-swiper-button-prev {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .portfolio-swiper-button-next::after,
+  .portfolio-swiper-button-prev::after {
+    font-size: 14px;
+  }
+  
+  .portfolio-swiper-pagination {
+    bottom: -25px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .resume .resume-side .contact-info li {
+    font-size: 0.85rem;
+  }
+  
+  .resume .resume-side .contact-info li i {
+    width: 18px;
+    margin-right: 0.4rem;
+  }
 }
 
 .resume .resume-side .skill-item {
@@ -1909,7 +2192,7 @@ section,
 
 @media (max-width: 768px) {
   .services .service-card {
-    padding: 150px 25px 25px;
+    padding: 40px 25px 25px;
   }
 
   .services .service-card h3 {
@@ -1917,8 +2200,8 @@ section,
   }
 
   .services .service-card .service-icon {
-    position: absolute;
-    top: 40px;
+    /* position: absolute; */
+    /* top: 40px; */
     left: 25px;
   }
 }
@@ -1935,8 +2218,11 @@ section,
 .testimonials .testimonial-masonry {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
   gap: 2rem;
   position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .testimonials .testimonial-masonry::before {
@@ -1949,12 +2235,9 @@ section,
   z-index: -1;
 }
 
-.testimonials .testimonial-item:nth-child(3n-1) {
-  margin-top: 3rem;
-}
-
-.testimonials .testimonial-item:nth-child(3n) {
-  margin-top: 1.5rem;
+/* Remove staggered margins for clean grid layout */
+.testimonials .testimonial-item {
+  margin: 0;
 }
 
 .testimonials .testimonial-item.highlight .testimonial-content {
@@ -1977,6 +2260,9 @@ section,
   position: relative;
   transition: all 0.3s ease;
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .testimonials .testimonial-content:hover {
@@ -2013,7 +2299,7 @@ section,
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: auto;
   padding-top: 1.5rem;
   border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
 }
@@ -2117,6 +2403,104 @@ section,
   height: 100%;
 }
 
+/* Enhanced Contact Information Alignment */
+.contact .info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+/* Fix spacing between Professional Summary and Contact Information */
+.resume-section h3 + p {
+  margin-bottom: 1.5rem !important;
+}
+
+.resume-section h3.mt-4 {
+  margin-top: 1.5rem !important;
+}
+
+/* Reduce gap between sections */
+.resume-section .contact-info {
+  margin-top: 0.5rem;
+}
+
+.resume-section .skills-animation {
+  margin-top: 2rem !important;
+}
+
+.contact .info-item:hover {
+  background-color: color-mix(in srgb, var(--contrast-color), transparent 10%);
+  transform: translateY(-2px);
+}
+
+.contact .info-item:last-child {
+  margin-bottom: 0;
+}
+
+.contact .info-item .icon-box {
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: color-mix(in srgb, var(--contrast-color), transparent 85%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact .info-item .icon-box i {
+  font-size: 1.5rem;
+  color: var(--contrast-color);
+}
+
+.contact .info-item:hover .icon-box {
+  background-color: color-mix(in srgb, var(--contrast-color), transparent 70%);
+  transform: scale(1.1);
+}
+
+.contact .info-item .content {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact .info-item .content h4 {
+  color: var(--contrast-color);
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.contact .info-item .content p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.contact .info-item .content p:last-child {
+  margin-bottom: 0;
+}
+
+.contact .info-item .content a {
+  color: var(--contrast-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  word-break: break-all;
+}
+
+.contact .info-item .content a:hover {
+  color: var(--contrast-color);
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
 .contact .info-box h3 {
   color: var(--contrast-color);
   font-size: 2rem;
@@ -2197,11 +2581,97 @@ section,
   border-radius: 1rem;
   height: 100%;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+/* Enhanced Contact Form Styling */
+.contact .contact-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.contact .contact-form .form-control,
+.contact .contact-form .form-select {
+  padding: 1rem 1.25rem;
+  border: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 0.75rem;
+  background-color: color-mix(in srgb, var(--surface-color) 90%, white 5%);
+  color: var(--default-color);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.contact .contact-form .form-control:focus,
+.contact .contact-form .form-select:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 20%);
+  border-color: var(--accent-color);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.contact .contact-form .form-control::placeholder,
+.contact .contact-form .form-select::placeholder {
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  font-style: italic;
+}
+
+.contact .contact-form textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
 }
 
 @media (max-width: 992px) {
   .contact .contact-form {
     padding: 1.5rem;
+  }
+  
+  .contact .info-box {
+    padding: 2rem;
+  }
+  
+  .contact .info-item {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+  
+  .contact .info-item .icon-box {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .contact .info-item .icon-box i {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact .contact-form {
+    padding: 1.25rem;
+  }
+  
+  .contact .info-box {
+    padding: 1.5rem;
+  }
+  
+  .contact .info-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .contact .info-item .content h4 {
+    font-size: 1.1rem;
+  }
+  
+  .contact .info-item .content p {
+    font-size: 0.9rem;
+  }
+  
+  .contact .contact-form .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
   }
 }
 
@@ -2242,14 +2712,35 @@ section,
 }
 
 .contact .contact-form .btn {
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color) 0%, color-mix(in srgb, var(--accent-color), var(--contrast-color) 10%) 100%);
   color: var(--contrast-color);
-  padding: 1rem 2rem;
+  padding: 1rem 2.5rem;
   border-radius: 2rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  transition: 0.3s;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact .contact-form .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.contact .contact-form .btn:hover::before {
+  left: 100%;
 }
 
 .contact .contact-form .btn i {
@@ -2581,4 +3072,595 @@ section,
 --------------------------------------------------------------*/
 .starter-section {
   /* Add your styles here */
+}
+
+/*--------------------------------------------------------------
+# Mobile Center Alignment for Home Page Sections
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Testimonial Mobile Vertical Slider
+--------------------------------------------------------------*/
+.testimonial-mobile-slider {
+  position: relative;
+  height: 700px;
+  overflow: hidden;
+}
+
+.testimonial-mobile-slider .swiper {
+  height: 100%;
+}
+
+.testimonial-mobile-slider .swiper-slide {
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.testimonial-mobile-slider .testimonial-wrap {
+  background: var(--surface-color);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 90%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* Horizontal Pagination Dots - Right Side */
+.testimonial-mobile-slider .swiper-pagination {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+}
+
+.testimonial-mobile-slider .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.testimonial-mobile-slider .swiper-pagination-bullet:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.testimonial-mobile-slider .swiper-pagination-bullet-active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.testimonial-mobile-slider .testimonial-content {
+  position: relative;
+}
+
+.testimonial-mobile-slider .quote-pattern {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.testimonial-mobile-slider .quote-pattern i {
+  color: var(--contrast-color);
+  font-size: 18px;
+}
+
+.testimonial-mobile-slider .testimonial-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 20px 0;
+  color: var(--default-color);
+}
+
+.testimonial-mobile-slider .client-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.testimonial-mobile-slider .client-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--accent-color);
+}
+
+.testimonial-mobile-slider .client-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-mobile-slider .client-details h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--heading-color);
+}
+
+.testimonial-mobile-slider .client-details .position {
+  font-size: 14px;
+  color: var(--accent-color);
+  display: block;
+  margin-top: 5px;
+}
+
+/* Enhanced sneak peek effect for previous and next slides */
+.testimonial-mobile-slider .swiper-slide-prev .testimonial-wrap {
+  transform: translateY(120px) scale(0.7);
+  opacity: 0.6;
+  filter: blur(1px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.testimonial-mobile-slider .swiper-slide-next .testimonial-wrap {
+  transform: translateY(-120px) scale(0.7);
+  opacity: 0.6;
+  filter: blur(1px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.testimonial-mobile-slider .swiper-slide-active .testimonial-wrap {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  filter: blur(0);
+  z-index: 2;
+}
+
+/* Additional preview slides for better visibility */
+.testimonial-mobile-slider .swiper-slide-prev + .swiper-slide-prev .testimonial-wrap {
+  transform: translateY(180px) scale(0.6);
+  opacity: 0.4;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+.testimonial-mobile-slider .swiper-slide-next + .swiper-slide-next .testimonial-wrap {
+  transform: translateY(-180px) scale(0.6);
+  opacity: 0.4;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .testimonial-mobile-slider {
+    height: 650px;
+  }
+  
+  .testimonial-mobile-slider .swiper-pagination {
+    right: 15px;
+    gap: 10px;
+  }
+  
+  .testimonial-mobile-slider .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Mobile slider shows on mobile/tablet, desktop grid shows on desktop */
+@media (max-width: 1199px) {
+  .testimonial-mobile-slider {
+    display: block;
+  }
+  
+  .testimonial-masonry {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  .testimonial-mobile-slider {
+    display: none;
+  }
+  
+  .testimonial-masonry {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .testimonial-masonry .testimonial-item {
+    margin: 0;
+    width: 100%;
+    height: auto;
+  }
+  
+  .testimonial-masonry .testimonial-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 480px) {
+  .testimonial-mobile-slider .testimonial-wrap {
+    padding: 25px 20px;
+    max-width: 95%;
+  }
+  
+  .testimonial-mobile-slider .testimonial-content p {
+    font-size: 15px;
+    margin: 15px 0;
+  }
+  
+  .testimonial-mobile-slider .client-info {
+    gap: 12px;
+  }
+  
+  .testimonial-mobile-slider .client-image {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .testimonial-mobile-slider .client-details h3 {
+    font-size: 16px;
+  }
+  
+  .testimonial-mobile-slider .client-details .position {
+    font-size: 13px;
+  }
+}
+@media (max-width: 768px) {
+  /* Hero Section */
+  .hero .hero-text {
+    text-align: center;
+  }
+  
+  .hero .hero-text h1,
+  .hero .hero-text h2,
+  .hero .hero-text .lead,
+  .hero .hero-text .description {
+    text-align: center;
+  }
+  
+  .hero .hero-actions {
+    justify-content: center;
+  }
+  
+  .hero .social-links {
+    justify-content: center;
+  }
+  
+  /* About Section */
+  .about .profile-card {
+    text-align: center;
+  }
+  
+  .about .profile-header {
+    justify-content: center;
+  }
+  
+  .about .about-content {
+    text-align: center;
+  }
+  
+  .about .section-header {
+    text-align: center;
+  }
+  
+  .about .stats-grid {
+    justify-content: center;
+  }
+  
+  .about .details-grid {
+    text-align: center;
+  }
+  
+  .about .cta-section {
+    text-align: center;
+  }
+  
+  /* Stats Section */
+  .stats .section-title {
+    text-align: center;
+  }
+  
+  .stats .stats-wrapper {
+    justify-content: center;
+  }
+  
+  /* Skills Section */
+  .skills .section-title {
+    text-align: center;
+  }
+  
+  .skills .skills-category {
+    text-align: center;
+  }
+  
+  /* Resume Section */
+  .resume .section-title {
+    text-align: center;
+  }
+  
+  .resume .resume-side {
+    text-align: center;
+  }
+  
+  .resume .profile-img {
+    text-align: center;
+  }
+  
+  .resume .resume-section {
+    text-align: center;
+  }
+  
+  .resume .resume-item {
+    text-align: center;
+  }
+  
+  /* Portfolio Section */
+  .portfolio .section-title {
+    text-align: center;
+  }
+  
+  .portfolio .filter-sidebar {
+    text-align: center;
+  }
+  
+  .portfolio .portfolio-filters {
+    justify-content: center;
+  }
+  
+  /* Services Section */
+  .services .section-title {
+    text-align: center;
+  }
+  
+  .services .service-header {
+    text-align: center;
+  }
+  
+  .services .service-intro {
+    text-align: center;
+  }
+  
+  .services .service-summary {
+    text-align: center;
+  }
+  
+  .services .service-card {
+    text-align: center;
+  }
+  
+  /* Testimonials Section */
+  .testimonials .section-title {
+    text-align: center;
+  }
+  
+  .testimonials .testimonial-content {
+    text-align: center;
+  }
+  
+  .testimonials .client-info {
+    justify-content: center;
+  }
+  
+  /* Contact Section */
+  .contact .section-title {
+    text-align: center;
+  }
+  
+  .contact .info-box {
+    text-align: center;
+  }
+  
+  .contact .contact-form {
+    text-align: center;
+  }
+  
+  .contact .info-item {
+    text-align: center;
+  }
+  
+  .contact .info-item .content {
+    text-align: center;
+  }
+  
+  /* Center align all buttons and icons */
+  .btn,
+  .service-btn,
+  .cta-section .btn,
+  .hero-actions .btn {
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+  }
+  
+  /* Center align icons in various sections */
+  .hero .social-links a,
+  .about .profile-badge,
+  .stats .icon-wrapper,
+  .skills .skill-item,
+  .resume .resume-side .contact-info li i,
+  .portfolio .portfolio-links a,
+  .services .service-icon,
+  .services .card-action,
+  .testimonials .quote-pattern,
+  .contact .info-item .icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Center align profile images */
+  .about .profile-image,
+  .resume .profile-img {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Center align stats grid items */
+  .about .stats-grid .stat-item {
+    text-align: center;
+  }
+  
+  /* Center align skills progress bars */
+  .skills .skill-item .progress {
+    margin: 0 auto;
+  }
+  
+  /* Center align portfolio filters */
+  .portfolio .portfolio-filters li {
+    text-align: center;
+    margin: 5px;
+  }
+  
+  /* Center align service cards */
+  .services .service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Center align service section icons specifically */
+  .services .service-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  
+  .services .service-icon img,
+  .services .service-icon i {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  /* Center align service section content */
+  .services .service-header {
+    text-align: center;
+  }
+  
+  .services .service-intro .service-heading {
+    text-align: center;
+  }
+  
+  .services .service-summary p {
+    text-align: center;
+  }
+  
+  .services .service-summary .service-btn {
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  /* Center align individual service cards completely */
+  .services .service-card {
+    text-align: center;
+  }
+  
+  .services .service-card h3 {
+    text-align: center;
+  }
+  
+  .services .service-card p {
+    text-align: center;
+  }
+  
+  .services .service-card .card-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  
+  /* Ensure service icons are perfectly centered */
+  .services .service-card .service-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 25px auto;
+  }
+  
+  .services .service-card .service-icon img,
+  .services .service-card .service-icon i {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  /* Center align testimonial items */
+  .testimonials .testimonial-item {
+    text-align: center;
+  }
+  
+  /* Center align contact form elements */
+  .contact .contact-form input,
+  .contact .contact-form textarea {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Additional mobile adjustments */
+  .hero .hero-text h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero .hero-text h2 {
+    font-size: 1.5rem;
+  }
+  
+  .hero .hero-actions .btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .about .stats-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .about .stats-grid .stat-item {
+    margin: 15px 0;
+  }
+  
+  .about .details-grid .detail-row {
+    flex-direction: column;
+  }
+  
+  .about .details-grid .detail-item {
+    margin: 10px 0;
+  }
 }
