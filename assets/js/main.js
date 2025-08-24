@@ -94,38 +94,56 @@
    * Portfolio Mobile Slider
    */
   function initPortfolioSlider() {
-    const portfolioSlider = document.querySelector('.portfolio-swiper');
+    const portfolioSlider = document.querySelector('.portfolio-unified-swiper');
     if (portfolioSlider && typeof Swiper !== 'undefined') {
-      new Swiper('.portfolio-swiper', {
-        slidesPerView: 'auto',
-        spaceBetween: 20,
+      const swiper = new Swiper('.portfolio-unified-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
         centeredSlides: true,
         loop: true,
+        loopAdditionalSlides: 4,
+        loopedSlides: 4,
         autoplay: {
-          delay: 5000,
+          delay: 3000,
           disableOnInteraction: false,
         },
         pagination: {
           el: '.portfolio-swiper-pagination',
           clickable: true,
         },
-        navigation: {
-          nextEl: '.portfolio-swiper-button-next',
-          prevEl: '.portfolio-swiper-button-prev',
-        },
         breakpoints: {
+          // Mobile and Tablet (up to 991px) - Show 1 slide with preview
           320: {
             slidesPerView: 1.2,
             spaceBetween: 15,
+            centeredSlides: true,
           },
           480: {
             slidesPerView: 1.3,
             spaceBetween: 20,
+            centeredSlides: true,
           },
           768: {
-            slidesPerView: 1.5,
+            slidesPerView: 1.4,
             spaceBetween: 25,
+            centeredSlides: true,
           },
+          // Desktop (992px and above) - Show 2 slides with preview
+          992: {
+            slidesPerView: 2,
+            spaceBetween: 40,
+            centeredSlides: false,
+          },
+          1200: {
+            slidesPerView: 2,
+            spaceBetween: 50,
+            centeredSlides: false,
+          },
+          1400: {
+            slidesPerView: 2,
+            spaceBetween: 60,
+            centeredSlides: false,
+          }
         },
         on: {
           init: function() {
@@ -155,9 +173,88 @@
                 slide.classList.add('swiper-slide-prev');
               }
             });
+          },
+          // Prevent slides from disappearing on desktop
+          beforeLoopFix: function() {
+            if (window.innerWidth >= 992) {
+              this.loop = true;
+              this.updateSlidesClasses();
+            }
+          },
+          // Ensure proper slide visibility on desktop
+          afterInit: function() {
+            if (window.innerWidth >= 992) {
+              this.updateSlidesClasses();
+              this.updateSlidesProgress();
+            }
+          },
+          // Handle slide visibility on desktop to prevent disappearing
+          slideChangeTransitionEnd: function() {
+            if (window.innerWidth >= 992) {
+              // Force all slides to be visible
+              this.slides.forEach((slide, index) => {
+                slide.style.visibility = 'visible';
+                slide.style.opacity = '1';
+                slide.style.display = 'flex';
+              });
+            }
+          },
+          // Prevent slides from being hidden by Swiper
+          beforeDestroy: function() {
+            if (window.innerWidth >= 992) {
+              this.slides.forEach((slide) => {
+                slide.style.visibility = 'visible';
+                slide.style.opacity = '1';
+                slide.style.display = 'flex';
+              });
+            }
+          },
+          // Continuous monitoring to prevent slide hiding
+          touchStart: function() {
+            if (window.innerWidth >= 992) {
+              this.forceSlideVisibility();
+            }
+          },
+          touchEnd: function() {
+            if (window.innerWidth >= 992) {
+              this.forceSlideVisibility();
+            }
+          },
+          // Custom function to force slide visibility
+          forceSlideVisibility: function() {
+            this.slides.forEach((slide) => {
+              slide.style.visibility = 'visible';
+              slide.style.opacity = '1';
+              slide.style.display = 'flex';
+            });
           }
         }
       });
+      
+      // Add MutationObserver to continuously monitor slide visibility on desktop
+      if (window.innerWidth >= 992) {
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && 
+                (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
+              // Force all slides to remain visible
+              swiper.slides.forEach((slide) => {
+                slide.style.visibility = 'visible';
+                slide.style.opacity = '1';
+                slide.style.display = 'flex';
+              });
+            }
+          });
+        });
+        
+        // Observe the swiper wrapper for any changes
+        observer.observe(portfolioSlider, {
+          attributes: true,
+          attributeFilter: ['style', 'class'],
+          subtree: true,
+          childList: true
+        });
+      }
     }
   }
 

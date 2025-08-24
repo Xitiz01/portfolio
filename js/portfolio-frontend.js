@@ -223,4 +223,149 @@ jQuery(document).ready(function($) {
 			ensureGridLayout();
 		}, 100); // Reduced delay for faster response
 	});
+	
+	// Initialize testimonial carousel for mobile/tablet
+	
+	// Testimonial Carousel Functionality
+	function initTestimonialCarousel() {
+		var $carousel = $('.testimonial-carousel');
+		
+		if ($carousel.length === 0) {
+			return;
+		}
+		
+		var $slides = $carousel.find('.testimonial-slide');
+		var $prevBtn = $carousel.find('.nav-prev');
+		var $nextBtn = $carousel.find('.nav-next');
+		var currentSlide = 0;
+		var totalSlides = $slides.length;
+		
+		if (totalSlides <= 1) {
+			return;
+		}
+		
+		// Navigation button click handlers
+		$prevBtn.on('click', function(e) {
+			e.preventDefault();
+			navigateSlide('prev');
+		});
+		
+		$nextBtn.on('click', function(e) {
+			e.preventDefault();
+			navigateSlide('next');
+		});
+		
+		function navigateSlide(direction) {
+			var $currentSlide = $slides.eq(currentSlide);
+			var $nextSlide;
+			
+			if (direction === 'prev') {
+				currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+			} else {
+				currentSlide = (currentSlide + 1) % totalSlides;
+			}
+			
+			$nextSlide = $slides.eq(currentSlide);
+			
+			// Update active classes
+			$slides.removeClass('active');
+			$nextSlide.addClass('active');
+			
+			// Smooth slide transition
+			$currentSlide.fadeOut(400, function() {
+				$nextSlide.fadeIn(400);
+			});
+			
+			// Update profile images for the new slide
+			updateProfileImages();
+		}
+		
+		function updateProfileImages() {
+			var $currentSlide = $slides.eq(currentSlide);
+			var $profileImages = $currentSlide.find('.profile-images');
+			
+			// Get testimonial data for current slide
+			var testimonialData = window.testimonialData || [];
+			if (testimonialData.length === 0) return;
+			
+			var currentTestimonial = testimonialData[currentSlide];
+			var prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+			var nextIndex = (currentSlide + 1) % totalSlides;
+			
+			// Update profile images with fade effect
+			$profileImages.find('.profile-prev img').fadeOut(200, function() {
+				$(this).attr('src', testimonialData[prevIndex].image).fadeIn(200);
+			});
+			
+			$profileImages.find('.profile-current img').fadeOut(200, function() {
+				$(this).attr('src', currentTestimonial.image).fadeIn(200);
+			});
+			
+			$profileImages.find('.profile-next img').fadeOut(200, function() {
+				$(this).attr('src', testimonialData[nextIndex].image).fadeIn(200);
+			});
+		}
+		
+			// Auto-advance slides every 8 seconds (slower and more consistent)
+	var autoAdvanceTimer;
+	function startAutoAdvance() {
+		autoAdvanceTimer = setInterval(function() {
+			navigateSlide('next');
+		}, 5000); // Increased from 6 to 5 seconds	
+	}
+	
+	function stopAutoAdvance() {
+		if (autoAdvanceTimer) {
+			clearInterval(autoAdvanceTimer);
+		}
+	}
+	
+	// Start auto-advance and stop on user interaction
+	startAutoAdvance();
+	
+	$carousel.on('mouseenter', stopAutoAdvance);
+	$carousel.on('mouseleave', startAutoAdvance);
+	
+	// Pause auto-advance when navigation buttons are clicked
+	$prevBtn.on('click', function() {
+		stopAutoAdvance();
+		setTimeout(startAutoAdvance, 5000); // Resume after 5 seconds (increased from 3)
+	});
+	
+	$nextBtn.on('click', function() {
+		stopAutoAdvance();
+		setTimeout(startAutoAdvance, 5000); // Resume after 5 seconds (increased from 3)
+	});
+		
+		// Touch/swipe support for mobile
+		var touchStartX = 0;
+		var touchEndX = 0;
+		
+		$carousel.on('touchstart', function(e) {
+			touchStartX = e.originalEvent.touches[0].clientX;
+		});
+		
+		$carousel.on('touchend', function(e) {
+			touchEndX = e.originalEvent.changedTouches[0].clientX;
+			handleSwipe();
+		});
+		
+		function handleSwipe() {
+			var swipeThreshold = 50;
+			var diff = touchStartX - touchEndX;
+			
+			if (Math.abs(diff) > swipeThreshold) {
+				if (diff > 0) {
+					// Swipe left - next slide
+					navigateSlide('next');
+				} else {
+					// Swipe right - previous slide
+					navigateSlide('prev');
+				}
+			}
+		}
+	}
+	
+	// Call the function
+	initTestimonialCarousel();
 });

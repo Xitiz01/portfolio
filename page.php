@@ -751,12 +751,19 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
 	<h2><?php echo esc_html( get_option( 'portfolio_section_title', 'Portfolio' ) ); ?></h2>
-	<p><?php echo esc_html( get_option( 'portfolio_section_description', 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.' ) ); ?></p>
+	<p><?php echo esc_html( get_option( 'portfolio_section_description', 'Showcasing projects that reflect creativity, innovation, and technical expertise.' ) ); ?></p>
   </div><!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
 
 	<?php
+	$portfolio_categories = get_option( 'portfolio_categories', array(
+		array( 'name' => 'Photography', 'slug' => 'photography' ),
+		array( 'name' => 'Design', 'slug' => 'design' ),
+		array( 'name' => 'Automotive', 'slug' => 'automotive' ),
+		array( 'name' => 'Nature', 'slug' => 'nature' )
+	) );
+	
 	$portfolio_projects = get_option( 'portfolio_projects', array(
 		array(
 			'title' => 'Capturing Moments',
@@ -805,150 +812,128 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
 			'description' => 'Digital design experience project',
 			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Creative Branding',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-7.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-7.webp',
+			'description' => 'Brand identity and creative design project',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Modern Architecture',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-10.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-10.webp',
+			'description' => 'Contemporary architectural photography',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Product Showcase',
+			'category' => 'photography',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-1.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-1.webp',
+			'description' => 'Professional product photography',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Web Development',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-5.webp',
+			'description' => 'Modern web development project',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Corporate Identity',
+			'category' => 'design',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-6.webp',
+			'description' => 'Complete corporate branding solution',
+			'link' => 'portfolio-details.html'
+		),
+		array(
+			'title' => 'Event Photography',
+			'category' => 'photography',
+			'image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+			'lightbox_image' => get_template_directory_uri() . '/assets/img/portfolio/portfolio-portrait-1.webp',
+			'description' => 'Professional event coverage',
+			'link' => 'portfolio-details.html'
 		)
 	) );
-	
-	$initial_projects = get_option( 'portfolio_initial_projects', 6 );
-	$total_projects = count( $portfolio_projects );
 	
 	// Randomize the projects for the initial display
 	$shuffled_projects = $portfolio_projects;
 	shuffle( $shuffled_projects );
+	
+	// Ensure we have enough projects for the slider to work properly
+	// If we have less than 8 projects, duplicate some to fill the slider
+	if (count($shuffled_projects) < 8) {
+		$original_count = count($shuffled_projects);
+		$needed_count = 8;
+		
+		// Duplicate projects to reach the minimum count
+		for ($i = 0; $i < ($needed_count - $original_count); $i++) {
+			$shuffled_projects[] = $shuffled_projects[$i % $original_count];
+		}
+	}
+	
+	// Debug: Check if data is being retrieved (remove this after testing)
+	// echo '<pre>Debug - Portfolio Projects: '; print_r($shuffled_projects); echo '</pre>';
+	// echo '<pre>Debug - Portfolio Categories: '; print_r($portfolio_categories); echo '</pre>';
 	?>
 
-	<div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-	  <div class="row">
-		<div class="col-lg-3 filter-sidebar">
-		  <div class="filters-wrapper" data-aos="fade-right" data-aos-delay="150">
-			<ul class="portfolio-filters isotope-filters">
-			  <?php
-			  $portfolio_categories = get_option( 'portfolio_categories', array(
-				  array( 'name' => 'Photography', 'slug' => 'photography' ),
-				  array( 'name' => 'Design', 'slug' => 'design' ),
-				  array( 'name' => 'Automotive', 'slug' => 'automotive' ),
-				  array( 'name' => 'Nature', 'slug' => 'nature' )
-			  ) );
-			  
-			  // First category is always "All Projects"
-			  if ( ! empty( $portfolio_categories ) ) : ?>
-				  <li data-filter="*" class="filter-active">All Projects</li>
-				  <?php foreach ( $portfolio_categories as $category ) : ?>
-					  <li data-filter=".filter-<?php echo esc_attr( $category['slug'] ); ?>"><?php echo esc_html( $category['name'] ); ?></li>
-				  <?php endforeach; ?>
-			  <?php endif; ?>
-			</ul>
-		  </div>
-		</div>
-
-		<div class="col-lg-9">
-		  <!-- Mobile Portfolio Slider (visible only on mobile) -->
-		  <div class="portfolio-mobile-slider d-lg-none" data-aos="fade-up" data-aos-delay="200">
-			<div class="swiper portfolio-swiper">
-			  <div class="swiper-wrapper">
-				<?php
-				if ( ! empty( $shuffled_projects ) ) :
-					foreach ( $shuffled_projects as $index => $project ) :
-						// Get category name for display
-						$category_name = '';
-						foreach ( $portfolio_categories as $cat ) {
-							if ( $cat['slug'] === $project['category'] ) {
-								$category_name = $cat['name'];
-								break;
-							}
-						}
-						?>
-						<div class="swiper-slide">
-						  <div class="portfolio-wrap">
-							<?php if ( ! empty( $project['image'] ) ) : ?>
-								<img src="<?php echo esc_url( $project['image'] ); ?>" class="img-fluid" alt="<?php echo esc_attr( $project['title'] ); ?>" loading="lazy">
+	<!-- Unified Portfolio Slider for All Devices -->
+	<div class="portfolio-unified-slider" data-aos="fade-up" data-aos-delay="200">
+	  <div class="swiper portfolio-unified-swiper">
+		<div class="swiper-wrapper">
+		  <?php
+		  if ( ! empty( $shuffled_projects ) ) :
+			  foreach ( $shuffled_projects as $index => $project ) :
+				  // Get category name for display
+				  $category_name = '';
+				  foreach ( $portfolio_categories as $cat ) {
+					  if ( $cat['slug'] === $project['category'] ) {
+						  $category_name = $cat['name'];
+						  break;
+					  }
+				  }
+				  ?>
+				  <div class="swiper-slide">
+					<div class="portfolio-wrap">
+					  <?php if ( ! empty( $project['image'] ) ) : ?>
+						  <img src="<?php echo esc_url( $project['image'] ); ?>" class="img-fluid" alt="<?php echo esc_attr( $project['title'] ); ?>" loading="lazy">
+					  <?php endif; ?>
+					  <div class="portfolio-info">
+						<div class="content">
+						  <?php if ( ! empty( $category_name ) ) : ?>
+							  <span class="category"><?php echo esc_html( $category_name ); ?></span>
+						  <?php endif; ?>
+						  <?php if ( ! empty( $project['title'] ) ) : ?>
+							  <h4><?php echo esc_html( $project['title'] ); ?></h4>
+						  <?php endif; ?>
+						  <div class="portfolio-links">
+							<?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
+								<a href="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="glightbox" title="<?php echo esc_attr( $project['title'] ); ?>"><i class="bi bi-plus-lg"></i></a>
 							<?php endif; ?>
-							<div class="portfolio-info">
-							  <div class="content">
-								<?php if ( ! empty( $category_name ) ) : ?>
-									<span class="category"><?php echo esc_html( $category_name ); ?></span>
-								<?php endif; ?>
-								<?php if ( ! empty( $project['title'] ) ) : ?>
-									<h4><?php echo esc_html( $project['title'] ); ?></h4>
-								<?php endif; ?>
-								<div class="portfolio-links">
-								  <?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
-									  <a href="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="glightbox" title="<?php echo esc_attr( $project['title'] ); ?>"><i class="bi bi-plus-lg"></i></a>
-								  <?php endif; ?>
-								  <?php if ( ! empty( $project['link'] ) ) : ?>
-									  <a href="<?php echo esc_url( $project['link'] ); ?>" title="More Details"><i class="bi bi-arrow-right"></i></a>
-								  <?php endif; ?>
-								</div>
-							  </div>
-							</div>
-						  </div>
-						</div>
-						<?php
-					endforeach;
-				endif;
-				?>
-			  </div>
-			</div>
-		  </div>
-
-		  <!-- Desktop Portfolio Grid (visible only on desktop) -->
-		  <div class="row gy-4 portfolio-container isotope-container d-none d-lg-block" data-aos="fade-up" data-aos-delay="200">
-
-			<?php
-			if ( ! empty( $shuffled_projects ) ) :
-				// Show all projects initially (they will be filtered by JavaScript)
-				foreach ( $shuffled_projects as $index => $project ) :
-					// Get category name for display
-					$category_name = '';
-					foreach ( $portfolio_categories as $cat ) {
-						if ( $cat['slug'] === $project['category'] ) {
-							$category_name = $cat['name'];
-							break;
-						}
-					}
-					
-					// Add data attributes for filtering and view more functionality
-					$is_initial = $index < $initial_projects ? 'true' : 'false';
-					?>
-					<div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-<?php echo esc_attr( $project['category'] ); ?>" 
-						 data-initial="<?php echo $is_initial; ?>" 
-						 data-index="<?php echo $index; ?>"
-						 style="<?php echo $index >= $initial_projects ? 'display: none;' : ''; ?>">
-					  <div class="portfolio-wrap">
-						<?php if ( ! empty( $project['image'] ) ) : ?>
-							<img src="<?php echo esc_url( $project['image'] ); ?>" class="img-fluid" alt="<?php echo esc_attr( $project['title'] ); ?>" loading="lazy">
-						<?php endif; ?>
-						<div class="portfolio-info">
-						  <div class="content">
-							<?php if ( ! empty( $category_name ) ) : ?>
-								<span class="category"><?php echo esc_html( $category_name ); ?></span>
+							<?php if ( ! empty( $project['link'] ) ) : ?>
+								<a href="<?php echo esc_url( $project['link'] ); ?>" title="More Details"><i class="bi bi-arrow-right"></i></a>
 							<?php endif; ?>
-							<?php if ( ! empty( $project['title'] ) ) : ?>
-								<h4><?php echo esc_html( $project['title'] ); ?></h4>
-							<?php endif; ?>
-							<div class="portfolio-links">
-							  <?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
-								  <a href="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="glightbox" title="<?php echo esc_attr( $project['title'] ); ?>"><i class="bi bi-plus-lg"></i></a>
-							  <?php endif; ?>
-							  <?php if ( ! empty( $project['link'] ) ) : ?>
-								  <a href="<?php echo esc_url( $project['link'] ); ?>" title="More Details"><i class="bi bi-arrow-right"></i></a>
-							  <?php endif; ?>
-							</div>
 						  </div>
 						</div>
 					  </div>
-					</div><!-- End Portfolio Item -->
-					<?php
-				endforeach;
-			endif;
-			?>
-
-		  </div><!-- End Portfolio Container -->
-		  
-
+					</div>
+				  </div>
+				  <?php
+			  endforeach;
+		  endif;
+		  ?>
 		</div>
+		
+		<!-- Pagination -->
+		<div class="swiper-pagination portfolio-swiper-pagination"></div>
 	  </div>
-
 	</div>
 
   </div>
@@ -1449,16 +1434,14 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 
 	</div>
 
-	<!-- Mobile & Tablet Testimonials Vertical Slider (visible on mobile and tablet) -->
-	<div class="testimonial-mobile-slider d-xl-none" data-aos="fade-up" data-aos-delay="200">
-	  <div class="swiper testimonial-swiper">
-		<!-- Pagination Dots -->
-		<div class="swiper-pagination"></div>
-		
-		<div class="swiper-wrapper">
-		  <?php
-		  // Create array of testimonials for mobile slider
-		  $testimonials = array(
+	<!-- Mobile & Tablet Testimonials Centered Layout (visible on mobile and tablet) -->
+	<div class="testimonial-mobile-centered d-xl-none" data-aos="fade-up" data-aos-delay="200">
+		<!-- Debug button - remove after testing -->
+
+	  <div class="testimonial-carousel">
+		<?php
+		// Create array of testimonials for mobile centered layout
+		$testimonials = array(
 			array(
 				'content' => $testimonial_1_content,
 				'name' => $testimonial_1_name,
@@ -1501,41 +1484,108 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 				'image' => $testimonial_6_image,
 				'highlight' => $testimonial_6_highlight
 			)
-		  );
-		  
-		  // Filter out empty testimonials
-		  $testimonials = array_filter($testimonials, function($testimonial) {
+		);
+		
+		// Filter out empty testimonials
+		$testimonials = array_filter($testimonials, function($testimonial) {
 			return !empty($testimonial['content']) && !empty($testimonial['name']);
-		  });
-		  
-		  if ( ! empty( $testimonials ) ) :
-			foreach ( $testimonials as $testimonial ) :
-				$highlight_class = $testimonial['highlight'] ? ' highlight' : '';
-				?>
-				<div class="swiper-slide">
-				  <div class="testimonial-wrap">
-					<div class="testimonial-content">
-					  <div class="quote-pattern">
-						<i class="bi bi-quote"></i>
+		});
+		
+		if ( ! empty( $testimonials ) ) :
+			$total_testimonials = count($testimonials);
+			?>
+			<div class="testimonial-slide active" data-slide="0">
+			  <div class="testimonial-content-centered">
+				<div class="quote-container">
+				  <div class="quote-mark quote-open">"</div>
+				  <div class="quote-text">
+					<?php echo esc_html( $testimonials[0]['content'] ); ?>
+				  </div>
+				  <div class="quote-mark quote-close">"</div>
+				</div>
+				
+				<div class="client-profile-section">
+				  <div class="profile-images">
+					<?php 
+					// Show previous, current, and next profile images
+					$prev_index = ($total_testimonials - 1) % $total_testimonials;
+					$next_index = 1 % $total_testimonials;
+					?>
+					<div class="profile-image profile-prev">
+					  <img src="<?php echo esc_url( $testimonials[$prev_index]['image'] ); ?>" alt="<?php echo esc_attr( $testimonials[$prev_index]['name'] ); ?>">
+					</div>
+					<div class="profile-image profile-current">
+					  <img src="<?php echo esc_url( $testimonials[0]['image'] ); ?>" alt="<?php echo esc_attr( $testimonials[0]['name'] ); ?>">
+					</div>
+					<div class="profile-image profile-next">
+					  <img src="<?php echo esc_url( $testimonials[$next_index]['image'] ); ?>" alt="<?php echo esc_attr( $testimonials[$next_index]['name'] ); ?>">
+					</div>
+				  </div>
+				  
+				  <div class="client-details-centered">
+					<h3 class="client-name"><?php echo esc_html( $testimonials[0]['name'] ); ?></h3>
+					<p class="client-position"><?php echo esc_html( $testimonials[0]['position'] ); ?></p>
+				  </div>
+				</div>
+				
+				<div class="testimonial-navigation">
+				  <button class="nav-arrow nav-prev" data-direction="prev">
+					<i class="bi bi-chevron-left"></i>
+				  </button>
+				  <button class="nav-arrow nav-next" data-direction="next">
+					<i class="bi bi-chevron-right"></i>
+				  </button>
+				</div>
+			  </div>
+			</div>
+			
+			<!-- Hidden slides for JavaScript navigation -->
+			<?php for ( $i = 1; $i < $total_testimonials; $i++ ) : ?>
+				<div class="testimonial-slide" data-slide="<?php echo $i; ?>" style="display: none;">
+				  <div class="testimonial-content-centered">
+					<div class="quote-container">
+					  <div class="quote-mark quote-open">"</div>
+					  <div class="quote-text">
+						<?php echo esc_html( $testimonials[$i]['content'] ); ?>
 					  </div>
-					  <p><?php echo esc_html( $testimonial['content'] ); ?></p>
-					  <div class="client-info">
-						<div class="client-image">
-						  <img src="<?php echo esc_url( $testimonial['image'] ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>">
+					  <div class="quote-mark quote-close">"</div>
+					</div>
+					
+					<div class="client-profile-section">
+					  <div class="profile-images">
+						<?php 
+						$prev_index = ($i - 1 + $total_testimonials) % $total_testimonials;
+						$next_index = ($i + 1) % $total_testimonials;
+						?>
+						<div class="profile-image profile-prev">
+						  <img src="<?php echo esc_url( $testimonials[$prev_index]['image'] ); ?>" alt="<?php echo esc_attr( $testimonials[$prev_index]['name'] ); ?>">
 						</div>
-						<div class="client-details">
-						  <h3><?php echo esc_html( $testimonial['name'] ); ?></h3>
-						  <span class="position"><?php echo esc_html( $testimonial['position'] ); ?></span>
+						<div class="profile-image profile-current">
+						  <img src="<?php echo esc_url( $testimonials[$i]['image'] ); ?>" alt="<?php echo esc_attr( $testimonials[$i]['name'] ); ?>">
+						</div>
+						<div class="profile-image profile-next">
+						  <img src="<?php echo esc_url( $testimonials[$next_index]['image'] ); ?>" alt="<?php echo esc_attr( $testimonials[$next_index]['name'] ); ?>">
 						</div>
 					  </div>
+					  
+					  <div class="client-details-centered">
+						<h3 class="client-name"><?php echo esc_html( $testimonials[$i]['name'] ); ?></h3>
+						<p class="client-position"><?php echo esc_html( $testimonials[$i]['position'] ); ?></p>
+					  </div>
+					</div>
+					
+					<div class="testimonial-navigation">
+					  <button class="nav-arrow nav-prev" data-direction="prev">
+						<i class="bi bi-chevron-left"></i>
+					  </button>
+					  <button class="nav-arrow nav-next" data-direction="next">
+						<i class="bi bi-chevron-right"></i>
+					  </button>
 					</div>
 				  </div>
 				</div>
-				<?php
-			endforeach;
-		  endif;
-		  ?>
-		</div>
+			<?php endfor; ?>
+		<?php endif; ?>
 	  </div>
 	</div>
 
@@ -1548,115 +1598,82 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-	<h2><?php echo esc_html( get_option( 'contact_section_title', 'Contact' ) ); ?></h2>
-	<p><?php echo esc_html( get_option( 'contact_section_description', 'Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit' ) ); ?></p>
+    <h2><?php echo esc_html( get_option( 'contact_section_title', 'Contact' ) ); ?></h2>
+    <p><?php echo esc_html( get_option( 'contact_section_description', 'Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit' ) ); ?></p>
   </div><!-- End Section Title -->
 
   <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-xl-6">
+        <div class="info-box">
+          <h3>Contact Info</h3>
+          <p><?php echo esc_html( get_option( 'contact_info_description', 'Reach out to me. Here are the details you might need to get in touch.' ) ); ?></p>
 
-	<div class="row g-4 g-lg-5">
-	  <div class="col-lg-5">
-		<div class="info-box">
-		  <h3>Contact Info</h3>
-		  <p><?php echo esc_html( get_option( 'contact_info_description', 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.' ) ); ?></p>
+          <div class="info-item">
+            <div class="icon-box">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+            <div class="content">
+              <h4><?php echo esc_html( get_option( 'contact_location_title', 'Location' ) ); ?></h4>
+              <p><?php echo esc_html( get_option( 'contact_location_address_1', 'Kathmandu, Nepal' ) ); ?></p>
+              <p><?php echo esc_html( get_option( 'contact_location_address_2', 'Kirtipur' ) ); ?></p>
+            </div>
+          </div>
 
-		  <div class="info-item">
-			<div class="icon-box">
-			  <i class="bi bi-geo-alt"></i>
-			</div>
-			<div class="content">
-			  <h4><?php echo esc_html( get_option( 'contact_location_title', 'Our Location' ) ); ?></h4>
-			  <p><?php echo esc_html( get_option( 'contact_location_address_1', 'A108 Adam Street' ) ); ?></p>
-			  <p><?php echo esc_html( get_option( 'contact_location_address_2', 'New York, NY 535022' ) ); ?></p>
-			</div>
-		  </div>
+          <div class="info-item">
+            <div class="icon-box">
+              <i class="bi bi-telephone"></i>
+            </div>
+            <div class="content">
+              <h4><?php echo esc_html( get_option( 'contact_phone_title', 'Phone Number' ) ); ?></h4>
+              <p><a href="tel:<?php echo esc_attr( get_option( 'contact_phone_1', '9840368838' ) ); ?>"><?php echo esc_html( get_option( 'contact_phone_1', '9840368838' ) ); ?></a></p>
+              <?php 
+              $phone_2 = get_option( 'contact_phone_2', '' );
+              if ( ! empty( $phone_2 ) ) : ?>
+                <p><a href="tel:<?php echo esc_attr( $phone_2 ); ?>"><?php echo esc_html( $phone_2 ); ?></a></p>
+              <?php endif; ?>
+            </div>
+          </div>
 
-		  <div class="info-item">
-			<div class="icon-box">
-			  <i class="bi bi-telephone"></i>
-			</div>
-			<div class="content">
-			  <h4><?php echo esc_html( get_option( 'contact_phone_title', 'Phone Number' ) ); ?></h4>
-			  <p><?php echo esc_html( get_option( 'contact_phone_1', '+1 5589 55488 55' ) ); ?></p>
-			  <?php 
-			  $phone_2 = get_option( 'contact_phone_2', '' );
-			  if ( ! empty( $phone_2 ) ) : ?>
-				<p><?php echo esc_html( $phone_2 ); ?></p>
-			  <?php endif; ?>
-			</div>
-		  </div>
-
-		  <div class="info-item">
-			<div class="icon-box">
-			  <i class="bi bi-envelope"></i>
-			</div>
-			<div class="content">
-			  <h4><?php echo esc_html( get_option( 'contact_email_title', 'Email Address' ) ); ?></h4>
-			  <p><?php echo esc_html( get_option( 'contact_email_1', 'info@example.com' ) ); ?></p>
-			  <?php 
-			  $email_2 = get_option( 'contact_email_2', '' );
-			  if ( ! empty( $email_2 ) ) : ?>
-				<p><?php echo esc_html( $email_2 ); ?></p>
-			  <?php endif; ?>
-			</div>
-		  </div>
-		</div>
-	  </div>
-
-	  <div class="col-lg-7">
-		<div class="contact-form">
-		  <h3><?php echo esc_html( get_option( 'contact_form_title', 'Get In Touch' ) ); ?></h3>
-		  <p><?php echo esc_html( get_option( 'contact_form_description', 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.' ) ); ?></p>
-
-		  <?php
-		  $contact_form_shortcode = get_option( 'contact_form_shortcode', '' );
-		  
-		  if ( ! empty( $contact_form_shortcode ) ) {
-			// Display the shortcode if provided
-			echo do_shortcode( $contact_form_shortcode );
-		  } else {
-			// Fallback to default form
-			$form_action = get_option( 'contact_form_action', 'forms/contact.php' );
-		  ?>
-		  <form action="<?php echo esc_url( $form_action ); ?>" method="post" class="php-email-form">
-			<div class="row gy-4">
-
-			  <div class="col-md-6">
-				<input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-			  </div>
-
-			  <div class="col-md-6 ">
-				<input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-			  </div>
-
-			  <div class="col-12">
-				<input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-			  </div>
-
-			  <div class="col-12">
-				<textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-			  </div>
-
-			  <div class="col-12 text-center">
-				<div class="loading">Loading</div>
-				<div class="error-message"></div>
-				<div class="sent-message">Your message has been sent. Thank you!</div>
-
-				<button type="submit" class="btn">Send Message</button>
-			  </div>
-
-			</div>
-		  </form>
-		  <?php } ?>
-
-		</div>
-	  </div>
-
-	</div>
-
+          <div class="info-item">
+            <div class="icon-box">
+              <i class="bi bi-envelope"></i>
+            </div>
+            <div class="content">
+              <h4><?php echo esc_html( get_option( 'contact_email_title', 'Email Address' ) ); ?></h4>
+              <p><a href="mailto:<?php echo esc_attr( get_option( 'contact_email_1', 'kshitizkhanal0138@gmail.com' ) ); ?>"><?php echo esc_html( get_option( 'contact_email_1', 'kshitizkhanal0138@gmail.com' ) ); ?></a></p>
+              <?php 
+              $email_2 = get_option( 'contact_email_2', 'kkhanal01@gmail.com' );
+              if ( ! empty( $email_2 ) ) : ?>
+                <p><a href="mailto:<?php echo esc_attr( $email_2 ); ?>"><?php echo esc_html( $email_2 ); ?></a></p>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </section><!-- /Contact Section -->
+
+<!-- Testimonial Data for JavaScript -->
+<script>
+window.testimonialData = <?php 
+	$testimonials_for_js = array();
+	if ( ! empty( $testimonials ) ) {
+		foreach ( $testimonials as $testimonial ) {
+			$testimonials_for_js[] = array(
+				'content' => $testimonial['content'],
+				'name' => $testimonial['name'],
+				'position' => $testimonial['position'],
+				'image' => $testimonial['image']
+			);
+		}
+	}
+	echo json_encode( $testimonials_for_js );
+?>;
+console.log('Testimonial data loaded:', window.testimonialData);
+</script>
 
 </main>
 

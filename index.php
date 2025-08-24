@@ -1373,40 +1373,33 @@ get_header();
 
   <div class="container">
 
-	<div class="row g-4 g-lg-5">
-	  <div class="col-lg-5">
-		<div class="info-box">
+	<div class="row justify-content-center">
+	  <div class="col-lg-10 col-xl-8">
+		<div class="info-box redesigned">
 		  <h3>Contact Info</h3>
-		  <p><?php echo esc_html( get_option( 'contact_info_description', 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.' ) ); ?></p>
+		  <p class="contact-description"><?php echo esc_html( get_option( 'contact_info_description', 'Reach out to me. Here are the details you might need to get in touch.' ) ); ?></p>
 
-		  <div class="info-item">
-			<div class="icon-box">
-			  <i class="bi bi-geo-alt"></i>
+		  <div class="contact-cards">
+			<div class="contact-card">
+			  <div class="card-icon">
+				<i class="bi bi-chat-dots"></i>
+			  </div>
+			  <h4>Speak to me</h4>
+			  <p>This is my portfolio.</p>
+			  <a href="mailto:kshitizkhanal0138@gmail.com" class="contact-link">kshitizkhanal0138@gmail.com</a>
 			</div>
-			<div class="content">
-			  <h4><?php echo esc_html( get_option( 'contact_location_title', 'Our Location' ) ); ?></h4>
-			  <p><?php echo esc_html( get_option( 'contact_location_address_1', 'A108 Adam Street' ) ); ?></p>
-			  <p><?php echo esc_html( get_option( 'contact_location_address_2', 'New York, NY 535022' ) ); ?></p>
-			</div>
-		  </div>
 
-		  <div class="info-item">
-			<div class="icon-box">
-			  <i class="bi bi-telephone"></i>
+			<div class="contact-card">
+			  <div class="card-icon">
+				<i class="bi bi-telephone"></i>
+			  </div>
+			  <h4>Call me</h4>
+			  <p>Get in touch via phone.</p>
+			  <a href="tel:9840368838" class="contact-link">9840368838</a>
 			</div>
-			<div class="content">
-			  <h4><?php echo esc_html( get_option( 'contact_phone_title', 'Phone Number' ) ); ?></h4>
-			  <p><?php echo esc_html( get_option( 'contact_phone_1', '+1 5589 55488 55' ) ); ?></p>
-			  <?php 
-			  $phone_2 = get_option( 'contact_phone_2', '' );
-			  if ( ! empty( $phone_2 ) ) : ?>
-				<p><?php echo esc_html( $phone_2 ); ?></p>
-			  <?php endif; ?>
-			</div>
-		  </div>
 
-		  <div class="info-item">
-			<div class="icon-box">
+			<div class="contact-card">
+			  <div class="card-icon">
 			  <i class="bi bi-envelope"></i>
 			</div>
 			<div class="content">
@@ -1422,54 +1415,7 @@ get_header();
 		</div>
 	  </div>
 
-	  <div class="col-lg-7">
-		<div class="contact-form">
-		  <h3><?php echo esc_html( get_option( 'contact_form_title', 'Get In Touch' ) ); ?></h3>
-		  <p><?php echo esc_html( get_option( 'contact_form_description', 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.' ) ); ?></p>
 
-		  <?php
-		  $contact_form_shortcode = get_option( 'contact_form_shortcode', '' );
-		  
-		  if ( ! empty( $contact_form_shortcode ) ) {
-			// Display the shortcode if provided
-			echo do_shortcode( $contact_form_shortcode );
-		  } else {
-			// Fallback to default form
-			$form_action = get_option( 'contact_form_action', 'forms/contact.php' );
-		  ?>
-		  <form action="<?php echo esc_url( $form_action ); ?>" method="post" class="php-email-form">
-			<div class="row gy-4">
-
-			  <div class="col-md-6">
-				<input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-			  </div>
-
-			  <div class="col-md-6 ">
-				<input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-			  </div>
-
-			  <div class="col-12">
-				<input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-			  </div>
-
-			  <div class="col-12">
-				<textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-			  </div>
-
-			  <div class="col-12 text-center">
-				<div class="loading">Loading</div>
-				<div class="error-message"></div>
-				<div class="sent-message">Your message has been sent. Thank you!</div>
-
-				<button type="submit" class="btn">Send Message</button>
-			  </div>
-
-			</div>
-		  </form>
-		  <?php } ?>
-
-		</div>
-	  </div>
 
 	</div>
 
