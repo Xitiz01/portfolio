@@ -94,146 +94,129 @@
    * Portfolio Mobile Slider
    */
   function initPortfolioSlider() {
-    const portfolioSlider = document.querySelector('.portfolio-unified-swiper');
-    if (portfolioSlider && typeof Swiper !== 'undefined') {
-      const swiper = new Swiper('.portfolio-unified-swiper', {
+    // Initialize mobile/tablet slider
+    const portfolioMobileSlider = document.querySelector('.portfolio-mobile-swiper');
+    if (portfolioMobileSlider && typeof Swiper !== 'undefined') {
+      const mobileSwiper = new Swiper('.portfolio-mobile-swiper', {
+        // Mobile-first approach
         slidesPerView: 1,
-        spaceBetween: 30,
+        spaceBetween: 20,
         loop: true,
         autoplay: {
           delay: 5000,
           disableOnInteraction: false,
         },
-        pagination: {
-          el: '.portfolio-swiper-pagination',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.portfolio-swiper-button-next',
-          prevEl: '.portfolio-swiper-button-prev',
-        },
+        // Center the main slide
+        centeredSlides: true,
+        // Responsive breakpoints
         breakpoints: {
+          // Mobile: 1 slide centered
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 15,
+            centeredSlides: true,
+            width: '85%',
+          },
+          // Small tablet: 1.5 slides with center focus
+          576: {
+            slidesPerView: 1.5,
+            spaceBetween: 20,
+            centeredSlides: true,
+            width: '75%',
+          },
+          // Tablet: 2 slides with center focus
           768: {
             slidesPerView: 2,
-            spaceBetween: 30,
+            spaceBetween: 25,
+            centeredSlides: true,
+            width: '70%',
           },
-          1024: {
-            slidesPerView: 3,
+          // Large tablet: 2.5 slides with center focus
+          992: {
+            slidesPerView: 2.5,
             spaceBetween: 30,
-          },
+            centeredSlides: true,
+            width: '65%',
+          }
         },
-      });
-
-      // Add custom classes for styling
-      swiper.on('slideChange', function () {
-        // Remove all classes from all slides
-        swiper.slides.forEach((slide) => {
-          slide.classList.remove('swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
-        });
-
-        // Add classes to current and adjacent slides
-        const activeIndex = swiper.activeIndex;
-        const slides = swiper.slides;
-
-        // Active slide
-        if (slides[activeIndex]) {
-          slides[activeIndex].classList.add('swiper-slide-active');
-        }
-
-        // Next slide
-        const nextIndex = (activeIndex + 1) % slides.length;
-        if (slides[nextIndex]) {
-          slides[nextIndex].classList.add('swiper-slide-next');
-        }
-
-        // Previous slide
-        const prevIndex = (activeIndex - 1 + slides.length) % slides.length;
-        if (slides[prevIndex]) {
-          slides[prevIndex].classList.add('swiper-slide-prev');
-        }
-      });
-
-      // Initial call to set classes
-      swiper.emit('slideChange');
-
-      // Prevent slides from being hidden by Swiper
-      swiper.slides.forEach((slide) => {
-        slide.style.display = 'block';
-      });
-
-      // Observe the swiper wrapper for any changes
-      const observer = new MutationObserver(() => {
-        swiper.slides.forEach((slide) => {
-          slide.style.display = 'block';
-        });
-      });
-
-      observer.observe(portfolioSlider, {
-        childList: true,
-        subtree: true,
-      });
-    }
-  }
-
-  /**
-   * Services Slider
-   */
-  function initServicesSlider() {
-    const servicesSlider = document.querySelector('.services-swiper');
-    console.log('Services slider element:', servicesSlider);
-    
-    if (!servicesSlider) {
-      console.log('Services slider not found');
-      return;
-    }
-    
-    if (typeof Swiper === 'undefined') {
-      console.log('Swiper not loaded, waiting...');
-      // Wait for Swiper to load
-      setTimeout(() => {
-        if (typeof Swiper !== 'undefined') {
-          console.log('Swiper is available, initializing...');
-          initServicesSlider();
-        }
-      }, 1000);
-      return;
-    }
-    
-    console.log('Swiper is available, initializing services slider...');
-    
-    try {
-      const swiper = new Swiper('.services-swiper', {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
+        // Enable touch/swipe on mobile
+        allowTouchMove: true,
+        // Prevent slides from being hidden
+        watchOverflow: false,
+        // Responsive behavior
+        watchSlidesProgress: true,
+        // Smooth transitions
+        speed: 600,
+        // Auto height adjustment
+        autoHeight: true,
+        // Prevent slides from disappearing
+        loopAdditionalSlides: 2,
+        // Ensure proper slide rendering
+        observer: true,
+        observeParents: true,
+        // Navigation arrows (optional)
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
         },
+        // Pagination dots (optional)
         pagination: {
           el: '.swiper-pagination',
           clickable: true,
           dynamicBullets: true,
         },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+      });
+    }
+
+    // Initialize view more functionality for desktop grid
+    const viewMoreBtn = document.getElementById('portfolio-view-more-btn');
+    const remainingProjects = document.querySelector('.portfolio-remaining-projects');
+    const viewMoreText = document.querySelector('.portfolio-view-more-text');
+    const viewLessText = document.querySelector('.portfolio-view-less-text');
+
+    if (viewMoreBtn && remainingProjects) {
+      viewMoreBtn.addEventListener('click', function() {
+        if (remainingProjects.classList.contains('show')) {
+          remainingProjects.classList.remove('show');
+          viewMoreText.style.display = 'inline';
+          viewLessText.style.display = 'none';
+        } else {
+          remainingProjects.classList.add('show');
+          viewMoreText.style.display = 'none';
+          viewLessText.style.display = 'inline';
+          
+          // Smooth scroll to the newly shown projects
+          remainingProjects.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }
+      });
+    }
+  }
+
+  /**
+   * Services Mobile Slider
+   */
+  function initServicesSlider() {
+    // Initialize mobile/tablet slider
+    const servicesMobileSlider = document.querySelector('.services-mobile-swiper');
+    if (servicesMobileSlider && typeof Swiper !== 'undefined') {
+      const mobileSwiper = new Swiper('.services-mobile-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
         },
+        // Show previews of previous and next slides
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loopedSlides: 3,
         breakpoints: {
-          576: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
           768: {
-            slidesPerView: 2,
-            spaceBetween: 25,
-          },
-          992: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-          1200: {
-            slidesPerView: 4,
+            slidesPerView: 'auto',
             spaceBetween: 30,
           },
         },
@@ -252,95 +235,41 @@
         // Ensure proper slide rendering
         observer: true,
         observeParents: true,
-        // Fix for rendering issues
-        on: {
-          init: function() {
-            console.log('Services slider initialized with', this.slides.length, 'slides');
-            this.updateSlidesClasses();
-            this.updateSlidesProgress();
-          },
-          slideChange: function() {
-            this.updateSlidesClasses();
-            this.updateSlidesProgress();
-          },
-          resize: function() {
-            this.updateSlidesClasses();
-            this.updateSlidesProgress();
-          }
+      });
+    }
+
+    // Initialize view more functionality for desktop grid
+    const viewMoreBtn = document.getElementById('services-view-more');
+    const remainingServices = document.querySelector('.services-remaining');
+    const viewMoreText = document.querySelector('.services-view-more-text');
+    const viewLessText = document.querySelector('.services-view-less-text');
+
+    if (viewMoreBtn && remainingServices) {
+      viewMoreBtn.addEventListener('click', function() {
+        if (remainingServices.style.display === 'none' || remainingServices.style.display === '') {
+          // Show more services
+          remainingServices.style.display = 'block';
+          viewMoreText.style.display = 'none';
+          viewLessText.style.display = 'inline';
+          
+          // Smooth scroll to the newly shown services
+          remainingServices.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        } else {
+          // Hide services
+          remainingServices.style.display = 'none';
+          viewMoreText.style.display = 'inline';
+          viewLessText.style.display = 'none';
+          
+          // Smooth scroll back to the view more button
+          viewMoreBtn.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
         }
       });
-
-      // Add custom classes for styling
-      swiper.on('slideChange', function () {
-        // Remove all classes from all slides
-        swiper.slides.forEach((slide) => {
-          slide.classList.remove('swiper-slide-active', 'swiper-slide-next', 'swiper-slide-prev');
-        });
-
-        // Add classes to current and adjacent slides
-        const activeIndex = swiper.activeIndex;
-        const slides = swiper.slides;
-
-        // Active slide
-        if (slides[activeIndex]) {
-          slides[activeIndex].classList.add('swiper-slide-active');
-        }
-
-        // Next slide
-        const nextIndex = (activeIndex + 1) % slides.length;
-        if (slides[nextIndex]) {
-          slides[nextIndex].classList.add('swiper-slide-next');
-        }
-
-        // Previous slide
-        const prevIndex = (activeIndex - 1 + slides.length) % slides.length;
-        if (slides[prevIndex]) {
-          slides[prevIndex].classList.add('swiper-slide-prev');
-        }
-      });
-
-      // Initial call to set classes
-      swiper.emit('slideChange');
-
-      // Prevent slides from being hidden by Swiper
-      swiper.slides.forEach((slide) => {
-        slide.style.display = 'block';
-        slide.style.visibility = 'visible';
-        slide.style.opacity = '1';
-      });
-
-      // Observe the swiper wrapper for any changes
-      const observer = new MutationObserver(() => {
-        swiper.slides.forEach((slide) => {
-          slide.style.display = 'block';
-          slide.style.visibility = 'visible';
-          slide.style.opacity = '1';
-        });
-      });
-
-      observer.observe(servicesSlider, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: ['style', 'class']
-      });
-
-      // Force update on window resize
-      window.addEventListener('resize', () => {
-        swiper.update();
-        swiper.updateSlidesClasses();
-        swiper.updateSlidesProgress();
-      });
-
-      // Add initialized class for CSS fallback
-      servicesSlider.closest('.services-swiper-container').classList.add('swiper-initialized');
-
-      console.log('Services slider created:', swiper);
-      
-      return swiper;
-      
-    } catch (error) {
-      console.error('Error initializing services slider:', error);
     }
   }
 
@@ -507,6 +436,36 @@
         }
       });
     });
+  } else {
+    // Fallback for when Waypoint is not available (mobile/tablet)
+    function animateSkillsFallback() {
+      let progressBars = document.querySelectorAll('.progress .progress-bar');
+      progressBars.forEach(el => {
+        const percentage = el.getAttribute('aria-valuenow');
+        if (percentage && !el.style.width) {
+          el.style.width = percentage + '%';
+        }
+      });
+    }
+    
+    // Try to animate on different events for better mobile support
+    document.addEventListener('DOMContentLoaded', animateSkillsFallback);
+    window.addEventListener('load', animateSkillsFallback);
+    window.addEventListener('scroll', animateSkillsFallback);
+    
+    // Also animate when skills section comes into view
+    const skillsSection = document.querySelector('#skills');
+    if (skillsSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateSkillsFallback();
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      observer.observe(skillsSection);
+    }
   }
 
   /**
@@ -575,11 +534,6 @@
   window.addEventListener("load", initSwiper);
 
   /**
-   * Init portfolio mobile slider
-   */
-  window.addEventListener("load", initPortfolioSlider);
-
-  /**
    * Init services mobile slider
    */
   window.addEventListener("load", initServicesSlider);
@@ -593,15 +547,16 @@
   window.addEventListener("load", () => {
     setTimeout(initServicesSlider, 2000);
   });
-
-  /**
-   * Init testimonial mobile slider
-   */
-  window.addEventListener("load", initTestimonialSlider);
   
-  // Also try to initialize after a delay in case Swiper loads later
-  setTimeout(initTestimonialSlider, 1000);
-  setTimeout(initTestimonialSlider, 2000);
+  /**
+   * Init portfolio grid functionality
+   */
+  window.addEventListener("load", initPortfolioSlider);
+  
+  // Also try to initialize on DOMContentLoaded as a fallback
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(initPortfolioSlider, 100);
+  });
   
   // Debug: Test if function is being called
   console.log('Testimonial slider initialization scheduled');

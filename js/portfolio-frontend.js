@@ -1,12 +1,9 @@
 jQuery(document).ready(function($) {
 	var $portfolioContainer = $('.portfolio-container');
-	var $viewMoreContainer = $('#portfolio-view-more-container');
-	var $viewMoreBtn = $('#portfolio-view-more-btn');
 	var $portfolioItems = $('.portfolio-item');
 	var initialProjectsCount = parseInt($('.portfolio-item[data-initial="true"]').length);
 	var totalProjectsCount = $portfolioItems.length;
 	var currentFilter = '*';
-	var allProjectsShown = false;
 	var isAnimating = false; // Prevent multiple animations
 	
 	// Initialize portfolio functionality
@@ -18,14 +15,6 @@ jQuery(document).ready(function($) {
 		
 		// Set up filter click handlers
 		setupFilters();
-		
-		// Set up view more functionality
-		setupViewMore();
-		
-		// Show view more button if needed and we're on All Projects tab
-		if (totalProjectsCount > initialProjectsCount && currentFilter === '*') {
-			$viewMoreContainer.show();
-		}
 		
 		// Ensure initial grid layout is correct - single call with shorter delay
 		setTimeout(function() {
@@ -135,9 +124,6 @@ jQuery(document).ready(function($) {
 	}
 	
 	function applyFilter(filter) {
-		// Reset view more state
-		allProjectsShown = false;
-		
 		if (filter === '*') {
 			// All Projects tab - show initial projects only
 			$portfolioItems.each(function(index) {
@@ -151,13 +137,6 @@ jQuery(document).ready(function($) {
 				}
 			});
 			
-			// Show view more button if there are more projects
-			if (totalProjectsCount > initialProjectsCount) {
-				$viewMoreContainer.fadeIn(200);
-			} else {
-				$viewMoreContainer.fadeOut(200);
-			}
-			
 			// Ensure proper grid layout for All Projects tab - with shorter delay
 			setTimeout(function() {
 				ensureGridLayout();
@@ -165,47 +144,7 @@ jQuery(document).ready(function($) {
 		} else {
 			// Use smooth category transition to prevent stacking
 			smoothCategoryTransition(filter);
-			
-			// Hide view more button on category tabs
-			$viewMoreContainer.hide();
 		}
-	}
-	
-	function setupViewMore() {
-		$viewMoreBtn.on('click', function() {
-			if (isAnimating) return; // Prevent rapid clicking during animation
-			
-			if (!allProjectsShown) {
-				// Show all projects with smooth animation
-				$portfolioItems.each(function() {
-					var $item = $(this);
-					if ($item.attr('data-initial') === 'false') {
-						$item.fadeIn(300);
-					}
-				});
-				
-				// Update button text
-				$viewMoreBtn.text('Show Less');
-				allProjectsShown = true;
-			} else {
-				// Hide extra projects with smooth animation
-				$portfolioItems.each(function() {
-					var $item = $(this);
-					if ($item.attr('data-initial') === 'false') {
-						$item.fadeOut(300);
-					}
-				});
-				
-				// Update button text
-				$viewMoreBtn.text('View More Projects');
-				allProjectsShown = false;
-			}
-			
-			// Ensure proper grid layout - with shorter delay
-			setTimeout(function() {
-				ensureGridLayout();
-			}, 350);
-		});
 	}
 	
 	// Handle window resize for responsive behavior - debounced
@@ -306,36 +245,36 @@ jQuery(document).ready(function($) {
 			});
 		}
 		
-			// Auto-advance slides every 8 seconds (slower and more consistent)
-	var autoAdvanceTimer;
-	function startAutoAdvance() {
-		autoAdvanceTimer = setInterval(function() {
-			navigateSlide('next');
-		}, 5000); // Increased from 6 to 5 seconds	
-	}
-	
-	function stopAutoAdvance() {
-		if (autoAdvanceTimer) {
-			clearInterval(autoAdvanceTimer);
+		// Auto-advance slides every 8 seconds (slower and more consistent)
+		var autoAdvanceTimer;
+		function startAutoAdvance() {
+			autoAdvanceTimer = setInterval(function() {
+				navigateSlide('next');
+			}, 5000); // Increased from 6 to 5 seconds	
 		}
-	}
-	
-	// Start auto-advance and stop on user interaction
-	startAutoAdvance();
-	
-	$carousel.on('mouseenter', stopAutoAdvance);
-	$carousel.on('mouseleave', startAutoAdvance);
-	
-	// Pause auto-advance when navigation buttons are clicked
-	$prevBtn.on('click', function() {
-		stopAutoAdvance();
-		setTimeout(startAutoAdvance, 5000); // Resume after 5 seconds (increased from 3)
-	});
-	
-	$nextBtn.on('click', function() {
-		stopAutoAdvance();
-		setTimeout(startAutoAdvance, 5000); // Resume after 5 seconds (increased from 3)
-	});
+		
+		function stopAutoAdvance() {
+			if (autoAdvanceTimer) {
+				clearInterval(autoAdvanceTimer);
+			}
+		}
+		
+		// Start auto-advance and stop on user interaction
+		startAutoAdvance();
+		
+		$carousel.on('mouseenter', stopAutoAdvance);
+		$carousel.on('mouseleave', startAutoAdvance);
+		
+		// Pause auto-advance when navigation buttons are clicked
+		$prevBtn.on('click', function() {
+			stopAutoAdvance();
+			setTimeout(startAutoAdvance, 5000); // Resume after 5 seconds (increased from 3)
+		});
+		
+		$nextBtn.on('click', function() {
+			stopAutoAdvance();
+			setTimeout(startAutoAdvance, 5000); // Resume after 5 seconds (increased from 3)
+		});
 		
 		// Touch/swipe support for mobile
 		var touchStartX = 0;

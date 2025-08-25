@@ -867,26 +867,123 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 	$shuffled_projects = $portfolio_projects;
 	shuffle( $shuffled_projects );
 	
-	// Ensure we have enough projects for the slider to work properly
-	// If we have less than 8 projects, duplicate some to fill the slider
-	if (count($shuffled_projects) < 8) {
-		$original_count = count($shuffled_projects);
-		$needed_count = 8;
-		
-		// Duplicate projects to reach the minimum count
-		for ($i = 0; $i < ($needed_count - $original_count); $i++) {
-			$shuffled_projects[] = $shuffled_projects[$i % $original_count];
-		}
-	}
+	// Define how many projects to show initially (for desktop grid)
+	$initial_projects_count = 6; // Show 6 projects in first row (3x2 grid)
+	$initial_projects = array_slice( $shuffled_projects, 0, $initial_projects_count );
+	$remaining_projects = array_slice( $shuffled_projects, $initial_projects_count );
 	
-	// Debug: Check if data is being retrieved (remove this after testing)
-	// echo '<pre>Debug - Portfolio Projects: '; print_r($shuffled_projects); echo '</pre>';
-	// echo '<pre>Debug - Portfolio Categories: '; print_r($portfolio_categories); echo '</pre>';
+	
 	?>
 
-	<!-- Unified Portfolio Slider for All Devices -->
-	<div class="portfolio-unified-slider" data-aos="fade-up" data-aos-delay="200">
-	  <div class="swiper portfolio-unified-swiper">
+	<!-- Desktop Grid Layout (Hidden on mobile/tablet) -->
+	<div class="portfolio-desktop-grid d-none d-lg-block" data-aos="fade-up" data-aos-delay="200">
+	  <div class="row">
+		<?php
+		if ( ! empty( $initial_projects ) ) :
+			foreach ( $initial_projects as $project ) :
+				// Get category name for display
+				$category_name = '';
+				foreach ( $portfolio_categories as $cat ) {
+					if ( $cat['slug'] === $project['category'] ) {
+						$category_name = $cat['name'];
+						break;
+					}
+				}
+				?>
+				<div class="col-xl-4 col-lg-6 mb-4">
+				  <div class="portfolio-wrap">
+					<?php if ( ! empty( $project['image'] ) ) : ?>
+						<img src="<?php echo esc_url( $project['image'] ); ?>" class="img-fluid" alt="<?php echo esc_attr( $project['title'] ); ?>" loading="lazy">
+					<?php endif; ?>
+					<div class="portfolio-info">
+					  <div class="content">
+						<?php if ( ! empty( $category_name ) ) : ?>
+							<span class="category"><?php echo esc_html( $category_name ); ?></span>
+						<?php endif; ?>
+						<?php if ( ! empty( $project['title'] ) ) : ?>
+							<h4><?php echo esc_html( $project['title'] ); ?></h4>
+						<?php endif; ?>
+						<div class="portfolio-links">
+						  <?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
+							  <a href="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="glightbox" title="<?php echo esc_attr( $project['title'] ); ?>"><i class="bi bi-plus-lg"></i></a>
+						  <?php endif; ?>
+						  <?php if ( ! empty( $project['link'] ) ) : ?>
+							  <a href="<?php echo esc_url( $project['link'] ); ?>" title="More Details"><i class="bi bi-arrow-right"></i></a>
+						  <?php endif; ?>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+				<?php
+			endforeach;
+		endif;
+		?>
+	  </div>
+	</div>
+	
+	<!-- Hidden remaining projects for view more functionality (Visible on all screen sizes) -->
+	<?php if ( ! empty( $remaining_projects ) ) : ?>
+	  
+	  
+	  <div class="portfolio-remaining-projects">
+		<div class="row">
+		  <?php
+		  foreach ( $remaining_projects as $project ) :
+			  // Get category name for display
+			  $category_name = '';
+			  foreach ( $portfolio_categories as $cat ) {
+				  if ( $cat['slug'] === $project['category'] ) {
+					  $category_name = $cat['name'];
+					  break;
+				  }
+			  }
+			  ?>
+			  <div class="col-xl-4 col-lg-6 mb-4">
+				<div class="portfolio-wrap">
+				  <?php if ( ! empty( $project['image'] ) ) : ?>
+					  <img src="<?php echo esc_url( $project['image'] ); ?>" class="img-fluid" alt="<?php echo esc_attr( $project['title'] ); ?>" loading="lazy">
+				  <?php endif; ?>
+				  <div class="portfolio-info">
+					<div class="content">
+					  <?php if ( ! empty( $category_name ) ) : ?>
+						  <span class="category"><?php echo esc_html( $category_name ); ?></span>
+					  <?php endif; ?>
+					  <?php if ( ! empty( $project['title'] ) ) : ?>
+						  <h4><?php echo esc_html( $project['title'] ); ?></h4>
+					  <?php endif; ?>
+					  <div class="portfolio-links">
+						<?php if ( ! empty( $project['lightbox_image'] ) ) : ?>
+							<a href="<?php echo esc_url( $project['lightbox_image'] ); ?>" class="glightbox" title="<?php echo esc_attr( $project['title'] ); ?>"><i class="bi bi-plus-lg"></i></a>
+						<?php endif; ?>
+						<?php if ( ! empty( $project['link'] ) ) : ?>
+							<a href="<?php echo esc_url( $project['link'] ); ?>" title="More Details"><i class="bi bi-arrow-right"></i></a>
+						<?php endif; ?>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <?php
+		  endforeach;
+		  ?>
+		</div>
+	  </div>
+	<?php endif; ?>
+	
+	<!-- View More Button (Visible only on desktop) -->
+	<?php if ( ! empty( $remaining_projects ) ) : ?>
+	  <div class="text-center mt-4 d-none d-lg-block">
+		<button id="portfolio-view-more-btn" class="btn btn-primary">
+		  <span class="portfolio-view-more-text">View More</span>
+		  <span class="portfolio-view-less-text" style="display: none;">View Less</span>
+		</button>
+	  </div>
+	<?php endif; ?>
+
+	<!-- Mobile/Tablet Slider (Hidden on desktop) -->
+	<div class="portfolio-mobile-slider d-lg-none" data-aos="fade-up" data-aos-delay="200">
+	  <div class="swiper portfolio-mobile-swiper">
 		<div class="swiper-wrapper">
 		  <?php
 		  if ( ! empty( $shuffled_projects ) ) :
@@ -930,12 +1027,13 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 		  endif;
 		  ?>
 		</div>
-		
-		<!-- Pagination -->
-		<div class="swiper-pagination portfolio-swiper-pagination"></div>
+		<!-- Navigation arrows -->
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
+		<!-- Pagination dots -->
+		<div class="swiper-pagination"></div>
 	  </div>
 	</div>
-
   </div>
 
 </section><!-- /Portfolio Section -->
@@ -973,52 +1071,164 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 	  </div>
 	</div>
 
-	<!-- Services Slider -->
-	<div class="services-swiper-container">
-	  <div class="swiper services-swiper">
+	<!-- Desktop Services Grid (Hidden on mobile/tablet) -->
+	<div class="services-desktop-grid d-none d-lg-block">
+	  <?php
+	  // Dynamic service system - can handle any number of services
+	  $services = array();
+	  
+	  // Get all available services (up to 20 to handle future additions)
+	  for ( $i = 1; $i <= 20; $i++ ) {
+		$title = get_option( "service_{$i}_title", '' );
+		$highlight = get_option( "service_{$i}_highlight", '' );
+		$description = get_option( "service_{$i}_description", '' );
+		$icon = get_option( "service_{$i}_icon", '' );
+		$url = get_option( "service_{$i}_url", 'service-details.html' );
+		
+		if ( ! empty( $title ) ) {
+		  $services[] = array(
+			'title' => $title,
+			'highlight' => $highlight,
+			'description' => $description,
+			'icon' => $icon,
+			'url' => $url,
+			'index' => $i
+		  );
+		}
+	  }
+	  
+	  // Define how many services to show initially (for desktop grid)
+	  $initial_services_count = 9; // Show 9 services in 3x3 grid
+	  $initial_services = array_slice( $services, 0, $initial_services_count );
+	  $remaining_services = array_slice( $services, $initial_services_count );
+	  ?>
+
+	  <div class="row gy-4">
+		<?php foreach ( $initial_services as $service ) : $delay = ( $service['index'] % 3 ) * 100; ?>
+		<div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
+		  <div class="service-card position-relative z-1 h-100">
+			<div class="service-icon">
+			  <?php if ( ! empty( $service['icon'] ) ) : ?>
+				<img src="<?php echo esc_url( $service['icon'] ); ?>" alt="<?php echo esc_attr( $service['title'] ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
+			  <?php else : ?>
+				<?php
+				$default_icons = array(
+				  'bi-palette', 'bi-gem', 'bi-megaphone', 'bi-code-slash', 'bi-graph-up', 'bi-camera-video',
+				  'bi-lightbulb', 'bi-gear', 'bi-rocket', 'bi-briefcase', 'bi-chart-line', 'bi-phone',
+				  'bi-laptop', 'bi-mobile', 'bi-globe', 'bi-cloud', 'bi-shield', 'bi-star', 'bi-heart', 'bi-award'
+				);
+				$icon_index = ( $service['index'] - 1 ) % count( $default_icons );
+				?>
+				<i class="bi <?php echo $default_icons[ $icon_index ]; ?>"></i>
+			  <?php endif; ?>
+			</div>
+			<a href="<?php echo esc_url( $service['url'] ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
+			  <i class="bi bi-arrow-up-right"></i>
+			</a>
+			<h3>
+			  <a href="<?php echo esc_url( $service['url'] ); ?>">
+				<?php 
+				$title_parts = explode( ' ', $service['title'] );
+				$highlight_found = false;
+				foreach ( $title_parts as $part ) {
+				  if ( ! empty( $service['highlight'] ) && strtolower( $part ) === strtolower( $service['highlight'] ) && ! $highlight_found ) {
+					echo '<span>' . esc_html( $part ) . '</span>';
+					$highlight_found = true;
+				  } else {
+					echo esc_html( $part ) . ' ';
+				  }
+				}
+				?>
+			  </a>
+			</h3>
+			<p><?php echo esc_html( $service['description'] ); ?></p>
+		  </div>
+		</div>
+		<?php endforeach; ?>
+	  </div>
+	  
+	  <!-- Hidden remaining services for view more functionality -->
+	  <?php if ( ! empty( $remaining_services ) ) : ?>
+		<div class="services-remaining" style="display: none;">
+		  <div class="row gy-4">
+			<?php foreach ( $remaining_services as $service ) : $delay = ( $service['index'] % 3 ) * 100; ?>
+			<div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
+			  <div class="service-card position-relative z-1 h-100">
+				<div class="service-icon">
+				  <?php if ( ! empty( $service['icon'] ) ) : ?>
+					<img src="<?php echo esc_url( $service['icon'] ); ?>" alt="<?php echo esc_attr( $service['title'] ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
+				  <?php else : ?>
+					<?php
+					$default_icons = array(
+					  'bi-palette', 'bi-gem', 'bi-megaphone', 'bi-code-slash', 'bi-graph-up', 'bi-camera-video',
+					  'bi-lightbulb', 'bi-gear', 'bi-rocket', 'bi-briefcase', 'bi-chart-line', 'bi-phone',
+					  'bi-laptop', 'bi-mobile', 'bi-globe', 'bi-cloud', 'bi-shield', 'bi-star', 'bi-heart', 'bi-award'
+					);
+					$icon_index = ( $service['index'] - 1 ) % count( $default_icons );
+					?>
+					<i class="bi <?php echo $default_icons[ $icon_index ]; ?>"></i>
+				  <?php endif; ?>
+				</div>
+				<a href="<?php echo esc_url( $service['url'] ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
+				  <i class="bi bi-arrow-up-right"></i>
+				</a>
+				<h3>
+				  <a href="<?php echo esc_url( $service['url'] ); ?>">
+					<?php 
+					$title_parts = explode( ' ', $service['title'] );
+					$highlight_found = false;
+					foreach ( $title_parts as $part ) {
+					  if ( ! empty( $service['highlight'] ) && strtolower( $part ) === strtolower( $service['highlight'] ) && ! $highlight_found ) {
+						echo '<span>' . esc_html( $part ) . '</span>';
+						$highlight_found = true;
+					  } else {
+						echo esc_html( $part ) . ' ';
+					  }
+					}
+					?>
+				  </a>
+				</h3>
+				<p><?php echo esc_html( $service['description'] ); ?></p>
+			  </div>
+			</div>
+			<?php endforeach; ?>
+		  </div>
+		</div>
+	  <?php endif; ?>
+	  
+	  <!-- View More Button -->
+	  <?php if ( ! empty( $remaining_services ) ) : ?>
+		<div class="text-center mt-4">
+		  <button id="services-view-more" class="btn btn-primary">
+			<span class="services-view-more-text">View More</span>
+			<span class="services-view-less-text" style="display: none;">View Less</span>
+		  </button>
+		</div>
+	  <?php endif; ?>
+	</div>
+
+	<!-- Mobile/Tablet Services Slider (Hidden on desktop) -->
+	<div class="services-mobile-slider d-lg-none" data-aos="fade-up" data-aos-delay="200">
+	  <div class="swiper services-mobile-swiper">
 		<div class="swiper-wrapper">
 		  <?php
-		  // Dynamic service system - can handle any number of services
-		  $services = array();
-		  
-		  // Get all available services (up to 20 to handle future additions)
-		  for ( $i = 1; $i <= 20; $i++ ) {
-			$title = get_option( "service_{$i}_title", '' );
-			$highlight = get_option( "service_{$i}_highlight", '' );
-			$description = get_option( "service_{$i}_description", '' );
-			$icon = get_option( "service_{$i}_icon", '' );
-			$url = get_option( "service_{$i}_url", 'service-details.html' );
-			
-			if ( ! empty( $title ) ) {
-			  $services[] = array(
-				'title' => $title,
-				'highlight' => $highlight,
-				'description' => $description,
-				'icon' => $icon,
-				'url' => $url,
-				'index' => $i
-			  );
-			}
-		  }
-		  
-		  // Render services
-		  foreach ( $services as $service ) :
-			$delay = ( $service['index'] % 3 ) * 100; // Cycle through delays
+		  if ( ! empty( $services ) ) :
+			  foreach ( $services as $index => $service ) :
+				  $delay = ( $index % 3 ) * 100;
 		  ?>
 		  <div class="swiper-slide" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
-			<div class="service-card position-relative z-1">
+			<div class="service-card position-relative z-1 h-100">
 			  <div class="service-icon">
 				<?php if ( ! empty( $service['icon'] ) ) : ?>
 				  <img src="<?php echo esc_url( $service['icon'] ); ?>" alt="<?php echo esc_attr( $service['title'] ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
 				<?php else : ?>
 				  <?php
-				  // Default icons for each service
 				  $default_icons = array(
 					'bi-palette', 'bi-gem', 'bi-megaphone', 'bi-code-slash', 'bi-graph-up', 'bi-camera-video',
 					'bi-lightbulb', 'bi-gear', 'bi-rocket', 'bi-briefcase', 'bi-chart-line', 'bi-phone',
 					'bi-laptop', 'bi-mobile', 'bi-globe', 'bi-cloud', 'bi-shield', 'bi-star', 'bi-heart', 'bi-award'
 				  );
-				  $icon_index = ( $service['index'] - 1 ) % count( $default_icons );
+				  $icon_index = ( $index % count( $default_icons ) );
 				  ?>
 				  <i class="bi <?php echo $default_icons[ $icon_index ]; ?>"></i>
 				<?php endif; ?>
@@ -1038,22 +1248,18 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 					} else {
 					  echo esc_html( $part ) . ' ';
 					}
-				  }
-				  ?>
+					}
+					?>
 				</a>
 			  </h3>
 			  <p><?php echo esc_html( $service['description'] ); ?></p>
 			</div>
 		  </div>
-		  <?php endforeach; ?>
+		  <?php 
+			  endforeach;
+		  endif;
+		  ?>
 		</div>
-		
-		<!-- Navigation arrows -->
-		<div class="swiper-button-next"></div>
-		<div class="swiper-button-prev"></div>
-		
-		<!-- Pagination -->
-		<div class="swiper-pagination"></div>
 	  </div>
 	</div>
 

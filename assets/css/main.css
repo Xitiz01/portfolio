@@ -1577,6 +1577,11 @@ section,
 /*--------------------------------------------------------------
 # Skills Section
 --------------------------------------------------------------*/
+.skills .section-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
 .skills .skills-category {
   background-color: var(--surface-color);
   padding: 30px;
@@ -1639,7 +1644,27 @@ section,
   width: 0;
   height: 100%;
   border-radius: 20px;
+  /* Fallback animation for mobile/tablet */
+  animation: progressBarFallback 2s ease-in-out 0.5s forwards;
 }
+
+/* CSS Animation Fallback for Progress Bars */
+@keyframes progressBarFallback {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--progress-width, 0%);
+  }
+}
+
+/* Set progress bar width based on aria-valuenow attribute */
+.skills .skill-item .progress .progress-bar[aria-valuenow="95"] { --progress-width: 95%; }
+.skills .skill-item .progress .progress-bar[aria-valuenow="85"] { --progress-width: 85%; }
+.skills .skill-item .progress .progress-bar[aria-valuenow="80"] { --progress-width: 80%; }
+.skills .skill-item .progress .progress-bar[aria-valuenow="75"] { --progress-width: 75%; }
+.skills .skill-item .progress .progress-bar[aria-valuenow="70"] { --progress-width: 70%; }
+.skills .skill-item .progress .progress-bar[aria-valuenow="65"] { --progress-width: 65%; }
 
 .skills .skill-item .skill-tooltip {
   font-size: 14px;
@@ -1702,6 +1727,7 @@ section,
   transition: all 0.3s;
 }
 
+/* Responsive Skills Section */
 @media (max-width: 991.98px) {
   .skills .skills-category {
     margin-bottom: 30px;
@@ -1709,6 +1735,15 @@ section,
 
   .skills .skills-category:last-child {
     margin-bottom: 0;
+  }
+  
+  /* Ensure progress bars are visible on tablet */
+  .skills .skill-item .progress {
+    height: 10px;
+  }
+  
+  .skills .skill-item .progress .progress-bar {
+    min-width: 0%;
   }
 }
 
@@ -1719,6 +1754,40 @@ section,
 
   .skills .skill-box:last-child {
     margin-bottom: 0;
+  }
+  
+  /* Ensure progress bars are visible on mobile */
+  .skills .skill-item .progress {
+    height: 12px;
+  }
+  
+  .skills .skill-item .progress .progress-bar {
+    min-width: 0%;
+  }
+  
+  /* Make skills categories more mobile-friendly */
+  .skills .skills-category {
+    padding: 20px;
+  }
+  
+  .skills .skills-category h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .skills .skill-item h4 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  /* Extra small devices */
+  .skills .skills-category {
+    padding: 15px;
+  }
+  
+  .skills .skill-item .progress {
+    height: 14px;
   }
 }
 
@@ -1841,849 +1910,497 @@ section,
   }
 }
 
-/* Unified Portfolio Slider Styles for All Devices */
-.portfolio-unified-slider {
+/* Portfolio Section - Desktop Grid Layout */
+.portfolio-desktop-grid {
   margin-bottom: 2rem;
+}
+
+.portfolio-desktop-grid .portfolio-wrap {
   position: relative;
-}
-
-/* Ensure portfolio section is always visible */
-.portfolio.section {
-  display: block;
-  visibility: visible;
-  opacity: 1;
-}
-
-.portfolio-unified-slider .swiper {
-  padding: 0 20px;
-  overflow: visible;
-  position: relative;
-}
-
-.portfolio-unified-slider .swiper-wrapper {
-  align-items: center;
-  height: auto;
-}
-
-.portfolio-unified-slider .swiper-slide {
-  height: auto;
-  display: flex;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.portfolio-unified-slider .swiper-slide-active {
-  transform: scale(1);
-  z-index: 2;
-  filter: blur(0);
-}
-
-.portfolio-unified-slider .swiper-slide-next {
-  transform: scale(0.9);
-  z-index: 1;
-}
-
-.portfolio-unified-slider .swiper-slide-prev {
-  transform: scale(0.9);
-  z-index: 1;
-}
-
-.portfolio-unified-slider .portfolio-wrap {
-  border-radius: 1.2rem;
   overflow: hidden;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-  transition: all 0.4s ease;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  position: relative;
 }
 
-.portfolio-unified-slider .portfolio-wrap img {
+.portfolio-desktop-grid .portfolio-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-desktop-grid .portfolio-wrap img {
   width: 100%;
   height: 250px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.portfolio-unified-slider .portfolio-wrap:hover img {
+.portfolio-desktop-grid .portfolio-wrap:hover img {
   transform: scale(1.05);
 }
 
-.portfolio-unified-slider .portfolio-info {
-  padding: 22px;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(10px);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.portfolio-unified-slider .portfolio-info .content h4 {
-  margin: 0 0 10px 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.portfolio-unified-slider .portfolio-info .content .category {
-  display: inline-block;
-  background: var(--accent-color, #007bff);
+.portfolio-desktop-grid .portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
   color: white;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-desktop-grid .portfolio-wrap:hover .portfolio-info {
+  transform: translateY(0);
+}
+
+.portfolio-desktop-grid .portfolio-info .content h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.portfolio-desktop-grid .portfolio-info .content .category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
   margin-bottom: 10px;
+  backdrop-filter: blur(10px);
 }
 
-.portfolio-unified-slider .portfolio-links {
+.portfolio-desktop-grid .portfolio-links {
   display: flex;
   gap: 10px;
   margin-top: 15px;
 }
 
-.portfolio-unified-slider .portfolio-links a {
+.portfolio-desktop-grid .portfolio-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
-  background: var(--accent-color, #007bff);
+  background: rgba(255, 255, 255, 0.2);
   color: white;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-decoration: none;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
-.portfolio-unified-slider .portfolio-links a:hover {
-  background: var(--accent-color-dark, #0056b3);
+.portfolio-desktop-grid .portfolio-links a:hover {
+  background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
 
-.portfolio-unified-slider .swiper-slide-active .portfolio-wrap {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+.portfolio-desktop-grid .portfolio-links a i {
+  font-size: 1.1rem;
 }
 
-
-
-/* Portfolio Pagination - Enhanced UI/UX */
-.portfolio-unified-slider .swiper-pagination {
-  position: relative;
-  margin-top: 40px;
-  z-index: 5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+/* Portfolio Remaining Projects */
+.portfolio-remaining-projects {
+  margin-top: 2rem;
+  animation: fadeInUp 0.5s ease;
+  display: none; /* Hidden by default */
 }
 
-.portfolio-unified-slider .swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
-  background: rgba(0, 0, 0, 0.2);
-  opacity: 1;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  margin: 0;
-  border-radius: 50%;
-  cursor: pointer;
+.portfolio-remaining-projects.show {
+  display: block !important; /* Force display when shown */
+}
+
+.portfolio-remaining-projects .portfolio-wrap {
   position: relative;
   overflow: hidden;
-}
-
-.portfolio-unified-slider .swiper-pagination-bullet::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: var(--accent-color, #007bff);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.portfolio-unified-slider .swiper-pagination-bullet-active {
-  background: transparent;
-  transform: scale(1.2);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3);
-}
-
-.portfolio-unified-slider .swiper-pagination-bullet-active::before {
-  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   height: 100%;
-  box-shadow: 0 2px 12px rgba(0, 123, 255, 0.6);
 }
 
-.portfolio-unified-slider .swiper-pagination-bullet:hover {
-  background: rgba(0, 123, 255, 0.1);
+.portfolio-remaining-projects .portfolio-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-remaining-projects .portfolio-wrap img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-remaining-projects .portfolio-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.portfolio-remaining-projects .portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  color: white;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-remaining-projects .portfolio-wrap:hover .portfolio-info {
+  transform: translateY(0);
+}
+
+.portfolio-remaining-projects .portfolio-info .content h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.portfolio-remaining-projects .portfolio-info .content .category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-remaining-projects .portfolio-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.portfolio-remaining-projects .portfolio-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-remaining-projects .portfolio-links a:hover {
+  background: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
 
-.portfolio-unified-slider .swiper-pagination-bullet-active:hover {
-  transform: scale(1.3);
+.portfolio-remaining-projects .portfolio-links a i {
+  font-size: 1.1rem;
 }
 
-/* Mobile Portfolio Slider Styles */
+/* View More Button */
+#portfolio-view-more-btn {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  border: 2px solid var(--accent-color);
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#portfolio-view-more-btn:hover {
+  background-color: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Portfolio Mobile/Tablet Slider */
 .portfolio-mobile-slider {
   margin-bottom: 2rem;
+  /* Center the entire slider container */
+  text-align: center;
 }
 
 .portfolio-mobile-slider .swiper {
   padding: 0 20px;
   overflow: visible;
+  /* Ensure proper centering */
+  margin: 0 auto;
 }
 
 .portfolio-mobile-slider .swiper-slide {
+  height: auto;
   width: 85%;
-  margin-right: 20px;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Center each slide */
+  margin: 0 auto;
 }
 
 .portfolio-mobile-slider .swiper-slide-active {
   transform: scale(1);
   z-index: 2;
+  filter: blur(0);
+  /* Center the active slide */
+  margin: 0 auto;
+  /* Ensure it's always fully visible and clickable */
+  position: relative;
 }
 
-.portfolio-mobile-slider .swiper-slide-next {
-  transform: scale(0.9);
-  opacity: 0.7;
-  z-index: 1;
-}
-
+.portfolio-mobile-slider .swiper-slide-next,
 .portfolio-mobile-slider .swiper-slide-prev {
-  transform: scale(0.9);
-  opacity: 0.7;
+  transform: scale(0.85);
   z-index: 1;
+  filter: blur(1px);
+  opacity: 0.7;
+}
+
+.portfolio-mobile-slider .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev) {
+  transform: scale(0.7);
+  opacity: 0.4;
+  filter: blur(2px);
 }
 
 .portfolio-mobile-slider .portfolio-wrap {
-  border-radius: 1rem;
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-}
-
-.portfolio-mobile-slider .swiper-slide-active .portfolio-wrap {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-}
-
-
-
-/* Responsive adjustments for unified slider */
-@media (max-width: 768px) {
-  .portfolio-unified-slider .swiper {
-    padding: 0 15px;
-  }
-  
-  .portfolio-unified-slider .swiper-slide {
-    width: 80%;
-    margin-right: 15px;
-  }
-  
-
-  
-  .portfolio-unified-slider .swiper-pagination {
-    margin-top: 25px;
-  }
-  
-  .portfolio-unified-slider .swiper-pagination-bullet {
-    width: 8px;
-    height: 8px;
-  }
-  
-  .portfolio-unified-slider .swiper-pagination-bullet-active {
-    transform: scale(1.1);
-  }
-  
-  .portfolio-unified-slider .portfolio-wrap img {
-    height: 200px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info {
-    padding: 15px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info .content h4 {
-    font-size: 1.1rem;
-  }
-  
-  .portfolio-unified-slider .portfolio-links a {
-    width: 35px;
-    height: 35px;
-  }
-  
-    .portfolio-unified-slider .swiper-slide-next,
-  .portfolio-unified-slider .swiper-slide-prev {
-    transform: scale(0.85);
-  }
-  
-  /* Enhanced mobile preview styles */
-  .portfolio-unified-slider .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev) {
-    transform: scale(0.7);
-  }
-  
-
-}
-
-@media (max-width: 480px) {
-  .portfolio-unified-slider .swiper {
-    padding: 0 10px;
-  }
-  
-  .portfolio-unified-slider .swiper-slide {
-    width: 75%;
-    margin-right: 10px;
-  }
-  
-  .portfolio-unified-slider .swiper-button-next,
-  .portfolio-unified-slider .swiper-button-prev {
-    width: 30px;
-    height: 30px;
-  }
-  
-  .portfolio-unified-slider .swiper-button-next::after,
-  .portfolio-unified-slider .swiper-button-prev::after {
-    font-size: 14px;
-  }
-  
-  .portfolio-unified-slider .swiper-pagination {
-    margin-top: 20px;
-  }
-  
-  .portfolio-unified-slider .swiper-pagination-bullet {
-    width: 7px;
-    height: 7px;
-  }
-  
-  .portfolio-unified-slider .swiper-pagination-bullet-active {
-    transform: scale(1.1);
-  }
-  
-  .portfolio-unified-slider .portfolio-wrap img {
-    height: 180px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info {
-    padding: 12px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info .content h4 {
-    font-size: 1rem;
-  }
-  
-  .portfolio-unified-slider .portfolio-links a {
-    width: 32px;
-    height: 32px;
-  }
-  
-  .portfolio-unified-slider .swiper-slide-next,
-  .portfolio-unified-slider .swiper-slide-prev {
-    transform: scale(0.8);
-  }
-  
-  /* Enhanced mobile preview styles */
-  .portfolio-unified-slider .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev) {
-    transform: scale(0.65);
-  }
-  
-
-}
-
-/* Desktop styles for 2 slides */
-@media (min-width: 992px) {
-  /* Ensure portfolio section is visible on desktop */
-  .portfolio.section {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .portfolio-unified-slider .swiper {
-    padding: 0 60px;
-    overflow: visible;
-  }
-  
-  .portfolio-unified-slider .swiper-wrapper {
-    align-items: center;
-    justify-content: center;
-    display: flex;
-  }
-  
-  .portfolio-unified-slider .swiper-slide {
-    width: auto;
-    margin-right: 0;
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  /* Active slides (2 main slides) - Both highlighted equally */
-  .portfolio-unified-slider .swiper-slide-active,
-  .portfolio-unified-slider .swiper-slide-next {
-    transform: scale(1);
-    z-index: 3;
-  }
-  
-  /* Previous slide preview (left side hint) - Fixed alignment and sizing */
-  .portfolio-unified-slider .swiper-slide-prev {
-    transform: scale(0.85) translateX(-25%);
-    z-index: 2;
-  }
-  
-  /* Other slides (hidden previews) - Fixed alignment and sizing */
-  .portfolio-unified-slider .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev) {
-    transform: scale(0.85) translateX(25%);
-    z-index: 2;
-  }
-  
-
-  
-  .portfolio-unified-slider .portfolio-wrap {
-    border-radius: 1.5rem;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-  }
-  
-  .portfolio-unified-slider .portfolio-wrap img {
-    height: 320px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info {
-    padding: 30px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info .content h4 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info .content .category {
-    font-size: 0.9rem;
-    padding: 6px 16px;
-    margin-bottom: 15px;
-  }
-  
-  .portfolio-unified-slider .portfolio-links a {
-    width: 45px;
-    height: 45px;
-  }
-  
-  /* Enhanced desktop pagination */
-  .portfolio-unified-slider .swiper-pagination {
-    margin-top: 45px;
-  }
-  
-  .portfolio-unified-slider .swiper-pagination-bullet {
-    width: 12px;
-    height: 12px;
-  }
-  
-  .portfolio-unified-slider .swiper-pagination-bullet-active {
-    transform: scale(1.4);
-  }
-  
-  /* Ensure proper spacing for 2-slide layout with previews */
-  .portfolio-unified-slider .swiper-slide {
-    margin-right: 0;
-  }
-  
-  /* Center the two main slides properly */
-  .portfolio-unified-slider .swiper-slide-active {
-    margin-right: 25px;
-  }
-  
-  .portfolio-unified-slider .swiper-slide-next {
-    margin-right: 0;
-  }
-  
-  /* Enhanced desktop preview positioning using only scaling and positioning */
-  .portfolio-unified-slider .swiper-slide-prev {
-    transform: scale(0.8) translateX(-25%);
-    z-index: 2;
-  }
-  
-  .portfolio-unified-slider .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev) {
-    transform: scale(0.8) translateX(25%);
-    z-index: 2;
-  }
-  
-  /* Ensure all slides remain visible on desktop - prevent disappearing */
-  .portfolio-unified-slider .swiper-slide {
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: flex !important;
-    position: relative !important;
-  }
-  
-  /* Force visibility for slides beyond the 12th */
-  .portfolio-unified-slider .swiper-slide:nth-child(n+13) {
-    visibility: visible !important;
-    opacity: 1 !important;
-    transform: scale(0.8) translateX(25%);
-    z-index: 2;
-  }
-  
-  /* Override any Swiper internal hiding */
-  .portfolio-unified-slider .swiper-slide[style*="display: none"],
-  .portfolio-unified-slider .swiper-slide[style*="visibility: hidden"],
-  .portfolio-unified-slider .swiper-slide[style*="opacity: 0"] {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  /* Force all slides to be visible regardless of Swiper state */
-  .portfolio-unified-slider .swiper-slide.swiper-slide-hidden,
-  .portfolio-unified-slider .swiper-slide.swiper-slide-blank {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  /* Fix the gap and ensure proper preview positioning */
-  .portfolio-unified-slider .swiper-slide-prev {
-    margin-right: 0;
-    margin-left: 0;
-  }
-  
-  .portfolio-unified-slider .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev) {
-    margin-right: 0;
-    margin-left: 0;
-  }
-  
-  /* Ensure the two main slides are perfectly centered */
-  .portfolio-unified-slider .swiper-slide-active,
-  .portfolio-unified-slider .swiper-slide-next {
-    margin-left: 0;
-  }
-}
-
-/* Large desktop screens */
-@media (min-width: 1400px) {
-  .portfolio-unified-slider .swiper {
-    padding: 0 80px;
-  }
-  
-  .portfolio-unified-slider .portfolio-wrap img {
-    height: 350px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info {
-    padding: 35px;
-  }
-  
-  .portfolio-unified-slider .portfolio-info .content h4 {
-    font-size: 1.5rem;
-  }
-  
-  /* Enhanced large desktop preview positioning using only scaling and positioning */
-  .portfolio-unified-slider .swiper-slide-prev {
-    transform: scale(0.8) translateX(-30%);
-    z-index: 2;
-  }
-  
-  .portfolio-unified-slider .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-next):not(.swiper-slide-prev) {
-    transform: scale(0.8) translateX(30%);
-    z-index: 2;
-  }
-  
-  /* Ensure all slides remain visible on large desktop - prevent disappearing */
-  .portfolio-unified-slider .swiper-slide:nth-child(n+13) {
-    visibility: visible !important;
-    opacity: 1 !important;
-    transform: scale(0.8) translateX(30%);
-    z-index: 2;
-  }
-  
-  /* Override any Swiper internal hiding for large desktop */
-  .portfolio-unified-slider .swiper-slide[style*="display: none"],
-  .portfolio-unified-slider .swiper-slide[style*="visibility: hidden"],
-  .portfolio-unified-slider .swiper-slide[style*="opacity: 0"] {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  /* Force all slides to be visible regardless of Swiper state for large desktop */
-  .portfolio-unified-slider .swiper-slide.swiper-slide-hidden,
-  .portfolio-unified-slider .swiper-slide.swiper-slide-blank {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-}
-
-@media (max-width: 1200px) {
-  .resume .resume-side .contact-info li {
-    font-size: 0.85rem;
-  }
-  
-  .resume .resume-side .contact-info li i {
-    width: 18px;
-    margin-right: 0.4rem;
-  }
-}
-
-.resume .resume-side .skill-item {
-  margin-bottom: 1.5rem;
-}
-
-.resume .resume-side .skill-item span {
-  font-size: 0.9rem;
-  color: var(--default-color);
-}
-
-.resume .resume-side .skill-item .progress {
-  height: 8px;
-  background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
-  border-radius: 4px;
-  margin-top: 0.5rem;
-}
-
-.resume .resume-side .skill-item .progress .progress-bar {
-  background-color: var(--accent-color);
-  width: 0;
-  transition: width 1s ease;
-}
-
-.resume .resume-section {
-  margin-bottom: 3rem;
-}
-
-.resume .resume-section h3 {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
-  color: var(--heading-color);
-  font-weight: 600;
-}
-
-.resume .resume-section h3 i {
-  color: var(--accent-color);
-}
-
-.resume .resume-section .resume-item {
-  padding-left: 1.5rem;
-  border-left: 2px solid color-mix(in srgb, var(--accent-color), transparent 80%);
-  margin-bottom: 2rem;
-  position: relative;
-}
-
-.resume .resume-section .resume-item:before {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  left: -9px;
-  top: 0;
-  background: var(--accent-color);
-}
-
-.resume .resume-section .resume-item h4 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--heading-color);
-  font-weight: 600;
-}
-
-.resume .resume-section .resume-item h5 {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: var(--accent-color);
-}
-
-.resume .resume-section .resume-item .company {
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  color: var(--heading-color);
-}
-
-.resume .resume-section .resume-item .company i {
-  margin-right: 0.5rem;
-}
-
-.resume .resume-section .resume-item ul {
-  padding-left: 1.2rem;
-}
-
-.resume .resume-section .resume-item ul li {
-  margin-bottom: 0.5rem;
-  color: var(--default-color);
-}
-
-.resume .resume-section .resume-item p {
-  color: var(--default-color);
-  margin-bottom: 0;
-}
-
-@media (max-width: 991.98px) {
-  .resume .resume-side {
-    margin-bottom: 2rem;
-  }
-}
-
-/*--------------------------------------------------------------
-# Portfolio Section
---------------------------------------------------------------*/
-@media (max-width: 991px) {
-  .portfolio .filter-sidebar {
-    margin-bottom: 30px;
-  }
-}
-
-.portfolio .filters-wrapper {
-  background-color: color-mix(in srgb, var(--surface-color), var(--default-color) 3%);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
-}
-
-@media (max-width: 991px) {
-  .portfolio .filters-wrapper {
-    padding: 20px;
-  }
-}
-
-.portfolio .portfolio-filters {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-@media (max-width: 991px) {
-  .portfolio .portfolio-filters {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-.portfolio .portfolio-filters li {
-  cursor: pointer;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--default-color);
-  transition: all 0.3s ease-in-out;
-  border-radius: 6px;
-  background: transparent;
-  position: relative;
-  border-left: 3px solid transparent;
-}
-
-@media (max-width: 991px) {
-  .portfolio .portfolio-filters li {
-    padding: 8px 16px;
-    border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
-    border-left-width: 3px;
-  }
-}
-
-.portfolio .portfolio-filters li:hover {
-  color: var(--accent-color);
-  background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
-  border-left-color: color-mix(in srgb, var(--accent-color), transparent 50%);
-}
-
-.portfolio .portfolio-filters li.filter-active {
-  color: var(--accent-color);
-  background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
-  border-left-color: var(--accent-color);
-  font-weight: 600;
-}
-
-.portfolio .portfolio-wrap {
-  transition: 0.4s;
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
   height: 100%;
+  /* Ensure the main card is fully visible */
+  margin: 0 auto;
+  /* Make sure it's clickable */
+  cursor: pointer;
 }
 
-.portfolio .portfolio-wrap img {
-  transition: transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+.portfolio-mobile-slider .portfolio-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-mobile-slider .portfolio-wrap img {
   width: 100%;
-  height: 350px;
+  height: 250px;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.portfolio .portfolio-wrap .portfolio-info {
+.portfolio-mobile-slider .portfolio-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.portfolio-mobile-slider .portfolio-info {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 25px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%);
-  z-index: 3;
-  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-  transform: translateY(20px);
-  opacity: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  color: white;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
 }
 
-.portfolio .portfolio-wrap .portfolio-info .content {
-  transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-  transform: translateY(20px);
+.portfolio-mobile-slider .portfolio-wrap:hover .portfolio-info {
+  transform: translateY(0);
 }
 
-.portfolio .portfolio-wrap .portfolio-info .category {
-  display: inline-block;
-  color: var(--accent-color);
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.portfolio-mobile-slider .portfolio-info .content h4 {
+  font-size: 1.1rem;
   margin-bottom: 8px;
+  font-weight: 600;
 }
 
-.portfolio .portfolio-wrap .portfolio-info h4 {
-  font-size: 20px;
-  color: var(--contrast-color);
-  font-weight: 700;
-  margin-bottom: 15px;
+.portfolio-mobile-slider .portfolio-info .content .category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
 }
 
-.portfolio .portfolio-wrap .portfolio-info .portfolio-links {
+.portfolio-mobile-slider .portfolio-links {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.portfolio .portfolio-wrap .portfolio-info .portfolio-links a {
-  color: var(--contrast-color);
-  width: 40px;
-  height: 40px;
+.portfolio-mobile-slider .portfolio-links a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: color-mix(in srgb, var(--accent-color), transparent 30%);
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
   border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-mobile-slider .portfolio-links a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.portfolio-mobile-slider .portfolio-links a i {
+  font-size: 1.1rem;
+}
+
+/* Responsive Portfolio Layout */
+/* Mobile: Show slider, hide grid */
+@media (max-width: 767px) {
+  .portfolio-desktop-grid {
+    display: none !important;
+  }
+  
+  .portfolio-mobile-slider {
+    display: block !important;
+  }
+  
+  .portfolio-mobile-slider .swiper-slide {
+    width: 90%;
+  }
+  
+  .portfolio-mobile-slider .swiper {
+    padding: 0 15px;
+  }
+  
+  /* Ensure main card is centered and fully visible */
+  .portfolio-mobile-slider .swiper-slide-active {
+    transform: scale(1) !important;
+    z-index: 10 !important;
+    filter: blur(0) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Tablet: Show slider, hide grid */
+@media (min-width: 768px) and (max-width: 991px) {
+  .portfolio-desktop-grid {
+    display: none !important;
+  }
+  
+  .portfolio-mobile-slider {
+    display: block !important;
+  }
+  
+  .portfolio-mobile-slider .swiper-slide {
+    width: 80%;
+  }
+  
+  .portfolio-mobile-slider .swiper {
+    padding: 0 25px;
+  }
+  
+  /* Ensure main card is centered and fully visible */
+  .portfolio-mobile-slider .swiper-slide-active {
+    transform: scale(1) !important;
+    z-index: 10 !important;
+    filter: blur(0) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Desktop: Show grid, hide slider */
+@media (min-width: 992px) {
+  .portfolio-desktop-grid {
+    display: block !important;
+  }
+  
+  .portfolio-mobile-slider {
+    display: none !important;
+  }
+}
+
+/* Swiper Navigation and Pagination Styles */
+.portfolio-mobile-slider .swiper-button-next,
+.portfolio-mobile-slider .swiper-button-prev {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  color: var(--contrast-color);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-mobile-slider .swiper-button-next:hover,
+.portfolio-mobile-slider .swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-mobile-slider .swiper-button-next::after,
+.portfolio-mobile-slider .swiper-button-prev::after {
   font-size: 18px;
-  transition: 0.3s;
+  font-weight: bold;
 }
 
-.portfolio .portfolio-wrap .portfolio-info .portfolio-links a:hover {
-  background-color: var(--accent-color);
-  transform: translateY(-3px);
+.portfolio-mobile-slider .swiper-pagination {
+  position: relative;
+  margin-top: 20px;
 }
 
-.portfolio .portfolio-wrap:hover {
-  transform: translateY(-5px);
-}
-
-.portfolio .portfolio-wrap:hover img {
-  transform: scale(1.08);
-}
-
-.portfolio .portfolio-wrap:hover .portfolio-info {
-  transform: translateY(0);
+.portfolio-mobile-slider .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
   opacity: 1;
+  transition: all 0.3s ease;
 }
 
-.portfolio .portfolio-wrap:hover .portfolio-info .content {
-  transform: translateY(0);
+.portfolio-mobile-slider .swiper-pagination-bullet-active {
+  background: var(--accent-color);
+  transform: scale(1.2);
+}
+
+.portfolio-mobile-slider .swiper-pagination-bullet:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive adjustments for navigation */
+@media (max-width: 767px) {
+  .portfolio-mobile-slider .swiper-button-next,
+  .portfolio-mobile-slider .swiper-button-prev {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .portfolio-mobile-slider .swiper-button-next::after,
+  .portfolio-mobile-slider .swiper-button-prev::after {
+    font-size: 16px;
+  }
+  
+  .portfolio-mobile-slider .swiper-pagination {
+    margin-top: 15px;
+  }
+  
+  .portfolio-mobile-slider .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -4462,4 +4179,513 @@ section,
 .services-swiper-container:not(.swiper-initialized) .swiper-button-prev,
 .services-swiper-container:not(.swiper-initialized) .swiper-pagination {
   display: none !important;
+}
+
+/* Portfolio Section - Desktop Grid Layout */
+.portfolio-desktop-grid {
+  margin-bottom: 2rem;
+}
+
+.portfolio-desktop-grid .portfolio-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.portfolio-desktop-grid .portfolio-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-desktop-grid .portfolio-wrap img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-desktop-grid .portfolio-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.portfolio-desktop-grid .portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  color: white;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-desktop-grid .portfolio-wrap:hover .portfolio-info {
+  transform: translateY(0);
+}
+
+.portfolio-desktop-grid .portfolio-info .content h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.portfolio-desktop-grid .portfolio-info .content .category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-desktop-grid .portfolio-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.portfolio-desktop-grid .portfolio-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-desktop-grid .portfolio-links a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.portfolio-desktop-grid .portfolio-links a i {
+  font-size: 1.1rem;
+}
+
+/* Portfolio Remaining Projects */
+.portfolio-remaining-projects {
+  margin-top: 2rem;
+  animation: fadeInUp 0.5s ease;
+  display: none; /* Hidden by default */
+}
+
+.portfolio-remaining-projects.show {
+  display: block !important; /* Force display when shown */
+}
+
+.portfolio-remaining-projects .portfolio-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.portfolio-remaining-projects .portfolio-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-remaining-projects .portfolio-wrap img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-remaining-projects .portfolio-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.portfolio-remaining-projects .portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  color: white;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-remaining-projects .portfolio-wrap:hover .portfolio-info {
+  transform: translateY(0);
+}
+
+.portfolio-remaining-projects .portfolio-info .content h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.portfolio-remaining-projects .portfolio-info .content .category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-remaining-projects .portfolio-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.portfolio-remaining-projects .portfolio-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-remaining-projects .portfolio-links a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.portfolio-remaining-projects .portfolio-links a i {
+  font-size: 1.1rem;
+}
+
+/* View More Button */
+#portfolio-view-more-btn {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  border: 2px solid var(--accent-color);
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#portfolio-view-more-btn:hover {
+  background-color: color-mix(in srgb, var(--accent-color), black 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+/* Portfolio Mobile/Tablet Slider */
+.portfolio-mobile-slider {
+  margin-bottom: 2rem;
+}
+
+.portfolio-mobile-slider .swiper {
+  padding-bottom: 60px;
+}
+
+.portfolio-mobile-slider .swiper-slide {
+  height: auto;
+}
+
+.portfolio-mobile-slider .portfolio-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.portfolio-mobile-slider .portfolio-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-mobile-slider .portfolio-wrap img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-mobile-slider .portfolio-wrap:hover img {
+  transform: scale(1.05);
+}
+
+.portfolio-mobile-slider .portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  color: white;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-mobile-slider .portfolio-wrap:hover .portfolio-info {
+  transform: translateY(0);
+}
+
+.portfolio-mobile-slider .portfolio-info .content h4 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.portfolio-mobile-slider .portfolio-info .content .category {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-mobile-slider .portfolio-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.portfolio-mobile-slider .portfolio-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-mobile-slider .portfolio-links a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.portfolio-mobile-slider .portfolio-links a i {
+  font-size: 1.1rem;
+}
+
+/* Mobile Slider Preview Styling */
+.portfolio-mobile-slider .swiper-slide-active .portfolio-wrap {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .portfolio-desktop-grid {
+    display: none !important;
+  }
+  
+  .portfolio-mobile-slider {
+    display: block !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .portfolio-desktop-grid {
+    display: block !important;
+  }
+  
+  .portfolio-mobile-slider {
+    display: none !important;
+  }
+}
+
+/* Services Grid */
+.services-grid .service-card {
+  height: 100%;
+}
+
+/* Remove swiper container spacing when not used */
+.services-swiper-container { display: none; }
+
+/* Optional: spacing adjustments for service cards in grid */
+.services .row.gy-4 > [class*='col-'] { display: flex; }
+.services .row.gy-4 > [class*='col-'] .service-card { width: 100%; }
+
+/* Services Desktop Grid */
+.services-desktop-grid .service-card {
+  height: 100%;
+}
+
+/* Services Remaining */
+.services-remaining {
+  margin-top: 2rem;
+  animation: fadeInUp 0.5s ease;
+}
+
+/* Services Mobile/Tablet Slider */
+.services-mobile-slider {
+  margin-bottom: 2rem;
+}
+
+.services-mobile-slider .swiper {
+  padding: 0 20px;
+  overflow: visible;
+}
+
+.services-mobile-slider .swiper-slide {
+  height: auto;
+  width: 85%;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.services-mobile-slider .swiper-slide-active {
+  transform: scale(1);
+  z-index: 2;
+  filter: blur(0);
+}
+
+.services-mobile-slider .swiper-slide-next,
+.services-mobile-slider .swiper-slide-prev {
+  transform: scale(0.75);
+  z-index: 1;
+  filter: blur(1px);
+  opacity: 0.6;
+}
+
+.services-mobile-slider .service-card {
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.services-mobile-slider .service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile Slider Preview Styling */
+.services-mobile-slider .swiper-slide-active .service-card {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments for services */
+@media (max-width: 768px) {
+  .services-mobile-slider .swiper-slide {
+    width: 80%;
+  }
+  
+  .services-mobile-slider .swiper-slide-next,
+  .services-mobile-slider .swiper-slide-prev {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-mobile-slider .swiper-slide {
+    width: 75%;
+  }
+  
+  .services-mobile-slider .swiper-slide-next,
+  .services-mobile-slider .swiper-slide-prev {
+    transform: scale(0.65);
+    opacity: 0.4;
+  }
+}
+
+/* Responsive display logic for services */
+@media (max-width: 991.98px) {
+  .services-desktop-grid {
+    display: none !important;
+  }
+  
+  .services-mobile-slider {
+    display: block !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .services-desktop-grid {
+    display: block !important;
+  }
+  
+  .services-mobile-slider {
+    display: none !important;
+  }
+}
+
+/* Technical Skills Section */
+.skills-animation {
+  margin-top: 2rem;
+}
+
+.skills-animation h3 {
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.skills-animation .skill-item {
+  margin-bottom: 1.5rem;
+}
+
+.skills-animation .skill-item span {
+  font-size: 0.9rem;
+  color: white;
+  font-weight: 500;
+}
+
+.skills-animation .progress {
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.skills-animation .progress .progress-bar {
+  background-color: white;
+  width: 0;
+  transition: width 1s ease;
+  border-radius: 4px;
+}
+
+/* Enhanced Grid Responsiveness */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .portfolio-desktop-grid .portfolio-wrap img,
+  .portfolio-remaining-projects .portfolio-wrap img {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .portfolio-desktop-grid .portfolio-wrap img,
+  .portfolio-remaining-projects .portfolio-wrap img {
+    height: 280px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .portfolio-desktop-grid .portfolio-wrap img,
+  .portfolio-remaining-projects .portfolio-wrap img {
+    height: 320px;
+  }
 }
