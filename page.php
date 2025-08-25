@@ -973,265 +973,88 @@ Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit la
 	  </div>
 	</div>
 
-	<div class="row justify-content-center">
-	  <?php
-	  // Service 1
-	  $service_1_title = get_option( 'service_1_title', 'Creative branding' );
-	  $service_1_highlight = get_option( 'service_1_highlight', 'branding' );
-	  $service_1_description = get_option( 'service_1_description', 'Nulla facilisi. Maecenas eget magna neque. Suspendisse potenti. Curabitur eleifend nisi non magna vulputate, vel condimentum libero tempus. Proin consectetur feugiat diam.' );
-	  $service_1_icon = get_option( 'service_1_icon', '' );
-	  $service_1_url = get_option( 'service_1_url', 'service-details.html' );
-	  
-	  if ( ! empty( $service_1_title ) ) :
-	  ?>
-	  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-		<div class="service-card position-relative z-1">
-		  <div class="service-icon">
-			<?php if ( ! empty( $service_1_icon ) ) : ?>
-			  <img src="<?php echo esc_url( $service_1_icon ); ?>" alt="<?php echo esc_attr( $service_1_title ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
-			<?php else : ?>
-			  <i class="bi bi-palette"></i>
-			<?php endif; ?>
+	<!-- Services Slider -->
+	<div class="services-swiper-container">
+	  <div class="swiper services-swiper">
+		<div class="swiper-wrapper">
+		  <?php
+		  // Dynamic service system - can handle any number of services
+		  $services = array();
+		  
+		  // Get all available services (up to 20 to handle future additions)
+		  for ( $i = 1; $i <= 20; $i++ ) {
+			$title = get_option( "service_{$i}_title", '' );
+			$highlight = get_option( "service_{$i}_highlight", '' );
+			$description = get_option( "service_{$i}_description", '' );
+			$icon = get_option( "service_{$i}_icon", '' );
+			$url = get_option( "service_{$i}_url", 'service-details.html' );
+			
+			if ( ! empty( $title ) ) {
+			  $services[] = array(
+				'title' => $title,
+				'highlight' => $highlight,
+				'description' => $description,
+				'icon' => $icon,
+				'url' => $url,
+				'index' => $i
+			  );
+			}
+		  }
+		  
+		  // Render services
+		  foreach ( $services as $service ) :
+			$delay = ( $service['index'] % 3 ) * 100; // Cycle through delays
+		  ?>
+		  <div class="swiper-slide" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
+			<div class="service-card position-relative z-1">
+			  <div class="service-icon">
+				<?php if ( ! empty( $service['icon'] ) ) : ?>
+				  <img src="<?php echo esc_url( $service['icon'] ); ?>" alt="<?php echo esc_attr( $service['title'] ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
+				<?php else : ?>
+				  <?php
+				  // Default icons for each service
+				  $default_icons = array(
+					'bi-palette', 'bi-gem', 'bi-megaphone', 'bi-code-slash', 'bi-graph-up', 'bi-camera-video',
+					'bi-lightbulb', 'bi-gear', 'bi-rocket', 'bi-briefcase', 'bi-chart-line', 'bi-phone',
+					'bi-laptop', 'bi-mobile', 'bi-globe', 'bi-cloud', 'bi-shield', 'bi-star', 'bi-heart', 'bi-award'
+				  );
+				  $icon_index = ( $service['index'] - 1 ) % count( $default_icons );
+				  ?>
+				  <i class="bi <?php echo $default_icons[ $icon_index ]; ?>"></i>
+				<?php endif; ?>
+			  </div>
+			  <a href="<?php echo esc_url( $service['url'] ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
+				<i class="bi bi-arrow-up-right"></i>
+			  </a>
+			  <h3>
+				<a href="<?php echo esc_url( $service['url'] ); ?>">
+				  <?php 
+				  $title_parts = explode( ' ', $service['title'] );
+				  $highlight_found = false;
+				  foreach ( $title_parts as $part ) {
+					if ( ! empty( $service['highlight'] ) && strtolower( $part ) === strtolower( $service['highlight'] ) && ! $highlight_found ) {
+					  echo '<span>' . esc_html( $part ) . '</span>';
+					  $highlight_found = true;
+					} else {
+					  echo esc_html( $part ) . ' ';
+					}
+				  }
+				  ?>
+				</a>
+			  </h3>
+			  <p><?php echo esc_html( $service['description'] ); ?></p>
+			</div>
 		  </div>
-		  <a href="<?php echo esc_url( $service_1_url ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
-			<i class="bi bi-arrow-up-right"></i>
-		  </a>
-		  <h3>
-			<a href="<?php echo esc_url( $service_1_url ); ?>">
-			  <?php 
-			  $title_parts = explode( ' ', $service_1_title );
-			  $highlight_found = false;
-			  foreach ( $title_parts as $part ) {
-				if ( strtolower( $part ) === strtolower( $service_1_highlight ) && ! $highlight_found ) {
-				  echo '<span>' . esc_html( $part ) . '</span>';
-				  $highlight_found = true;
-				} else {
-				  echo esc_html( $part ) . ' ';
-				}
-			  }
-			  ?>
-			</a>
-		  </h3>
-		  <p><?php echo esc_html( $service_1_description ); ?></p>
+		  <?php endforeach; ?>
 		</div>
+		
+		<!-- Navigation arrows -->
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
+		
+		<!-- Pagination -->
+		<div class="swiper-pagination"></div>
 	  </div>
-	  <?php endif; ?>
-
-	  <?php
-	  // Service 2
-	  $service_2_title = get_option( 'service_2_title', 'Design systems' );
-	  $service_2_highlight = get_option( 'service_2_highlight', 'systems' );
-	  $service_2_description = get_option( 'service_2_description', 'Praesent euismod varius tellus, vel bibendum nunc interdum at. Donec vehicula diam vel metus venenatis convallis. Aliquam erat volutpat. Etiam viverra magna sit amet.' );
-	  $service_2_icon = get_option( 'service_2_icon', '' );
-	  $service_2_url = get_option( 'service_2_url', 'service-details.html' );
-	  
-	  if ( ! empty( $service_2_title ) ) :
-	  ?>
-	  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-		<div class="service-card position-relative z-1">
-		  <div class="service-icon">
-			<?php if ( ! empty( $service_2_icon ) ) : ?>
-			  <img src="<?php echo esc_url( $service_2_icon ); ?>" alt="<?php echo esc_attr( $service_2_title ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
-			<?php else : ?>
-			  <i class="bi bi-gem"></i>
-			<?php endif; ?>
-		  </div>
-		  <a href="<?php echo esc_url( $service_2_url ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
-			<i class="bi bi-arrow-up-right"></i>
-		  </a>
-		  <h3>
-			<a href="<?php echo esc_url( $service_2_url ); ?>">
-			  <?php 
-			  $title_parts = explode( ' ', $service_2_title );
-			  $highlight_found = false;
-			  foreach ( $title_parts as $part ) {
-				if ( strtolower( $part ) === strtolower( $service_2_highlight ) && ! $highlight_found ) {
-				  echo '<span>' . esc_html( $part ) . '</span>';
-				  $highlight_found = true;
-				} else {
-				  echo esc_html( $part ) . ' ';
-				}
-			  }
-			  ?>
-			</a>
-		  </h3>
-		  <p><?php echo esc_html( $service_2_description ); ?></p>
-		</div>
-	  </div>
-	  <?php endif; ?>
-
-	  <?php
-	  // Service 3
-	  $service_3_title = get_option( 'service_3_title', 'Marketing strategies' );
-	  $service_3_highlight = get_option( 'service_3_highlight', 'strategies' );
-	  $service_3_description = get_option( 'service_3_description', 'Vivamus tempor velit id magna dictum, sed fermentum nisi faucibus. Integer nec pretium sapien. Fusce tincidunt ligula et purus consequat, ac pellentesque nulla eleifend.' );
-	  $service_3_icon = get_option( 'service_3_icon', '' );
-	  $service_3_url = get_option( 'service_3_url', 'service-details.html' );
-	  
-	  if ( ! empty( $service_3_title ) ) :
-	  ?>
-	  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-		<div class="service-card position-relative z-1">
-		  <div class="service-icon">
-			<?php if ( ! empty( $service_3_icon ) ) : ?>
-			  <img src="<?php echo esc_url( $service_3_icon ); ?>" alt="<?php echo esc_attr( $service_3_title ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
-			<?php else : ?>
-			  <i class="bi bi-megaphone"></i>
-			<?php endif; ?>
-		  </div>
-		  <a href="<?php echo esc_url( $service_3_url ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
-			<i class="bi bi-arrow-up-right"></i>
-		  </a>
-		  <h3>
-			<a href="<?php echo esc_url( $service_3_url ); ?>">
-			  <?php 
-			  $title_parts = explode( ' ', $service_3_title );
-			  $highlight_found = false;
-			  foreach ( $title_parts as $part ) {
-				if ( strtolower( $part ) === strtolower( $service_3_highlight ) && ! $highlight_found ) {
-				  echo '<span>' . esc_html( $part ) . '</span>';
-				  $highlight_found = true;
-				} else {
-				  echo esc_html( $part ) . ' ';
-				}
-			  }
-			  ?>
-			</a>
-		  </h3>
-		  <p><?php echo esc_html( $service_3_description ); ?></p>
-		</div>
-	  </div>
-	  <?php endif; ?>
-
-	  <?php
-	  // Service 4
-	  $service_4_title = get_option( 'service_4_title', 'Digital platforms' );
-	  $service_4_highlight = get_option( 'service_4_highlight', 'platforms' );
-	  $service_4_description = get_option( 'service_4_description', 'Cras fermentum odio eu feugiat malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et accumsan cursus. Morbi placerat nulla vel nunc viverra accumsan.' );
-	  $service_4_icon = get_option( 'service_4_icon', '' );
-	  $service_4_url = get_option( 'service_4_url', 'service-details.html' );
-	  
-	  if ( ! empty( $service_4_title ) ) :
-	  ?>
-	  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-		<div class="service-card position-relative z-1">
-		  <div class="service-icon">
-			<?php if ( ! empty( $service_4_icon ) ) : ?>
-			  <img src="<?php echo esc_url( $service_4_icon ); ?>" alt="<?php echo esc_attr( $service_4_title ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
-			<?php else : ?>
-			  <i class="bi bi-code-slash"></i>
-			<?php endif; ?>
-		  </div>
-		  <a href="<?php echo esc_url( $service_4_url ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
-			<i class="bi bi-arrow-up-right"></i>
-		  </a>
-		  <h3>
-			<a href="<?php echo esc_url( $service_4_url ); ?>">
-			  <?php 
-			  $title_parts = explode( ' ', $service_4_title );
-			  $highlight_found = false;
-			  foreach ( $title_parts as $part ) {
-				if ( strtolower( $part ) === strtolower( $service_4_highlight ) && ! $highlight_found ) {
-				  echo '<span>' . esc_html( $part ) . '</span>';
-				  $highlight_found = true;
-				} else {
-				  echo esc_html( $part ) . ' ';
-				}
-			  }
-			  ?>
-			</a>
-		  </h3>
-		  <p><?php echo esc_html( $service_4_description ); ?></p>
-		</div>
-	  </div>
-	  <?php endif; ?>
-
-	  <?php
-	  // Service 5
-	  $service_5_title = get_option( 'service_5_title', 'Growth acceleration' );
-	  $service_5_highlight = get_option( 'service_5_highlight', 'acceleration' );
-	  $service_5_description = get_option( 'service_5_description', 'Aenean vel augue vel nisi bibendum posuere. Phasellus in lacus quis urna sodales dignissim. Duis aliquam libero eget risus facilisis. Quisque eget libero vel nisl fringilla.' );
-	  $service_5_icon = get_option( 'service_5_icon', '' );
-	  $service_5_url = get_option( 'service_5_url', 'service-details.html' );
-	  
-	  if ( ! empty( $service_5_title ) ) :
-	  ?>
-	  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-		<div class="service-card position-relative z-1">
-		  <div class="service-icon">
-			<?php if ( ! empty( $service_5_icon ) ) : ?>
-			  <img src="<?php echo esc_url( $service_5_icon ); ?>" alt="<?php echo esc_attr( $service_5_title ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
-			<?php else : ?>
-			  <i class="bi bi-graph-up"></i>
-			<?php endif; ?>
-		  </div>
-		  <a href="<?php echo esc_url( $service_5_url ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
-			<i class="bi bi-arrow-up-right"></i>
-		  </a>
-		  <h3>
-			<a href="<?php echo esc_url( $service_5_url ); ?>">
-			  <?php 
-			  $title_parts = explode( ' ', $service_5_title );
-			  $highlight_found = false;
-			  foreach ( $title_parts as $part ) {
-				if ( strtolower( $part ) === strtolower( $service_5_highlight ) && ! $highlight_found ) {
-				  echo '<span>' . esc_html( $part ) . '</span>';
-				  $highlight_found = true;
-				} else {
-				  echo esc_html( $part ) . ' ';
-				}
-			  }
-			  ?>
-			</a>
-		  </h3>
-		  <p><?php echo esc_html( $service_5_description ); ?></p>
-		</div>
-	  </div>
-	  <?php endif; ?>
-
-	  <?php
-	  // Service 6
-	  $service_6_title = get_option( 'service_6_title', 'Media solutions' );
-	  $service_6_highlight = get_option( 'service_6_highlight', 'solutions' );
-	  $service_6_description = get_option( 'service_6_description', 'Etiam efficitur lacus in diam finibus, nec ultrices est sagittis. Maecenas elementum magna sed risus faucibus, nec commodo purus facilisis. Vestibulum accumsan magna.' );
-	  $service_6_icon = get_option( 'service_6_icon', '' );
-	  $service_6_url = get_option( 'service_6_url', 'service-details.html' );
-	  
-	  if ( ! empty( $service_6_title ) ) :
-	  ?>
-	  <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-		<div class="service-card position-relative z-1">
-		  <div class="service-icon">
-			<?php if ( ! empty( $service_6_icon ) ) : ?>
-			  <img src="<?php echo esc_url( $service_6_icon ); ?>" alt="<?php echo esc_attr( $service_6_title ); ?>" style="width: 64px; height: 64px; object-fit: contain;">
-			<?php else : ?>
-			  <i class="bi bi-camera-video"></i>
-			<?php endif; ?>
-		  </div>
-		  <a href="<?php echo esc_url( $service_6_url ); ?>" class="card-action d-flex align-items-center justify-content-center rounded-circle">
-			<i class="bi bi-arrow-up-right"></i>
-		  </a>
-		  <h3>
-			<a href="<?php echo esc_url( $service_6_url ); ?>">
-			  <?php 
-			  $title_parts = explode( ' ', $service_6_title );
-			  $highlight_found = false;
-			  foreach ( $title_parts as $part ) {
-				if ( strtolower( $part ) === strtolower( $service_6_highlight ) && ! $highlight_found ) {
-				  echo '<span>' . esc_html( $part ) . '</span>';
-				  $highlight_found = true;
-				} else {
-				  echo esc_html( $part ) . ' ';
-				}
-			  }
-			  ?>
-			</a>
-		  </h3>
-		  <p><?php echo esc_html( $service_6_description ); ?></p>
-		</div>
-	  </div>
-	  <?php endif; ?>
-
 	</div>
 
   </div>
